@@ -3,8 +3,15 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
-// http://stackoverflow.com/questions/3522454/java-tree-data-structure
-// http://sujitpal.blogspot.co.il/2006/05/java-data-structure-generic-tree.html
+/*
+ * Great Tree implementation based on StackOverflow, with a lot of corrections of my own. 
+ * 
+ * See also:
+ *  - http://stackoverflow.com/questions/3522454/java-tree-data-structure
+ *  - http://sujitpal.blogspot.co.il/2006/05/java-data-structure-generic-tree.html
+ */
+
+
 
 public class TreeNode<T> implements ITree<T>, Iterable<TreeNode<T>> {
 

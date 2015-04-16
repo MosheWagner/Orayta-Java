@@ -12,7 +12,9 @@ import tree.TreeNode;
 
 public abstract class OraytaCoreManager implements UIBridge, IOraytaCore
 {
+	@SuppressWarnings("unused")
 	private GeneralSettings generalSettings;
+	@SuppressWarnings("unused")
 	private TreeNode<BookID> bookList;
 	
 	public abstract DownloadManager downloadManager();

@@ -5,7 +5,8 @@ import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-public class ZipReader implements IFileReader {
+public class ZipReader implements IFileReader 
+{
 
 	String zipPath = "";
 	

@@ -12,7 +12,7 @@ import java.util.LinkedList;
 
 //TODO: Implement pause and cancel
 
-public class ProgressedFileDownload implements  Runnable, IFileDownloader
+public class ProgressedFileDownload implements ISingleFileDownloader
 {
 
 	Collection<IDownloadListener> progressListeners = new LinkedList<IDownloadListener>();

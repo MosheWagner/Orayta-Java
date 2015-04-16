@@ -16,7 +16,7 @@ public class DownloadManager implements IDownloadManager
 	
 	int totalProgress;
 	
-	ArrayList<IFileDownloader> activeDownloads = new ArrayList<IFileDownloader>();
+	ArrayList<ISingleFileDownloader> activeDownloads = new ArrayList<ISingleFileDownloader>();
 	//These listen to events of each download
 	ArrayList<IDownloadListener> internallListeners = new ArrayList<IDownloadListener>();
 	//These listen to events of the Manager itself. So they are called when ALL downloads are finished,
@@ -26,7 +26,7 @@ public class DownloadManager implements IDownloadManager
 	
 	private class DownloadListener implements IDownloadListener
 	{
-		IFileDownloader mDownloader;
+		ISingleFileDownloader mDownloader;
 		
 		public void registerToEvents()
 		{
@@ -34,7 +34,7 @@ public class DownloadManager implements IDownloadManager
 			mDownloader.registerProgressListener(this);
 		}
 		
-		public DownloadListener(IFileDownloader downloader)
+		public DownloadListener(ISingleFileDownloader downloader)
 		{
 			mDownloader = downloader;
 		}
@@ -51,7 +51,7 @@ public class DownloadManager implements IDownloadManager
 		
 	}
 	
-	public void addDownload(String urlPath, String savePath) 
+	public void addDownloadRequest(String urlPath, String savePath) 
 	{
 		pendingURLs.add(urlPath);
 		pendingSavePaths.add(savePath);
@@ -79,7 +79,7 @@ public class DownloadManager implements IDownloadManager
 			String savePath = pendingSavePaths.remove(0);
 			
 			//Create a new downloader:
-			IFileDownloader downloader = new ProgressedFileDownload();
+			ISingleFileDownloader downloader = new ProgressedFileDownload();
 			downloader.downloadNewThread(urlPath, savePath, true);
 			activeDownloads.add(downloader);
 			
@@ -99,7 +99,7 @@ public class DownloadManager implements IDownloadManager
 		long totalSize = 0;
 		long totalWeight = 0;
 		
-		for (IFileDownloader d:activeDownloads)
+		for (ISingleFileDownloader d:activeDownloads)
 		{
 			totalSize += d.getDownloadSize();
 			totalWeight += d.getDownloadSize() * d.getProgress();
@@ -114,7 +114,7 @@ public class DownloadManager implements IDownloadManager
 		System.out.println(totalProgress);
 	}
 
-	private void downloadFinished(IFileDownloader downloader)
+	private void downloadFinished(ISingleFileDownloader downloader)
 	{
 		activeDownloads.remove(downloader);
 		StartMoreDownloads();

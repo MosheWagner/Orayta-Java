@@ -2,6 +2,10 @@ package tree;
 
 import java.util.Collection;
 
+/*
+ * The way any good tree should act.
+ */
+
 public interface ITree<T> {
 	public boolean isRoot();
 	public boolean isLeaf();

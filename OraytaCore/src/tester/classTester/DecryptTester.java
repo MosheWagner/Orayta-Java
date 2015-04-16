@@ -1,6 +1,6 @@
 package tester.classTester;
 
-import html.OBK_ParseHelper;
+import bookBuilder.obk.OBK_ParseHelper;
 import tester.ITest;
 
 public class DecryptTester implements ITest

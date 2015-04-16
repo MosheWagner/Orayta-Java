@@ -8,9 +8,10 @@ import java.util.List;
 
 import tree.TreeNode;
 
-import book.bookTypes.ABook;
-import book.bookTypes.Book_Folder;
-import book.bookTypes.Book_OBK;
+import book.Book;
+import bookBuilder.BookHeaderBuilder;
+import bookBuilder.FolderBookBuilder;
+import bookBuilder.IBookBuilder;
 
 /*
  * Builds the bookTree from the file system
@@ -18,12 +19,15 @@ import book.bookTypes.Book_OBK;
 
 public class BookTreeBuilder
 {
-	TreeNode<ABook> tree;
+	TreeNode<Book> tree;
 
-	public TreeNode<ABook> buildTree(String rootPath)
+	IBookBuilder folderBuilder = new FolderBookBuilder();
+	IBookBuilder emptyBookBuilder = new BookHeaderBuilder();
+	
+	public TreeNode<Book> buildTree(String rootPath)
 	{
 		//Root is a folder called 'OraytaBooks'
-		tree = new TreeNode<ABook>(new Book_Folder(rootPath, "OraytaBooks"));
+		tree = new TreeNode<Book>(folderBuilder.buildBook(rootPath, "OraytaBooks"));
 		
 		List<File> files = Arrays.asList(new File(rootPath).listFiles());
 		sortByLeadingNumber(files);
@@ -35,18 +39,18 @@ public class BookTreeBuilder
 	private final String OBK_SUFFIX = ".obk";
 	private final String FOLDER_CONF_SUFFIX = ".folder";
 	
-	private void addFilesToTreeNode(List<File> files, TreeNode<ABook> treeNode)
+	private void addFilesToTreeNode(List<File> files, TreeNode<Book> treeNode)
 	{
 		for (File f:files)
 		{
-			ABook book;
+			Book book;
 
 			if (f.getName().endsWith(FOLDER_CONF_SUFFIX))
 			{
 				String folderPath = f.getAbsolutePath().replace(FOLDER_CONF_SUFFIX, "");
 				
-				book = new Book_Folder(folderPath);
-				TreeNode<ABook> branch = treeNode.addChild(book);
+				book = folderBuilder.buildBook(folderPath);
+				TreeNode<Book> branch = treeNode.addChild(book);
 				
 				List<File> children = Arrays.asList(new File(folderPath).listFiles());
 				sortByLeadingNumber(children);
@@ -54,7 +58,7 @@ public class BookTreeBuilder
 			}
 			else if (f.getName().endsWith(OBK_SUFFIX))
 			{
-				book = new Book_OBK(f.getAbsolutePath());
+				book = emptyBookBuilder.buildBook(f.getAbsolutePath());
 				treeNode.addChild(book);
 			}
 		}

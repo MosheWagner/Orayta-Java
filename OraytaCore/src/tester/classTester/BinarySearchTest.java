@@ -2,8 +2,8 @@ package tester.classTester;
 
 import java.util.ArrayList;
 
-import search.ISortedNumberList;
-import search.LesserGreaterSearchableArrayList;
+import search.chapterMapping.BoundarySearchableArrayList;
+import search.chapterMapping.ISortedNumberList;
 import tester.ITest;
 
 public class BinarySearchTest implements ITest {
@@ -24,7 +24,7 @@ public class BinarySearchTest implements ITest {
 		numList.add(39); 
 		numList.add(41); 
 		
-		ISortedNumberList s = new LesserGreaterSearchableArrayList(numList);
+		ISortedNumberList s = new BoundarySearchableArrayList(numList);
 		
 		System.out.println(s.lastValueEqualOrLesserThan(-5)); //-1
 		System.out.println(s.lastValueEqualOrLesserThan(5)); //0

@@ -7,5 +7,10 @@ package search;
 public interface ISearchQuery
 {
 	public String getSearchString();
-	public Boolean exactMatch();
+	
+	//public Boolean exactMatch();
+	public Boolean allowKtivTolerance();
+	public Boolean isRegexp();
+	
+	public int getResultLimit();
 }
