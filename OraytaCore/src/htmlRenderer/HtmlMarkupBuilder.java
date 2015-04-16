@@ -2,6 +2,8 @@ package htmlRenderer;
 
 import java.util.IllegalFormatException;
 
+import book.contents.IChapter;
+
 /*
  * Helper class that helps create HTML elements when someone needs them.
  * Most of this consists of simple String returning static methods.
@@ -42,6 +44,17 @@ public class HtmlMarkupBuilder
 		return prefix + txt + suffix;
 	}
 	
+	public static String genChapTitle(IChapter c) 
+	{
+		int level = c.getChapterAddress().getLevel() + 1;
+		
+		String lvlStr = String.valueOf(level);
+		String prefix = "<h" + lvlStr + "> ";
+		String suffix = " </h" + lvlStr + ">";
+		
+		return prefix + c.getUID() + suffix;
+	}
+	
 	public static String genHeader(String title)
 	{
 		String html;
@@ -58,7 +71,7 @@ public class HtmlMarkupBuilder
 	    html += "</title>\n";
 	    html += "\n</head>";
 	    
-	    html += "\n<body>";
+	    html += "\n<body>\n";
 		
 		return html;
 	}
@@ -106,5 +119,4 @@ public class HtmlMarkupBuilder
 
 	    return origStr; 
 	}
-	
 }

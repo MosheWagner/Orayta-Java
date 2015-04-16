@@ -113,7 +113,7 @@ public class OBK_Builder implements IBookContentsBuilder
 					else
 					{    
 						//In this case, we met a '!' marker. The format is: "! {LVL_NAME}\n".
-						if (markCode != -1) levelCode = LevelSigns.length() + markCode -1;
+						if (markCode != -1) levelCode = LevelSigns.length() + markCode;
 						
 						//New level!
 						chapid = new ChapterID(book.getBookID());

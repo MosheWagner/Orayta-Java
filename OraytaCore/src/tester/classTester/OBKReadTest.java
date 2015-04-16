@@ -17,7 +17,7 @@ public class OBKReadTest implements ITest
 		Book b = new BookHeaderBuilder().buildBook(path);
 		b.setContents(new OBK_Builder().buildBookContents(b));
 		
-		System.out.println(b.getChapterList().printTree());
+		System.out.println(b.getChapterIDList().printTree());
 		System.out.println(b.getContents().getFlatIndex());
 	}
 }

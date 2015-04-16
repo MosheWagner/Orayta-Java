@@ -3,7 +3,7 @@ package bookBuilder;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import fileManager.SimpleFileReader;
+import fileManager.SFileReader;
 import book.Book;
 import book.contents.BookID;
 
@@ -27,7 +27,7 @@ public class FolderBookBuilder implements IBookBuilder
 		{
 			Book book = new Book();
 			
-			String s = new SimpleFileReader().readContents(folderPath + ".folder");
+			String s = new SFileReader().readContents(folderPath + ".folder");
 			book.parseSttings(s);
 			
 			String displayName = book.getSettings().get("BranchName");

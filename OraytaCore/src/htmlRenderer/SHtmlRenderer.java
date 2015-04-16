@@ -21,15 +21,30 @@ public class SHtmlRenderer implements IHtmlRenderer
 	{
 		String html = HtmlMarkupBuilder.genHeader(book.getDisplayName() + " - " + chapid.getUID());
 		
-		TreeNode<IChapter> chapNode = book.getContents().getChapterByID(chapid);
+		TreeNode<IChapter> baseNode = book.getContents().getChapterByID(chapid);
+
+		int startLevel = baseNode.data.getChapterAddress().getLevel();
 		
-		ITreeIterator<TreeNode<IChapter>> iter = chapNode.iterator();
+		ITreeIterator<TreeNode<IChapter>> iter = baseNode.iterator();
 		
-		while (iter.hasNext())
+		TreeNode<IChapter> chapNode;
+		while ( (chapNode = iter.next()) != null)
 		{
-			//TODO: Implement!
-			html += iter.next().data.text();
-		}
+			//TODO: Improve all this
+			
+			if (!chapNode.data.equals(baseNode.data))
+			{
+				if (chapNode.data.getChapterAddress().getLevel() <=  startLevel) break;
+			}
+			
+			IChapter chap = chapNode.data;
+			
+			//TODO: Add css so that <h6> doesn't line break
+			html += HtmlMarkupBuilder.genChapTitle(chap);
+			
+			//TODO: Have this in base paragraph style
+			html += chap.text();
+		} 
 		
 		html += HtmlMarkupBuilder.htmlEnd();
 		

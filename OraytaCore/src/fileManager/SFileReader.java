@@ -6,7 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
-public class SimpleFileReader implements IFileReader
+public class SFileReader implements IFileReader
 {
 
 	public String readContents(String path) throws IOException, FileNotFoundException 

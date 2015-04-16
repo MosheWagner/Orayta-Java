@@ -48,7 +48,7 @@ public class Book implements Comparable<Book>, IHasID, IPuretextSearchable
 
 	public String toString() {return mDisplayName;}
 	
-	public TreeNode<ChapterID> getChapterList() {return mContents.getChapterIDTree();}
+	public TreeNode<ChapterID> getChapterIDList() {return mContents.getChapterIDTree();}
 	
 	public Map<String, String> getSettings() { return mBookSettingsMap; }
 	
