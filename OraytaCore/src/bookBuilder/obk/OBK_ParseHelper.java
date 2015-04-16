@@ -1,7 +1,7 @@
 package bookBuilder.obk;
 
 
-import htmlRenderer.HtmlMarkuperBuilder;
+import htmlRenderer.HtmlMarkupBuilder;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
@@ -117,7 +117,7 @@ public class OBK_ParseHelper
 	    String linkto = BookInternalLabel;
 
 	    //Escape the hebrew chars
-	    linkto = HtmlMarkuperBuilder.escapeToHex(linkto);
+	    linkto = HtmlMarkupBuilder.escapeToHex(linkto);
 
 	    if (BookUniqueId != 0)
 	    {

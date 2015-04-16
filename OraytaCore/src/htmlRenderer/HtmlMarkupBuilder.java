@@ -7,7 +7,7 @@ import java.util.IllegalFormatException;
  * Most of this consists of simple String returning static methods.
  */
 
-public class HtmlMarkuperBuilder 
+public class HtmlMarkupBuilder 
 {
 	public static String createAnchor(String txt)
 	{	
@@ -30,6 +30,42 @@ public class HtmlMarkuperBuilder
 	public static String genMarkerAnchor(int levelCode, String markerText)
 	{
 		return createHeading(levelCode, createAnchor(markerText));
+	}
+	
+	
+	public static String createHeading(int level, String txt)
+	{
+		String lvlStr = String.valueOf(level);
+		String prefix = "<h" + lvlStr + "> ";
+		String suffix = " </h" + lvlStr + ">";
+		
+		return prefix + txt + suffix;
+	}
+	
+	public static String genHeader(String title)
+	{
+		String html;
+		
+		html = "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\"\n ";
+		html += "\"http://www.w3.org/TR/html4/loose.dtd\">\n";
+		html += "<html dir=\"RTL\">\n";
+		html += "<head>\n\t";
+
+		html += "<meta http-equiv=Content-Type content=\"text/html; charset=UTF-8\">";
+
+		html += "\n<title>";
+		html += title;
+	    html += "</title>\n";
+	    html += "\n</head>";
+	    
+	    html += "\n<body>";
+		
+		return html;
+	}
+	
+	public static String htmlEnd()
+	{
+		return "</body>\n</html>\n";
 	}
 	
 	//	Because for some stupid reason some renderers can't handle internal HTML links with Hebrew chars, 
@@ -71,12 +107,4 @@ public class HtmlMarkuperBuilder
 	    return origStr; 
 	}
 	
-	public static String createHeading(int level, String txt)
-	{
-		String lvlStr = String.valueOf(level);
-		String prefix = "<h" + lvlStr + "> ";
-		String suffix = " </h" + lvlStr + ">";
-		
-		return prefix + txt + suffix;
-	}
 }

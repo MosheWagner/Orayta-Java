@@ -1,7 +1,7 @@
 package bookBuilder.obk;
 
 import fileManager.ZipReader;
-import htmlRenderer.HtmlMarkuperBuilder;
+import htmlRenderer.HtmlMarkupBuilder;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import bookBuilder.IBookContentsBuilder;
 
 public class OBK_Builder implements IBookContentsBuilder
 {
-	private final static String LevelSigns = "$#^@~!";
+	private final static String LevelSigns = "$#^@~";
 	private final static String MarkSigns = "!";
 
 	private int LowerLevelsLBound = 0;
@@ -107,8 +107,8 @@ public class OBK_Builder implements IBookContentsBuilder
 					{
 						//In this case, the level sign is just a marker, NOT part of the hierarchy
 						// So we generate a marker from the given line
-						chap.setChapterText(chap.text() + HtmlMarkuperBuilder.genHtmlComment("LevelMarker!") + "\n");
-						chap.setChapterText(chap.text() + HtmlMarkuperBuilder.genMarkerAnchor(levelCode, line.replace(firstChar + " ", "")) + "\n");
+						chap.setChapterText(chap.text() + HtmlMarkupBuilder.genHtmlComment("LevelMarker!") + "\n");
+						chap.setChapterText(chap.text() + HtmlMarkupBuilder.genMarkerAnchor(levelCode + 1, line.replace(firstChar + " ", "")) + "\n");
 					}
 					else
 					{    
@@ -156,7 +156,7 @@ public class OBK_Builder implements IBookContentsBuilder
 				}
 				else
 				{
-					//Just more text
+					//Just more text. Added it to the current chapter
 					chap.setChapterText(chap.text() + line + "\n");
 				}
 			}
