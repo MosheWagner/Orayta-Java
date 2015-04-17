@@ -79,6 +79,8 @@ public class OBK_Builder implements IBookContentsBuilder
 		}
 	}	
 
+	
+	//TODO: Add external link reading
 	private void buildChapters() 
 	{
 		TreeNode<IChapter> chapterContentsTree = new TreeNode<IChapter>(null);
@@ -89,6 +91,8 @@ public class OBK_Builder implements IBookContentsBuilder
 		
 		int currentsLevel = -1;
 
+		String pendingText = "";
+		
 		ChapterID chapid;
 		DChapter chap = new DChapter();
 		
@@ -107,8 +111,8 @@ public class OBK_Builder implements IBookContentsBuilder
 					{
 						//In this case, the level sign is just a marker, NOT part of the hierarchy
 						// So we generate a marker from the given line
-						chap.setChapterText(chap.text() + HtmlMarkupBuilder.genHtmlComment("LevelMarker!") + "\n");
-						chap.setChapterText(chap.text() + HtmlMarkupBuilder.genMarkerAnchor(levelCode + 1, line.replace(firstChar + " ", "")) + "\n");
+						pendingText += HtmlMarkupBuilder.genHtmlMarkerComment() + "\n";
+						pendingText += HtmlMarkupBuilder.genMarkerAnchor(levelCode + 1, line.replace(firstChar + " ", "")) + "\n";
 					}
 					else
 					{    
@@ -124,6 +128,10 @@ public class OBK_Builder implements IBookContentsBuilder
 						
 						chap = new DChapter();
 						chap.setAddress(chapid);
+						
+						//Pending text is added right at start of the new chapter
+						chap.setChapterText(pendingText);
+						pendingText = "";
 						
 						//Root element
 						if (levelCode == 0)
@@ -154,10 +162,12 @@ public class OBK_Builder implements IBookContentsBuilder
 						currentsLevel = levelCode;
 					}
 				}
-				else
+				else if(line.trim() != "") //Ignore empty line totally
 				{
-					//Just more text. Added it to the current chapter
-					chap.setChapterText(chap.text() + line + "\n");
+					//Simply add this line's text, and any pending text we have
+					chap.setChapterText(chap.text() + pendingText + line + "\n");
+					
+					pendingText = "";
 				}
 			}
 		}

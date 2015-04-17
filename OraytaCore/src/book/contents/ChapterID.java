@@ -11,7 +11,7 @@ public class ChapterID implements Comparable<ChapterID>, IHasID
 	public ChapterID(BookID bookId, String id)
 	{
 		mBookId = bookId;
-		mUID = id;
+		setID(id);
 	}
 	
 	public ChapterID(BookID bookId)
@@ -19,7 +19,7 @@ public class ChapterID implements Comparable<ChapterID>, IHasID
 		mBookId = bookId;
 	}
 	
-	public void setID(String id) { mUID = id; }
+	public void setID(String id) { mUID = id.trim(); }
 	
 	public BookID getBookID() {
 		return mBookId;

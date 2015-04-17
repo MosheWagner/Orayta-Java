@@ -16,18 +16,26 @@ public class HtmlMarkupBuilder
 		return createAnchor(txt, escapeToHex(txt));
 	}
 	
+	public final static String ARBITRAY_BEGINNING_MARK = "A";
 	public static String createAnchor(String txt, String anchorHexID)
 	{	
-		String prefix = "<a id=\"" + anchorHexID + "\"> ";
+		String prefix = "<a id=\"" + ARBITRAY_BEGINNING_MARK + anchorHexID + "\"> ";
 		String suffix = " </a>";
 		
 		return prefix + txt + suffix;
 	}
 	
-	public static String genHtmlComment(String txt)
+	private static String genHtmlComment(String txt)
 	{	
 		return "<!--" + txt + "-->";
 	}
+	
+	public static String genHtmlMarkerComment()
+	{	
+		return genHtmlComment("LevelMarker!");
+	}
+	
+	
 	
 	public static String genMarkerAnchor(int levelCode, String markerText)
 	{

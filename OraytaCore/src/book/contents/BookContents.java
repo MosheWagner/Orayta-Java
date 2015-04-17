@@ -21,9 +21,9 @@ public class BookContents
 		this.chapterIDTree = chapterIDTree;
 	}
 	
-	public TreeNode<IChapter> getChapterByID(ChapterID id)
+	public TreeNode<IChapter> getChapterByID(String id)
 	{
-		return chapterContentsIndex.findById(id.getUID());
+		return chapterContentsIndex.findById(id);
 	}
 
 	public TreeNode<IChapter> getChapterContentsTree() {
