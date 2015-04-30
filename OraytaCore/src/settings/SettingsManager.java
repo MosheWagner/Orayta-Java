@@ -6,8 +6,8 @@ public class SettingsManager
 	
 	//private static final String GENERAL_SETTINGS_PATH = "GeneralSettings";
 	
-	static GeneralSettings mGeneralSettings = new GeneralSettings();
-	
+	static GeneralSettings mGeneralSettings;
+	static UISettings mUISettings;
 	
 	public static GeneralSettings generalSettings()
 	{
@@ -15,11 +15,22 @@ public class SettingsManager
 		
 		return mGeneralSettings;
 	}
+	
+	public static UISettings uiSettings()
+	{
+		if (!initialized) initSettings();
+		
+		return mUISettings;
+	}
 
 	private static void initSettings() 
 	{
-		//TODO: Implement
+		//TODO: Implement the right way!!!
 		
-		//initialized = true;
+		
+		mGeneralSettings = new GeneralSettings();
+		mUISettings = new UISettings();
+		
+		initialized = true;
 	}
 }
