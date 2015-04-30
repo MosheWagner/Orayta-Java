@@ -1,31 +1,16 @@
 package fileManager;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
-public class SFileReader implements IFileReader
-{
+public class SFileReader implements IFileReader{
 
-	public String readContents(String path) throws IOException, FileNotFoundException 
+	public String readContents(String filePath) throws IOException, FileNotFoundException 
 	{
-		String contents = "";
-
-    	BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(path), "UTF8"));
-        StringBuilder sb = new StringBuilder();
-        String line = br.readLine();
-
-        while (line != null) {
-            sb.append(line);
-            sb.append(System.lineSeparator());
-            line = br.readLine();
-        }
-        contents = sb.toString();
-        
-        br.close();
-
-	    return contents;
+		byte[] encoded = Files.readAllBytes(Paths.get(filePath));
+		return new String(encoded, "utf8");
 	}
+
 }

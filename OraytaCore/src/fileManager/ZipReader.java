@@ -34,11 +34,8 @@ public class ZipReader implements IFileReader
 
 	}
 	
-	
 	public String readContents(String filePath) throws IOException, FileNotFoundException 
 	{
-		String contents = "";
-		
 		zFile = new ZipFile(zipPath);
 		
 		String innerPath = filePath;
@@ -48,18 +45,7 @@ public class ZipReader implements IFileReader
         
         InputStream inStream = zFile.getInputStream(entry);
         
-        // create a buffer to improve copy performance later.
-        byte[] buffer = new byte[2048];
-
-		while ( inStream.read(buffer) > 0)
-		{
-		    contents += new String(buffer, "UTF-8");
-		}
-
-        // Close the zip file.
-		inStream.close();
-
-		return contents;
+        return new StreamReader().readContents(inStream, "utf8");
 	}
 
 }
