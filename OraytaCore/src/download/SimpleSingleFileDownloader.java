@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import fileManager.FileHash;
+
 
 
 public class SimpleSingleFileDownloader implements ISingleFileDownloader
@@ -21,10 +23,19 @@ public class SimpleSingleFileDownloader implements ISingleFileDownloader
 	String origSavePath;
 	boolean mOverWrite;
 	
+	String mHash = null;
+	
+	DownloadStatus Status = DownloadStatus.NOT_STARTED_YET;
+	
 	Thread thread = null;
 
-	public void downloadNewThread(String urlPath, String filePath,
-			boolean overWrite) 
+	public void downloadAsyncAndCheck(String urlPath, String filePath, boolean overWrite, String hash)
+	{
+		mHash = hash;
+		downloadAsync(urlPath, filePath, overWrite);
+	}
+	
+	public void downloadAsync(String urlPath, String filePath, boolean overWrite) 
 	{
 		mDownloadPath = urlPath;
 		mSavePath = filePath;
@@ -32,6 +43,8 @@ public class SimpleSingleFileDownloader implements ISingleFileDownloader
 		
 		thread = new Thread(this);
 		thread.start();
+		
+		Status = DownloadStatus.ACTIVE;
 	}
 	
 	public void run()
@@ -47,17 +60,21 @@ public class SimpleSingleFileDownloader implements ISingleFileDownloader
 	
 	public void downloadFile() throws IOException
 	{
-		addSuffix();
+		addSuffixToFilename();
 		
 		URL downloadUrl = new URL(mDownloadPath);
 		
+		File downloadFileOrig = new File(origSavePath);
 		File downloadFile = new File(mSavePath);
-		if (downloadFile.exists())
+		if (downloadFileOrig.exists())
 		{
 			if (mOverWrite == false) return;
 			
-			//else:
-			
+			//Will throw an IOException if fails
+			downloadFileOrig.delete();
+		}
+		if (downloadFile.exists())
+		{
 			//Will throw an IOException if fails
 			downloadFile.delete();
 		}
@@ -73,28 +90,54 @@ public class SimpleSingleFileDownloader implements ISingleFileDownloader
         downloadFinished();
 	}
 
-	private void downloadFinished() throws IOException 
+	private void downloadFinished()
 	{
-		removeSuffix();
+		try {
+			removeSuffixFromFilename();
+
+			Status = DownloadStatus.FINISHED_OK;
+			
+			File tester = new File(mSavePath);
+			if (! tester.exists()) Status = DownloadStatus.FINISHED_ERROR;
+			
+			//Test for hash only if we got one to compare to
+			if (mHash != null)
+			{
+				if (!FileHash.calculateMd5(mSavePath).equals(mHash))
+				{
+					Status = DownloadStatus.FINISHED_ERROR;
+					tester.delete();
+				}
+			}
+		} catch (IOException e) { Status = DownloadStatus.FINISHED_ERROR; }
 		
+		postFinished();
+	}
+	
+	private void postFinished()
+	{
 		//Tell everyone we are done
 		for (IDownloadListener l:listeners)
 		{
-			l.onDownloadFinished();
+			l.onDownloadFinished(Status);
 		}
 	}
 
-	private void addSuffix() {
-		//Add ".download" to the filename
+	//Add ".download" to the filename
+	private void addSuffixToFilename() 
+	{
 		origSavePath = mSavePath;
 		mSavePath = mSavePath + ".download";
 	}
 	
-	private void removeSuffix() throws IOException  {
-		//Remove the ".download" from the filename
+	//Remove the ".download" from the filename
+	private void removeSuffixFromFilename() throws IOException  
+	{
 		File oldFile = new File(mSavePath);
 		File newFile = new File(origSavePath);
 		Files.move(oldFile.toPath(), newFile.toPath());
+		
+		mSavePath = origSavePath;
 	}
 
 	public void registerProgressListener(IDownloadListener iListener) {
@@ -108,9 +151,7 @@ public class SimpleSingleFileDownloader implements ISingleFileDownloader
 
 	public DownloadStatus getStatus() 
 	{
-		if (thread == null) return DownloadStatus.NOT_STARTED_YET;
-		else if(thread.isAlive()) return DownloadStatus.ACTIVE;
-		else return DownloadStatus.FINISHED_OK;
+		return Status;
 	}
 
 	public long getDownloadSize() {

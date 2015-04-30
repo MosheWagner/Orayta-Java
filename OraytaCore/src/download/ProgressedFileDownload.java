@@ -10,6 +10,8 @@ import java.nio.file.Files;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import fileManager.FileHash;
+
 //TODO: Implement pause and cancel
 
 public class ProgressedFileDownload implements ISingleFileDownloader
@@ -25,10 +27,17 @@ public class ProgressedFileDownload implements ISingleFileDownloader
 	String origSavePath;
 	boolean mOverWrite;
 	
-	DownloadStatus status = DownloadStatus.NOT_STARTED_YET;
+	String mHash = null;
 	
-	public void downloadNewThread(String urlPath, String filePath,
-			boolean overWrite) 
+	DownloadStatus Status = DownloadStatus.NOT_STARTED_YET;
+	
+	public void downloadAsyncAndCheck(String urlPath, String filePath, boolean overWrite, String hash)
+	{
+		mHash = hash;
+		downloadAsync(urlPath, filePath, overWrite);
+	}
+	
+	public void downloadAsync(String urlPath, String filePath, boolean overWrite) 
 	{
 		mDownloadPath = urlPath;
 		mSavePath = filePath;
@@ -52,11 +61,27 @@ public class ProgressedFileDownload implements ISingleFileDownloader
 	{
 		addSuffix();
 		
+		File downloadFileOrig = new File(origSavePath);
+		File downloadFile = new File(mSavePath);
+		if (downloadFileOrig.exists())
+		{
+			if (mOverWrite == false) return;
+			
+			//Will throw an IOException if fails
+			downloadFileOrig.delete();
+		}
+		if (downloadFile.exists())
+		{
+			//Will throw an IOException if fails
+			downloadFile.delete();
+		}
+		
+		
 		RandomAccessFile file = null;
 		InputStream stream = null;
 		
 	    try {
-	    	status = DownloadStatus.ACTIVE;
+	    	Status = DownloadStatus.ACTIVE;
 	    	
 	    	URL url = new URL(mDownloadPath);
 	    	
@@ -93,7 +118,7 @@ public class ProgressedFileDownload implements ISingleFileDownloader
 	        file.seek(downloaded);
 	
 	        stream = connection.getInputStream();
-	        while (status == DownloadStatus.ACTIVE) 
+	        while (Status == DownloadStatus.ACTIVE) 
 	        {
 	        	/* Size buffer according to how much of the
 	       		file is left to download. */
@@ -143,7 +168,7 @@ public class ProgressedFileDownload implements ISingleFileDownloader
 
 	private void error()
 	{
-		status = DownloadStatus.FINISHED_ERROR;
+		Status = DownloadStatus.FINISHED_ERROR;
 	}
 	    
 	public void registerProgressListener(IDownloadListener listener) {
@@ -156,7 +181,7 @@ public class ProgressedFileDownload implements ISingleFileDownloader
 
 	public DownloadStatus getStatus() 
 	{
-		return status;
+		return Status;
 	}
 	
 	// Get this download's size in bytes.
@@ -178,19 +203,35 @@ public class ProgressedFileDownload implements ISingleFileDownloader
 		}
 	}
 	
-	private void downloadFinished() throws IOException {
-		removeSuffix();
-		updateFinished();
+	private void downloadFinished(){
+		try {
+			removeSuffix();
+
+			Status = DownloadStatus.FINISHED_OK;
+			
+			File tester = new File(mSavePath);
+			if (! tester.exists()) Status = DownloadStatus.FINISHED_ERROR;
+			
+			//Test for hash only if we got one to compare to
+			if (mHash != null)
+			{
+				if (!FileHash.calculateMd5(mSavePath).equals(mHash))
+				{
+					Status = DownloadStatus.FINISHED_ERROR;
+					tester.delete();
+				}
+			}
+		} catch (IOException e) { Status = DownloadStatus.FINISHED_ERROR; }
+		
+		postFinished();
 	}
 	
-	private void updateFinished() 
+	private void postFinished() 
 	{
-		status = DownloadStatus.FINISHED_OK;
-		
 		//Tell everyone we are done
 		for (IDownloadListener l:finishedListeners)
 		{
-			l.onDownloadFinished();
+			l.onDownloadFinished(Status);
 		}
 	}
 	
@@ -206,5 +247,7 @@ public class ProgressedFileDownload implements ISingleFileDownloader
 		File oldFile = new File(mSavePath);
 		File newFile = new File(origSavePath);
 		Files.move(oldFile.toPath(), newFile.toPath());
+		
+		mSavePath = origSavePath;
 	}
 }
