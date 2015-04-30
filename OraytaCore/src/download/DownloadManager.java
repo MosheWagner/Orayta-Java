@@ -114,7 +114,6 @@ public class DownloadManager implements IDownloadManager
 		{
 			l.onDownloadProgress(totalProgress);
 		}
-		System.out.println(totalProgress);
 	}
 
 	private void downloadFinished(ISingleFileDownloader downloader, DownloadStatus status)

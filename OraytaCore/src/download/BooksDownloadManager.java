@@ -8,7 +8,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
@@ -26,9 +25,11 @@ import settings.SettingsManager;
 public class BooksDownloadManager 
 {
 	private TreeMap<String, ArrayList<DownloadCandidate>> categoryFileMapper = new TreeMap<String, ArrayList<DownloadCandidate>>();
-	private ArrayList<String> categories = new ArrayList<String>();
+	private ArrayList<DownloadCategoryTitle> categories = new ArrayList<DownloadCategoryTitle>();
 	
 	private String SavedBookListPath = SettingsManager.generalSettings().BOOKS_SAVE_PATH + "BookList";
+	
+	private List<ICategoryListReadyListener> listeners = new ArrayList<ICategoryListReadyListener>();
 	
 	public void downloadBookList()
 	{
@@ -39,6 +40,7 @@ public class BooksDownloadManager
 			public void onDownloadFinished(DownloadStatus status) 
 			{
 				if (status == DownloadStatus.FINISHED_OK) onDownloadBooklistDone();
+				else System.out.println("Couldn't download book list!");
 			}
 		});
 		
@@ -52,7 +54,8 @@ public class BooksDownloadManager
 	
 	protected void readThenParseBookList()
 	{
-		try {
+		try 
+		{
 			String rawtext = new SimplestFileReader().readContents(SavedBookListPath);
 			List<String> lines = Arrays.asList(rawtext.split("\\r?\\n"));
 			
@@ -69,82 +72,123 @@ public class BooksDownloadManager
 			e.printStackTrace();
 		}
 		
-		System.out.println(getAvailableCatagories());
+		postListReadyEvent();
 	}
 	
+	public void registerToListReadyEvent(ICategoryListReadyListener listener) { listeners.add(listener); }
 	
+	private void postListReadyEvent() 
+	{
+		for (ICategoryListReadyListener listener:listeners)
+		{
+			listener.onCategoryListReady(categories);
+		}
+	}
+
 	protected void parseBookListContents(List<String> contentsLines)
 	{
-		DateFormat format = new SimpleDateFormat("dd/MM/yy");
-		
 		ArrayList<DownloadCandidate> files = new ArrayList<DownloadCandidate>();
-		String categoryTitle = "";
-		
+		DownloadCategoryTitle categoryTitle = null;
 		
 		for (String line:contentsLines)
 		{
-
 			if (line.trim().equals("") || line.startsWith("#")) 
 			{ 
 				//Do nothing 
 			}
 			else if (line.startsWith("@"))
 			{
-				categoryTitle = line.substring(1).trim();
+				categoryTitle = new DownloadCategoryTitle(); 
+				categoryTitle.setCategoryName(line.substring(1).trim());
 				
 				//New category
 				files = new ArrayList<DownloadCandidate>();
 				
 				categories.add(categoryTitle);
-				categoryFileMapper.put(categoryTitle, files);
+				categoryFileMapper.put(categoryTitle.getCategoryName(), files);
 			}
 			else if (line.startsWith("."))
 			{
-				String url = "";
-				int sizeInBytes = -1;
-				Date date = null;
-				String hash = "";
-				
-				String[] lineParts = line.split(", ");
-				
-				if (lineParts.length > 2)
+				if (categoryTitle != null)
 				{
-					url = lineParts[0].replace("./", SettingsManager.generalSettings().SERVER_BOOK_ROOT_URL);
-					
-					sizeInBytes = Integer.parseInt(lineParts[1]);
-					
-					try 
-					{
-						date = format.parse(lineParts[2]);
-					} 
-					catch (ParseException e) 
-					{
-						System.out.println("Couldn't parse date: " + lineParts[2]);
-					}
-				}
-				if (lineParts.length > 3) 
-				{
-					hash = lineParts[3]; 
-				}
+					DownloadCandidate dc = genDownloadCandidateFromLine(categoryTitle.getCategoryName(), line);
 				
-				DownloadCandidate dc = new DownloadCandidate(categoryTitle, url, sizeInBytes, hash);
-				
-				if (!isFileUpToDate(dc.getSaveToPath(), date)) files.add(dc);
+					if (!isFileUpToDate(dc.getSaveToPath(), dc.getDate())) files.add(dc);
+				}
 			}
 		}
 		
+		removeStubCategories();
+		calculateCategoriesSizes();
+	}
+	
+	private DownloadCandidate genDownloadCandidateFromLine(String categoryTitle, String line)
+	{
+		DateFormat format = new SimpleDateFormat("dd/MM/yy");
 		
-		ArrayList<String> categoriesCpy = new ArrayList<String>(categories);
+		String url = "";
+		int sizeInBytes = -1;
+		String hash = "";
+		//One very old date
+		Date date = new Date(0);
 		
-		for (String category:categories)
+		String[] lineParts = line.split(", ");
+		
+		if (lineParts.length > 2)
 		{
-			if (categoryFileMapper.get(category).isEmpty())
+			url = lineParts[0].replace("./", SettingsManager.generalSettings().SERVER_BOOK_ROOT_URL);
+			
+			sizeInBytes = Integer.parseInt(lineParts[1]);
+			
+			try 
+			{
+				date = format.parse(lineParts[2]);
+			} 
+			catch (ParseException e) 
+			{
+				System.out.println("Couldn't parse date: " + lineParts[2]);
+			}
+		}
+		if (lineParts.length > 3) 
+		{
+			hash = lineParts[3]; 
+		}
+		
+		DownloadCandidate dc = new DownloadCandidate(categoryTitle, url, sizeInBytes, hash, date);
+		
+		return dc;
+	}
+	
+	private void removeStubCategories()
+	{
+		ArrayList<DownloadCategoryTitle> categoriesCpy = new ArrayList<DownloadCategoryTitle>(categories);
+		
+		for (DownloadCategoryTitle category:categories)
+		{
+			if (categoryFileMapper.get(category.getCategoryName()).isEmpty())
 			{
 				categoryFileMapper.remove(category);
 				categoriesCpy.remove(category);
 			}
 		}
 		categories = categoriesCpy;
+	}
+	
+	
+	private static double MB_BYTE_COUNT = 1024 * 1024;
+	private void calculateCategoriesSizes()
+	{
+		for (DownloadCategoryTitle category:categories)
+		{
+			double sizeInMB = 0;
+			
+			for (DownloadCandidate candidate:categoryFileMapper.get(category.getCategoryName()))
+			{
+				sizeInMB += candidate.getSizeInBytes() / MB_BYTE_COUNT;
+			}
+			
+			category.setSizeInMB(sizeInMB);
+		}
 	}
 	
 	private Boolean isFileUpToDate(String filePath, Date remoteUpdateDate)
@@ -164,12 +208,22 @@ public class BooksDownloadManager
 		return true;
 	}
 	
-	public Collection<String> getAvailableCatagories()
+	public List<DownloadCategoryTitle> getAvailableCatagories()
 	{
 		return categories;
 	}
 	
-	
+	public void startCategoryDownload(String categoryToDownload)
+	{
+		ArrayList <DownloadCandidate> filesToDownload = categoryFileMapper.get(categoryToDownload);
+		
+		DownloadManager dm = new DownloadManager();
+		
+		for (DownloadCandidate file:filesToDownload)
+		{
+			dm.addDownloadRequest(file.getURL(), file.getSaveToPath());
+		}
+	}
 	
 //	public abstract void downloadCatagories(Collection<String> catagoriesToDownload);
 //	private abstract void downloadCatagorie(String catagorieToDownload);

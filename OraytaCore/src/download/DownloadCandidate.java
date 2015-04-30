@@ -1,5 +1,7 @@
 package download;
 
+import java.util.Date;
+
 import settings.SettingsManager;
 
 public class DownloadCandidate 
@@ -8,13 +10,15 @@ public class DownloadCandidate
 	private String URL;
 	private int sizeInBytes;
 	private String Md5Hash;
+	private Date mDate;
 	
-	public DownloadCandidate(String category, String url, int sizeInBytes, String md5Hash)
+	public DownloadCandidate(String category, String url, int sizeInBytes, String md5Hash, Date date)
 	{
 		this.Category = category;
 		this.URL = url;
 		this.sizeInBytes = sizeInBytes;
 		this.Md5Hash = md5Hash;
+		this.mDate = date;
 	}
 	
 	public String getCategory() {
@@ -45,5 +49,13 @@ public class DownloadCandidate
 	public String getSaveToPath()
 	{
 		return getURL().replace(SettingsManager.generalSettings().SERVER_BOOK_ROOT_URL, SettingsManager.generalSettings().BOOKS_SAVE_PATH);
+	}
+
+	public Date getDate() {
+		return mDate;
+	}
+
+	public void setDate(Date mDate) {
+		this.mDate = mDate;
 	}
 }
