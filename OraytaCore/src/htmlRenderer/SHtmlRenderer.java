@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import tree.ITreeIterator;
+import htmlRenderer.DCSSBuilder;
+
 import tree.TreeNode;
 
 import book.Book;
-import book.contents.ChapterID;
+import book.contents.ChapterAddress;
 import book.contents.IChapter;
 
 public class SHtmlRenderer implements IHtmlRenderer
@@ -19,27 +20,19 @@ public class SHtmlRenderer implements IHtmlRenderer
 		return null;
 	}
 
-	public String renderChapter(Book book, ChapterID chapid) 
+	public String renderChapter(Book book, ChapterAddress chapid) 
 	{
-		String html = HtmlMarkupBuilder.genHeader(book.getDisplayName() + " - " + chapid.getUID());
+		String html = HtmlMarkupBuilder.genHeader(book.getDisplayName() + " - " + chapid.getUID(),
+				new DCSSBuilder(book));
 		
 		TreeNode<IChapter> baseNode = book.getContents().getChapterByID(chapid.getUID());
 
 		if (baseNode == null) return "Invalid chapter!";
 		
-		int startLevel = baseNode.data.getChapterAddress().getLevel();
-		int sameLevelCount = -1; //-1 Because we are going to count this chapter once too
-		
-		ITreeIterator<TreeNode<IChapter>> iter = baseNode.iterator();
-		
-		TreeNode<IChapter> chapNode;
-		while ((chapNode = iter.next()) != null)
+		Collection<IChapter> chaps = baseNode.deepSiblingsList();
+
+		for (IChapter chap:chaps)
 		{
-			if (chapNode.data.getChapterAddress().getLevel() <= startLevel) sameLevelCount ++;
-			if (sameLevelCount > 0) break;
-			
-			IChapter chap = chapNode.data;
-			
 			ArrayList<String> chapLines = new ArrayList<String>(Arrays.asList(chap.text().split("\\r?\\n")));
 			
 			//Deal with low-level chap markers (only if they come at the beginning of the chapter)
@@ -64,11 +57,15 @@ public class SHtmlRenderer implements IHtmlRenderer
 		
 		return html;
 	}
+	
+
+
 
 	public String renderChapterWeaved(Book baseBook,
-			Collection<Book> otherBooks, ChapterID chapid) {
+			Collection<Book> otherBooks, ChapterAddress chapid) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

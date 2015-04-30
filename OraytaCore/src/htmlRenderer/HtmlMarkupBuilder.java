@@ -46,8 +46,16 @@ public class HtmlMarkupBuilder
 	public static String createHeading(int level, String txt)
 	{
 		String lvlStr = String.valueOf(level);
-		String prefix = "<h" + lvlStr + "> ";
-		String suffix = " </h" + lvlStr + ">";
+		
+		String prefix = "";
+		String suffix = "";
+		
+		prefix += "<BR>";
+		
+		//prefix += "<h" + lvlStr + "> ";
+		//suffix += " </h" + lvlStr + ">\n";
+		prefix += "<span class=\"L" + lvlStr + "\">";
+		suffix += "</span>&nbsp;";
 		
 		return prefix + txt + suffix;
 	}
@@ -56,14 +64,10 @@ public class HtmlMarkupBuilder
 	{
 		int level = c.getChapterAddress().getLevel() + 1;
 		
-		String lvlStr = String.valueOf(level);
-		String prefix = "<h" + lvlStr + "> ";
-		String suffix = " </h" + lvlStr + ">";
-		
-		return prefix + c.getUID() + suffix;
+		return createHeading(level, c.getUID());
 	}
 	
-	public static String genHeader(String title)
+	public static String genHeader(String title, ICSSBuilder cssBuilder)
 	{
 		String html;
 		
@@ -77,6 +81,10 @@ public class HtmlMarkupBuilder
 		html += "\n<title>";
 		html += title;
 	    html += "</title>\n";
+	    
+	    //Add CSS settings to the html file:
+	    html += cssBuilder.genCSS();
+	    
 	    html += "\n</head>";
 	    
 	    html += "\n<body>\n";
