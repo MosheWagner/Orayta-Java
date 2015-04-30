@@ -12,7 +12,7 @@ import java.util.LinkedList;
 
 
 
-public class SSingleFileDownloader implements ISingleFileDownloader
+public class SimpleSingleFileDownloader implements ISingleFileDownloader
 {
 	Collection<IDownloadListener> listeners = new LinkedList<IDownloadListener>();
 	
