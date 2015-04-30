@@ -2,6 +2,8 @@ package download;
 
 import java.util.ArrayList;
 
+import download.ISingleFileDownloader.DownloadStatus;
+
 /*
  * Manages a list of files to download. 
  * All files will be downloaded asynchronously (each in a new thread), but a few at a time.
@@ -38,15 +40,16 @@ public class DownloadManager implements IDownloadManager
 		{
 			mDownloader = downloader;
 		}
-		
-		public void onDownloadFinished() 
-		{
-			downloadFinished(mDownloader);
-		}
+
 
 		public void onDownloadProgress(int percent) 
 		{
 			updateProgress();
+		}
+
+		public void onDownloadFinished(DownloadStatus status) 
+		{
+			downloadFinished(mDownloader, status);
 		}
 		
 	}
@@ -80,7 +83,7 @@ public class DownloadManager implements IDownloadManager
 			
 			//Create a new downloader:
 			ISingleFileDownloader downloader = new ProgressedFileDownload();
-			downloader.downloadNewThread(urlPath, savePath, true);
+			downloader.downloadAsync(urlPath, savePath, true);
 			activeDownloads.add(downloader);
 			
 			DownloadListener d = new DownloadListener(downloader);
@@ -114,7 +117,7 @@ public class DownloadManager implements IDownloadManager
 		System.out.println(totalProgress);
 	}
 
-	private void downloadFinished(ISingleFileDownloader downloader)
+	private void downloadFinished(ISingleFileDownloader downloader, DownloadStatus status)
 	{
 		activeDownloads.remove(downloader);
 		StartMoreDownloads();
@@ -124,7 +127,7 @@ public class DownloadManager implements IDownloadManager
 		{
 			for (IDownloadListener l:externallFinishedListeners)
 			{
-				l.onDownloadFinished();
+				l.onDownloadFinished(status);
 			}
 		}
 	}
