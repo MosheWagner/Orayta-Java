@@ -76,6 +76,8 @@ public class ProgressedFileDownload implements ISingleFileDownloader
 			downloadFile.delete();
 		}
 		
+		//Make sure path exists:
+		downloadFile.getParentFile().mkdirs();
 		
 		RandomAccessFile file = null;
 		InputStream stream = null;
