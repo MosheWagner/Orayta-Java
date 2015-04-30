@@ -1,7 +1,7 @@
 # Orayta-Java
 
 Orayta is a open-source, cross platform port to the "תורת אמת" project.
-( http://www.toratemetfreeware.com/ ) - http://orayta.googlecode.com/
+(http://www.toratemetfreeware.com/) - http://orayta.googlecode.com/
 
 The project intends to allow free and simple access to Jewish sources, from the Bible, Mishna and Talmud, to books written in the last years.
 
