@@ -1,21 +1,19 @@
 package download;
 
-import java.util.Date;
+import settings.SettingsManager;
 
 public class DownloadCandidate 
 {
 	private String Category;
 	private String URL;
 	private int sizeInBytes;
-	private Date date;
 	private String Md5Hash;
 	
-	public DownloadCandidate(String category, String url, int sizeInBytes, Date date, String md5Hash)
+	public DownloadCandidate(String category, String url, int sizeInBytes, String md5Hash)
 	{
 		this.Category = category;
 		this.URL = url;
 		this.sizeInBytes = sizeInBytes;
-		this.date = date;
 		this.Md5Hash = md5Hash;
 	}
 	
@@ -37,16 +35,15 @@ public class DownloadCandidate
 	public void setSizeInBytes(int sizeInBytes) {
 		this.sizeInBytes = sizeInBytes;
 	}
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
 	public String getMd5Hash() {
 		return Md5Hash;
 	}
 	public void setMd5Hash(String md5Hash) {
 		Md5Hash = md5Hash;
+	}
+	
+	public String getSaveToPath()
+	{
+		return getURL().replace(SettingsManager.generalSettings().SERVER_BOOK_ROOT_URL, SettingsManager.generalSettings().BOOKS_SAVE_PATH);
 	}
 }
