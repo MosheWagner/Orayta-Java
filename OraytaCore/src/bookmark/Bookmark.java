@@ -1,22 +1,22 @@
 package bookmark;
 
-import book.contents.ChapterID;
+import book.contents.ChapterAddress;
 
 public class Bookmark 
 {
-	private ChapterID address;
+	private ChapterAddress address;
 	private String displayName;
 	
-	public Bookmark(ChapterID address, String displayName)
+	public Bookmark(ChapterAddress address, String displayName)
 	{
 		this.address = address;
 		this.displayName = displayName;
 	}
 	
-	public ChapterID getAddress() {
+	public ChapterAddress getAddress() {
 		return address;
 	}
-	public void setAddress(ChapterID address) {
+	public void setAddress(ChapterAddress address) {
 		this.address = address;
 	}
 	public String getDisplayName() {

@@ -28,7 +28,7 @@ public class FolderBookBuilder implements IBookBuilder
 			Book book = new Book();
 			
 			String s = new SFileReader().readContents(folderPath + ".folder");
-			book.parseSttings(s);
+			book.setBookSettingsMap(new SimpleSetingsParser().parseSettings(s));
 			
 			String displayName = book.getSettings().get("BranchName");
 			book.setDisplayName(displayName);

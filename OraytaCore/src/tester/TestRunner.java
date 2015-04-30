@@ -3,9 +3,11 @@ package tester;
 import tester.classTester.BinarySearchTest;
 import tester.classTester.BookTreeTester;
 import tester.classTester.CatagoryTitleTester;
+import tester.classTester.ErrReportTester;
 import tester.classTester.HtmlGenTest;
 import tester.classTester.OBKReadTest;
 import tester.classTester.DecryptTester;
+import tester.classTester.UTFTester;
 
 
 /*
@@ -29,6 +31,8 @@ public class TestRunner
 		//ITest t = new DecryptTester();
 		//ITest t = new CatagoryTitleTester();
 		ITest t = new HtmlGenTest();
+		//ITest t = new ErrReportTester();
+		//ITest t = new UTFTester();
 		
 		t.Run();
 	}

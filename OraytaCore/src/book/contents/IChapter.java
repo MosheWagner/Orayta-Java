@@ -5,7 +5,7 @@ import tree.IHasID;
 public interface IChapter extends IHasID // extends Comparable<IChapter>
 {
 	//Returns the 'address' of this chapter 
-	public ChapterID getChapterAddress();
+	public ChapterAddress getChapterAddress();
 	
 	//Returns true if the chapter is a lowest level chapter (and therefore has it's own text) 
 	public boolean isAtom();

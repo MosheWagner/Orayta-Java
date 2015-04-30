@@ -14,8 +14,8 @@ import tree.TreeNode;
 public class HtmlGenTest implements ITest
 {
 
-	//private final String path = SettingsManager.generalSettings().BOOKS_ROOT_DIR + "001_mkra/01_torh/a01_Genesis.obk";
-	private final String path = SettingsManager.generalSettings().BOOKS_ROOT_DIR + "030_tlmod_bbli/01_Bav_BRAHOT_L1.obk";
+	private final String path = SettingsManager.generalSettings().BOOKS_ROOT_DIR + "001_mkra/01_torh/a01_Genesis.obk";
+	//private final String path = SettingsManager.generalSettings().BOOKS_ROOT_DIR + "030_tlmod_bbli/01_Bav_BRAHOT_L1.obk";
 	private final String savepath = "/home/moshe/Desktop/a.html";
 	
 	public void Run() 
@@ -24,7 +24,9 @@ public class HtmlGenTest implements ITest
 		b.setContents(new OBK_Builder().buildBookContents(b));
 		
 		//TreeNode<IChapter> chapnode = b.getContents().getChapterByID("בראשית פרק-יב");
-		TreeNode<IChapter> chapnode = b.getContents().getChapterByID("דף יג - א");
+		TreeNode<IChapter> chapnode = b.getContents().getChapterByID("בראשית פרק-יח");
+		//TreeNode<IChapter> chapnode = b.getContents().getChapterByID("בראשית פרק-יט");
+		//TreeNode<IChapter> chapnode = b.getContents().getChapterByID("דף יג - א");
 		//TreeNode<IChapter> chapnode = b.getContents().getChapterByID("דף לה - א");
 		
 		String html = new SHtmlRenderer().renderChapter(b, chapnode.data.getChapterAddress());

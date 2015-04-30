@@ -8,16 +8,16 @@ import tree.TreeNode;
 
 public class BookContents 
 {
-	private TreeNode<ChapterID> chapterIDTree = new TreeNode<ChapterID>(null);
+	private TreeNode<ChapterAddress> chapterIDTree = new TreeNode<ChapterAddress>(null);
 	private TreeNode<IChapter> chapterContentsTree = new TreeNode<IChapter>(null);
 	private IDSearcher<IChapter> chapterContentsIndex = new IDSearcher<IChapter>(null);
-	private List<ChapterID> flatIndex = new ArrayList<ChapterID>();
+	private List<ChapterAddress> flatIndex = new ArrayList<ChapterAddress>();
 	
-	public TreeNode<ChapterID> getChapterIDTree() {
+	public TreeNode<ChapterAddress> getChapterIDTree() {
 		return chapterIDTree;
 	}
 	
-	public void setChapterIDTree(TreeNode<ChapterID> chapterIDTree) {
+	public void setChapterIDTree(TreeNode<ChapterAddress> chapterIDTree) {
 		this.chapterIDTree = chapterIDTree;
 	}
 	
@@ -35,11 +35,11 @@ public class BookContents
 		chapterContentsIndex = new IDSearcher<IChapter>(this.chapterContentsTree);
 	}
 
-	public List<ChapterID> getFlatIndex() {
+	public List<ChapterAddress> getFlatIndex() {
 		return flatIndex;
 	}
 
-	public void setFlatIndex(List<ChapterID> flatIndex) {
+	public void setFlatIndex(List<ChapterAddress> flatIndex) {
 		this.flatIndex = flatIndex;
 	}
 

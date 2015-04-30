@@ -14,6 +14,7 @@ public class IDSearcher <T extends IHasID>
 	public IDSearcher (TreeNode<T> tree)
 	{
 		mDataMap = new TreeMap<String, TreeNode<T>>();
+		//TODO: Is the null test even needed?
 		if (tree != null) buildSearchIndex(tree);
 	}
 	

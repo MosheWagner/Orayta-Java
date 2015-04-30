@@ -1,11 +1,10 @@
 package book;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import book.contents.BookContents;
 import book.contents.BookID;
-import book.contents.ChapterID;
+import book.contents.ChapterAddress;
 import book.contents.IBookMetaData;
 
 import search.IPuretextSearchable;
@@ -30,8 +29,6 @@ public class Book implements Comparable<Book>, IHasID, IPuretextSearchable
 	protected String mDisplayName;
 	protected Map<String, String> mBookSettingsMap;
 
-	//public abstract IChapter getChapter(ChapterID address);
-	
 	public BookID getBookID() { return mID; }
 	public void setBookID(BookID id) { mID=id; }
 	
@@ -48,24 +45,11 @@ public class Book implements Comparable<Book>, IHasID, IPuretextSearchable
 
 	public String toString() {return mDisplayName;}
 	
-	public TreeNode<ChapterID> getChapterIDList() {return mContents.getChapterIDTree();}
+	public TreeNode<ChapterAddress> getChapterIDList() {return mContents.getChapterIDTree();}
 	
 	public Map<String, String> getSettings() { return mBookSettingsMap; }
-	
-	public void parseSttings(String settingsString) 
-	{
-		Map<String, String> map = new HashMap<String, String>();
-		for (String line:settingsString.split("\\r?\\n"))
-		{
-			String[] lineParts = line.split("=");
-			if (lineParts.length == 2)
-			{
-				map.put(lineParts[0], lineParts[1]);
-			}
-		}
 
-		mBookSettingsMap = map;
-	}
+	public void setBookSettingsMap(Map<String, String> mBookSettingsMap) { this.mBookSettingsMap = mBookSettingsMap; }
 	
 	//Compare by id
 	public int compareTo(Book other) 
@@ -89,5 +73,6 @@ public class Book implements Comparable<Book>, IHasID, IPuretextSearchable
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

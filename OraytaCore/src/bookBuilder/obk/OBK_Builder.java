@@ -13,10 +13,11 @@ import tree.TreeNode;
 import book.Book;
 import book.contents.BookContents;
 import book.contents.BookID;
-import book.contents.ChapterID;
+import book.contents.ChapterAddress;
 import book.contents.DChapter;
 import book.contents.IChapter;
 import bookBuilder.IBookContentsBuilder;
+import bookBuilder.SimpleSetingsParser;
 
 public class OBK_Builder implements IBookContentsBuilder
 {
@@ -36,7 +37,7 @@ public class OBK_Builder implements IBookContentsBuilder
 	private BookContents bookContents;
 	private Book book;
 
-	List<ChapterID> flatIndex;
+	List<ChapterAddress> flatIndex;
 	List<String> rawTextLines;
 
 	
@@ -50,7 +51,7 @@ public class OBK_Builder implements IBookContentsBuilder
 		
 		String zipComment = ZipReader.readComment(bookPath);
 		
-		book.parseSttings(zipComment);
+		book.setBookSettingsMap(new SimpleSetingsParser().parseSettings(zipComment));
 
 		displayName = book.getSettings().get("DisplayName");
 		
@@ -84,16 +85,16 @@ public class OBK_Builder implements IBookContentsBuilder
 	private void buildChapters() 
 	{
 		TreeNode<IChapter> chapterContentsTree = new TreeNode<IChapter>(null);
-		TreeNode<ChapterID> chapterIDTree = new TreeNode<ChapterID>(null);
+		TreeNode<ChapterAddress> chapterIDTree = new TreeNode<ChapterAddress>(null);
 		
 		TreeNode<IChapter> currentContentsNode = chapterContentsTree;
-		TreeNode<ChapterID> currentIDNode = chapterIDTree;
+		TreeNode<ChapterAddress> currentIDNode = chapterIDTree;
 		
 		int currentsLevel = -1;
 
 		String pendingText = "";
 		
-		ChapterID chapid;
+		ChapterAddress chapid;
 		DChapter chap = new DChapter();
 		
 		for (String line:rawTextLines)
@@ -120,10 +121,10 @@ public class OBK_Builder implements IBookContentsBuilder
 						if (markCode != -1) levelCode = LevelSigns.length() + markCode;
 						
 						//New level!
-						chapid = new ChapterID(book.getBookID());
+						chapid = new ChapterAddress(book.getBookID());
 						String title = line.substring(2).trim();
 						
-						chapid.setID(title);
+						chapid.setAddress(title);
 						chapid.setLevel(levelCode);
 						
 						chap = new DChapter();
@@ -194,7 +195,7 @@ public class OBK_Builder implements IBookContentsBuilder
 		signFound = new Boolean[LevelSigns.length()];
 		for (int i=0; i<LevelSigns.length(); i++) signFound[i] = false;
 		
-		flatIndex = new ArrayList<ChapterID>();
+		flatIndex = new ArrayList<ChapterAddress>();
 		
 		for (String line:rawTextLines)
 		{
@@ -206,9 +207,9 @@ public class OBK_Builder implements IBookContentsBuilder
 				//Level sign found
 				if (levelCode >= 0 && levelCode < LevelSigns.length()) 
 				{
-					ChapterID chapid = new ChapterID(book.getBookID());
+					ChapterAddress chapid = new ChapterAddress(book.getBookID());
 					chapid.setLevel(levelCode);
-					chapid.setID(line.replace(firstChar + " ", ""));
+					chapid.setAddress(line.replace(firstChar + " ", ""));
 					
 					flatIndex.add(chapid);
 					
@@ -240,8 +241,8 @@ public class OBK_Builder implements IBookContentsBuilder
 		try 
 		{
 			String rawtext = zr.readContents("BookText");
-			rawTextLines = Arrays.asList(rawtext.split("\\r?\\n"));
 			
+			rawTextLines = Arrays.asList(rawtext.split("\\r?\\n"));
 		}
 		catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

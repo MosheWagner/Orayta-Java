@@ -2,22 +2,22 @@ package book.contents;
 
 public class DChapter implements IChapter {
 
-	ChapterID mAddress;
+	ChapterAddress mAddress;
 	String mChapterText = "";
 	
 	public DChapter() {}
 	
-	public DChapter(ChapterID address, String text)
+	public DChapter(ChapterAddress address, String text)
 	{
 		mAddress = address;
 		mChapterText = text;
 	}
 	
-	public void setAddress(ChapterID address) { mAddress=address; }
+	public void setAddress(ChapterAddress address) { mAddress=address; }
 	public void setChapterText(String chapterText) { mChapterText=chapterText; }
 
 
-	public ChapterID getChapterAddress() {
+	public ChapterAddress getChapterAddress() {
 		return mAddress;
 	}
 

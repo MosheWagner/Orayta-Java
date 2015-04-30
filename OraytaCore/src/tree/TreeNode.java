@@ -1,7 +1,10 @@
 package tree;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Spliterator;
+import java.util.function.Consumer;
 
 /*
  * Great Tree implementation based on StackOverflow, with a lot of corrections of my own. 
@@ -94,6 +97,23 @@ public class TreeNode<T> implements ITree<T>, Iterable<TreeNode<T>> {
 		return parent.children.indexOf(this);
 	}
 	
+	
+	public Collection<T> deepSiblingsList() 
+	{
+		Collection<T> sibList = new ArrayList<T>();
+		
+		addDeepSiblingsToList(this, sibList);
+
+		return sibList;
+	}
+	
+	private void addDeepSiblingsToList(TreeNode<T> node, Collection<T> sibList) 
+	{
+		sibList.add(node.data);
+		
+		for (TreeNode<T> subNode:node.getChildren()) { addDeepSiblingsToList(subNode, sibList); }
+	}
+
 	/*
 	 * Removes the given node from the tree. 
 	 *  Obviously, it must have a parent, or this is meaningless.
@@ -132,4 +152,16 @@ public class TreeNode<T> implements ITree<T>, Iterable<TreeNode<T>> {
     public String toString() {
             return data != null ? "Node data: " + data.toString() : "[data null]";
     }
+
+	public void forEach(Consumer<? super TreeNode<T>> action) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public Spliterator<TreeNode<T>> spliterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 }

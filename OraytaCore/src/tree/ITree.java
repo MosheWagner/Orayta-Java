@@ -17,4 +17,7 @@ public interface ITree<T> {
 	public void removeElement(TreeNode<T> node);
 
 	public Collection<TreeNode<T>> findTreeNodes(T data);
+	
+	//Returns a list of all siblings (including siblings' siblings, recursively)
+	public Collection<T> deepSiblingsList();
 }
