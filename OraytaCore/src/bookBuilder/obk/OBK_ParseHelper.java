@@ -1,14 +1,11 @@
 package bookBuilder.obk;
 
-
 import htmlRenderer.HtmlMarkupBuilder;
 
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
-
-
 
 public class OBK_ParseHelper 
 {
@@ -191,6 +188,4 @@ public class OBK_ParseHelper
 	{
 		return new String(isoStr, Charset.forName(charset));
 	}
-	
-	
 }

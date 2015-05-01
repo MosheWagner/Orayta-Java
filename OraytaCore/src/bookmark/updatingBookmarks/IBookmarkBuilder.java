@@ -4,5 +4,5 @@ import bookmark.Bookmark;
 
 public interface IBookmarkBuilder 
 {
-	public Bookmark buildBookmark();
+	public Bookmark genBookmark();
 }

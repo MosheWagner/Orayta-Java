@@ -25,7 +25,9 @@ public class TestRunner
 		//ITest t = new ErrReportTester();
 		//ITest t = new UTFTester();
 		//ITest t = new HashTester();
-		ITest t = new BLDownloadTester();
+		//ITest t = new BLDownloadTester();
+		//ITest t = new gematriaTest();
+		ITest t = new DafYomiTester();
 		
 		t.Run();
 	}

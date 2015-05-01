@@ -10,7 +10,7 @@ public class BookContents
 {
 	private TreeNode<ChapterAddress> chapterIDTree = new TreeNode<ChapterAddress>(null);
 	private TreeNode<IChapter> chapterContentsTree = new TreeNode<IChapter>(null);
-	private IDSearcher<IChapter> chapterContentsIndex = new IDSearcher<IChapter>(null);
+	private IDSearcher<IChapter> chapterContentsIndex = null;
 	private List<ChapterAddress> flatIndex = new ArrayList<ChapterAddress>();
 	
 	public TreeNode<ChapterAddress> getChapterIDTree() {
