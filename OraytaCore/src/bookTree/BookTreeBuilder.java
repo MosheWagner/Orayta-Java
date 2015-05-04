@@ -10,8 +10,10 @@ import tree.TreeNode;
 
 import book.Book;
 import bookBuilder.BookHeaderBuilder;
+import bookBuilder.DBookBuildersFactory;
 import bookBuilder.FolderBookBuilder;
 import bookBuilder.IBookBuilder;
+import bookBuilder.IBookBuildersFactory;
 
 /*
  * Builds the bookTree from the file system
@@ -36,30 +38,27 @@ public class BookTreeBuilder
 		return new BookTree(tree);
 	}
 
-	private final String OBK_SUFFIX = ".obk";
-	private final String FOLDER_CONF_SUFFIX = ".folder";
+
 	
 	private void addFilesToTreeNode(List<File> files, TreeNode<Book> treeNode)
 	{
 		for (File f:files)
 		{
-			Book book;
-
-			if (f.getName().endsWith(FOLDER_CONF_SUFFIX))
+			IBookBuilder builder = new DBookBuildersFactory().getBookBuilder(f.getPath());
+			
+			if (builder != null)
 			{
-				String folderPath = f.getAbsolutePath().replace(FOLDER_CONF_SUFFIX, "");
-				
-				book = folderBuilder.buildBook(folderPath);
+				Book book = builder.buildBook(f.getAbsolutePath());
 				TreeNode<Book> branch = treeNode.addChild(book);
 				
-				List<File> children = Arrays.asList(new File(folderPath).listFiles());
-				sortByLeadingNumber(children);
-				addFilesToTreeNode(children, branch);
-			}
-			else if (f.getName().endsWith(OBK_SUFFIX))
-			{
-				book = emptyBookBuilder.buildBook(f.getAbsolutePath());
-				treeNode.addChild(book);
+				//It's a folder, so add the files within it, too
+				if (builder.isContainer())
+				{
+					String folderPath = f.getAbsolutePath().replace(IBookBuildersFactory.FOLDER_CONF_SUFFIX, "");
+					List<File> children = Arrays.asList(new File(folderPath).listFiles());
+					sortByLeadingNumber(children);
+					addFilesToTreeNode(children, branch);
+				}
 			}
 		}
 	}

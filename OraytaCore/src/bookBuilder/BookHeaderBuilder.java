@@ -34,4 +34,9 @@ public class BookHeaderBuilder implements IBookBuilder
 		return book;
 	}
 
+	public Boolean isContainer() 
+	{
+		return false;
+	}
+
 }
