@@ -10,12 +10,8 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
-import tree.IDSearcher;
-import tree.TreeNode;
-
-import book.Book;
-import book.contents.IChapter;
-import bookBuilder.obk.OBK_Builder;
+import book.contents.BookID;
+import book.contents.ChapterAddress;
 import bookmark.Bookmark;
 
 /*
@@ -24,37 +20,21 @@ import bookmark.Bookmark;
 
 public class DafYomiBookmarkGenerator implements IBookmarkBuilder 
 {
-	TreeNode<Book> mBookTree;
-	IDSearcher<Book> mBookSearcher;
-	
-	public DafYomiBookmarkGenerator(TreeNode<Book> bookTree)
-	{
-		mBookTree = bookTree;
-		mBookSearcher = new IDSearcher<Book>(bookTree);
-	}
-
 	public Bookmark genBookmark() 
 	{
 		String dispName = "דף יומי";
 		String dafPrefix = "דף ";
 		
 		int[] n = masechetAndDafFromDate(new Date());
-		int bookID = n[0];
+		BookID bookID = new BookID(n[0]);
+		
 		int daf = n[1];
 		String dafName = dafPrefix + GematriaTools.gematriaLetters(daf) + " - א";
-		
-		//TODO: This is the old implementation. This can be done much better.
-		
-		Book masechet = mBookSearcher.findById(String.valueOf(bookID)).data;
-		
-		OBK_Builder builder = new OBK_Builder();
-		masechet.setContents(builder.buildBookContents(masechet));
-		
-		if (masechet.getContents() == null) return null;
-		
-		IChapter chap = masechet.getContents().getChapterByID(dafName).data;
-		
-		return new Bookmark(chap.getChapterAddress(), dispName);
+
+		ChapterAddress addr = new ChapterAddress(bookID);
+		addr.setAddress(dafName);
+
+		return new Bookmark(addr, dispName);
 	}
 
 

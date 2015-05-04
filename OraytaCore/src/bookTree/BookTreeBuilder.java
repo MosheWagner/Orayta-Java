@@ -24,7 +24,7 @@ public class BookTreeBuilder
 	IBookBuilder folderBuilder = new FolderBookBuilder();
 	IBookBuilder emptyBookBuilder = new BookHeaderBuilder();
 	
-	public TreeNode<Book> buildTree(String rootPath)
+	public BookTree buildTree(String rootPath)
 	{
 		//Root is a folder called 'OraytaBooks'
 		tree = new TreeNode<Book>(folderBuilder.buildBook(rootPath, "OraytaBooks"));
@@ -33,7 +33,7 @@ public class BookTreeBuilder
 		sortByLeadingNumber(files);
 		addFilesToTreeNode((files), tree);
 
-		return tree;
+		return new BookTree(tree);
 	}
 
 	private final String OBK_SUFFIX = ".obk";

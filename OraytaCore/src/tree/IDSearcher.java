@@ -34,6 +34,7 @@ public class IDSearcher <T extends IHasID>
 
 	public TreeNode<T> findById(String id)
 	{
-		return mDataMap.get(id);
+		if (mDataMap.containsKey(id)) return mDataMap.get(id);
+		else return null;
 	}
 }

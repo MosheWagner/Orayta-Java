@@ -16,6 +16,7 @@ public class TestRunner
 	
 	private static void runTest()
 	{
+		ITest t = new BookTreeTester();
 		//ITest t = new BinarySearchTest();
 		//ITest t = new BookTreeTester();
 		//ITest t = new OBKReadTest();
@@ -27,7 +28,7 @@ public class TestRunner
 		//ITest t = new HashTester();
 		//ITest t = new BLDownloadTester();
 		//ITest t = new gematriaTest();
-		ITest t = new DafYomiTester();
+		//ITest t = new DafYomiTester();
 		
 		t.Run();
 	}

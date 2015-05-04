@@ -7,6 +7,11 @@ public class BookID implements Comparable<BookID>, IHasID
 	Integer UID = -1;
 	String mDisplayName;
 
+	public BookID(int id)
+	{
+		UID = id;
+	}
+	
 	public BookID(int id, String displayName)
 	{
 		UID = id;

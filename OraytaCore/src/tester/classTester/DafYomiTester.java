@@ -1,20 +1,33 @@
 package tester.classTester;
 
 import book.Book;
+import book.contents.IChapter;
+import bookBuilder.obk.OBK_Builder;
+import bookTree.BookTree;
 import bookTree.BookTreeBuilder;
+import bookmark.Bookmark;
 import bookmark.updatingBookmarks.DafYomiBookmarkGenerator;
 import settings.SettingsManager;
 import tester.ITest;
-import tree.TreeNode;
 
 public class DafYomiTester implements ITest
 {
 	public void Run() 
 	{
-		TreeNode<Book> bt = new BookTreeBuilder().buildTree(SettingsManager.generalSettings().BOOKS_ROOT_DIR);
+		BookTree bt = new BookTreeBuilder().buildTree(SettingsManager.generalSettings().BOOKS_ROOT_DIR);
 		
-		System.out.println(new DafYomiBookmarkGenerator(bt).genBookmark());
-		System.out.println(new DafYomiBookmarkGenerator(bt).genBookmark().getAddress());
+		
+		Bookmark bm = new DafYomiBookmarkGenerator().genBookmark();
+		Book masechet = bt.getBook(bm.getAddress().getBookID());
+		
+		OBK_Builder builder = new OBK_Builder();
+		masechet.setContents(builder.buildBookContents(masechet));
+		
+		if (masechet.getContents() != null)
+		{
+			IChapter chap = masechet.getContents().getChapterByID(bm.getAddress().getUID()).data;
+			System.out.println(chap);
+		}
 	}
 
 }
