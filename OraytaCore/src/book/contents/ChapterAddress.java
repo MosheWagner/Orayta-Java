@@ -4,35 +4,56 @@ import tree.IHasID;
 
 public class ChapterAddress implements Comparable<ChapterAddress>, IHasID
 {
-	private BookID mBookId;
-	private String mAddress;
+	private int mBookId;
+	private String mTitle = "";
+	private String mFullAddress = "";
 	private int mLevel = -1;
 	
-	public ChapterAddress(BookID bookId, String id)
+	public ChapterAddress(int bookId, String title, String fullAddress)
 	{
 		mBookId = bookId;
-		setAddress(id);
+		setTitle(title);
+		setFullAddress(fullAddress);
 	}
 	
-	public ChapterAddress(BookID bookId)
+	public ChapterAddress(int bookId)
 	{
 		mBookId = bookId;
 	}
 	
-	public void setAddress(String id) { mAddress = id.trim(); }
+	public void setTitle(String title) { mTitle = title.trim(); }
 	
-	public String getUID() {
-		return mAddress;
+	public void setFullAddress(String addr) { mFullAddress = addr.trim(); }
+	
+	
+	public String getUID() { return mFullAddress; }
+	public String getTitle() { return mTitle; }
+	
+	public int getBookID() { return mBookId; }
+	
+	public String toString()
+	{
+		 return "(Book: " + mBookId + ") - " + mTitle;
+	}
+
+	public int compareTo(ChapterAddress o) 
+	{
+		return mFullAddress.compareTo(o.getUID());
 	}
 	
-	public BookID getBookID() { return mBookId; }
+	public void setLevel(int level) { mLevel = level; }
+	
+	public int getLevel() { return mLevel; }
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + mBookId.getID();
-		result = prime * result + ((mAddress == null) ? 0 : mAddress.hashCode());
+		result = prime * result + mBookId;
+		result = prime * result
+				+ ((mFullAddress == null) ? 0 : mFullAddress.hashCode());
+		result = prime * result + mLevel;
+		result = prime * result + ((mTitle == null) ? 0 : mTitle.hashCode());
 		return result;
 	}
 
@@ -44,32 +65,22 @@ public class ChapterAddress implements Comparable<ChapterAddress>, IHasID
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		
 		ChapterAddress other = (ChapterAddress) obj;
 		if (mBookId != other.mBookId)
 			return false;
-		if (!mAddress.equals(other.mAddress))
+		if (mFullAddress == null) {
+			if (other.mFullAddress != null)
+				return false;
+		} else if (!mFullAddress.equals(other.mFullAddress))
 			return false;
-		
+		if (mLevel != other.mLevel)
+			return false;
+		if (mTitle == null) {
+			if (other.mTitle != null)
+				return false;
+		} else if (!mTitle.equals(other.mTitle))
+			return false;
 		return true;
 	}
-	
-	public int hashcode()
-	{
-		 return mAddress.hashCode();
-	}
-	
-	public String toString()
-	{
-		 return "(Book: " + mBookId + ") - " + mAddress;
-	}
 
-	public int compareTo(ChapterAddress o) 
-	{
-		return mAddress.compareTo(o.getUID());
-	}
-	
-	public void setLevel(int level) { mLevel = level; }
-	
-	public int getLevel() { return mLevel; }
 }

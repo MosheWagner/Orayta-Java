@@ -2,9 +2,14 @@ package bookmark.updatingBookmarks;
 
 import bookmark.Bookmark;
 
-public class HalachaYomitBookmarkBuilder implements IBookmarkBuilder {
+public class HalachaYomitBookmarkBuilder implements IBookmarkBuilder 
+{
 
-	public Bookmark genBookmark() {
+
+	
+	
+	public Bookmark genBookmark() 
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}

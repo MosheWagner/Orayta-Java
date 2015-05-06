@@ -3,7 +3,6 @@ package book;
 import java.util.Map;
 
 import book.contents.BookContents;
-import book.contents.BookID;
 import book.contents.ChapterAddress;
 import book.contents.IBookMetaData;
 
@@ -22,17 +21,21 @@ import tree.TreeNode;
 public class Book implements Comparable<Book>, IHasID, IPuretextSearchable
 {
 	protected BookContents mContents;
+	
+	//TODO: ???
 	protected IBookMetaData metaData;
+	
+	protected int mBookUID;
+	protected String mDisplayName;
+	
 	protected String mFilePath;
 	
-	protected BookID mID;
-	protected String mDisplayName;
 	protected Map<String, String> mBookSettingsMap;
 
-	public BookID getBookID() { return mID; }
-	public void setBookID(BookID id) { mID=id; }
+	public int getBookID() { return mBookUID; }
+	public void setBookID(int uid) { mBookUID = uid; }
 	
-	public String getUID() { return mID.getUID(); }
+	public String getUID() { return String.valueOf(mBookUID); }
 	
 	public String getPath() { return mFilePath; }
 	public void setPath(String filePath) { mFilePath=filePath; }
@@ -54,10 +57,7 @@ public class Book implements Comparable<Book>, IHasID, IPuretextSearchable
 	//Compare by id
 	public int compareTo(Book other) 
 	{
-		if (this.getBookID() == null) return -1;
-		if (other.getBookID() == null) return 1;
-		
-		return this.getBookID().compareTo(other.getBookID());
+		return (this.getBookID() - other.getBookID());
 	}
 	
 	

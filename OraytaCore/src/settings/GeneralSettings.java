@@ -13,5 +13,6 @@ public class GeneralSettings
 	public String BOOKS_SAVE_PATH = "/home/moshe/Desktop/books/";
 	//public String BOOKS_SAVE_PATH = "/home/moshe/Orayta/Orayta-Books/books/";
 	
-	public String BOOKS_DOWNLOAD_PATH;
+	//public String DAILY_LIMUD_FILE_PATH = BOOKS_ROOT_DIR + "LimudYomi.csv";
+	public String DAILY_LIMUD_FILE_PATH = "/home/moshe/Orayta/Orayta-Java/OraytaCore/" + "LimudYomi.csv";
 }

@@ -16,19 +16,17 @@ public class TestRunner
 	
 	private static void runTest()
 	{
-		ITest t = new BookTreeTester();
-		//ITest t = new BinarySearchTest();
 		//ITest t = new BookTreeTester();
+		//ITest t = new BinarySearchTest();
 		//ITest t = new OBKReadTest();
 		//ITest t = new DecryptTester();
 		//ITest t = new CatagoryTitleTester();
 		//ITest t = new HtmlGenTest();
 		//ITest t = new ErrReportTester();
-		//ITest t = new UTFTester();
 		//ITest t = new HashTester();
 		//ITest t = new BLDownloadTester();
-		//ITest t = new gematriaTest();
-		//ITest t = new DafYomiTester();
+		//ITest t = new GematriaTest();
+		ITest t = new LimudYomiTester();
 		
 		t.Run();
 	}

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import book.Book;
 import book.contents.ChapterAddress;
 
 public class AutomaticErrorReporter 
@@ -43,9 +44,9 @@ public class AutomaticErrorReporter
 		return sendMsgToServer(title + "|" + body);
 	}
 	
-	public String sendErrorReport(ChapterAddress chapAddr, String msg)
+	public String sendErrorReport(Book b, ChapterAddress chapAddr, String msg)
 	{
-		String title = chapAddr.getBookID().getDisplayName() + " - " + chapAddr.getUID();
+		String title = b.getDisplayName() + " - " + chapAddr.getUID();
 		
 		String body = "This is a Auto-Generated Orayta Error Report.\n";
 		body += "The error seems to be at " + title + "\n\n";

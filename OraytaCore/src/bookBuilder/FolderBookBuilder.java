@@ -5,7 +5,6 @@ import java.io.IOException;
 
 import fileManager.SFileReader;
 import book.Book;
-import book.contents.BookID;
 
 
 public class FolderBookBuilder implements IBookBuilder
@@ -17,7 +16,7 @@ public class FolderBookBuilder implements IBookBuilder
 		Book b = new Book();
 		b.setPath(path);
 		b.setDisplayName(displayName);
-		b.setBookID(new BookID(FOLDER_BOOK_ID, displayName));
+		b.setBookID(FOLDER_BOOK_ID);
 		
 		return b;
 	}
@@ -35,7 +34,7 @@ public class FolderBookBuilder implements IBookBuilder
 			String displayName = book.getSettings().get("BranchName");
 			book.setDisplayName(displayName);
 			
-			book.setBookID(new BookID(FOLDER_BOOK_ID, displayName));
+			book.setBookID(FOLDER_BOOK_ID);
 			
 			return book;
 		} 

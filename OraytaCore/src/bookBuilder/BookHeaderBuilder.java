@@ -2,7 +2,6 @@ package bookBuilder;
 
 import fileManager.ZipReader;
 import book.Book;
-import book.contents.BookID;
 
 public class BookHeaderBuilder implements IBookBuilder
 {
@@ -29,7 +28,8 @@ public class BookHeaderBuilder implements IBookBuilder
 		try { id = Integer.parseInt(book.getSettings().get("UniqueId")); }
 		catch (NumberFormatException e) {}
 		
-		book.setBookID(new BookID(id, displayName));
+		book.setBookID(id);
+		book.setDisplayName(displayName);
 		
 		return book;
 	}

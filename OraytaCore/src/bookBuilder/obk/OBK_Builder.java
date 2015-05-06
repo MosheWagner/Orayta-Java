@@ -12,7 +12,6 @@ import java.util.List;
 import tree.TreeNode;
 import book.Book;
 import book.contents.BookContents;
-import book.contents.BookID;
 import book.contents.ChapterAddress;
 import book.contents.DChapter;
 import book.contents.IChapter;
@@ -61,8 +60,7 @@ public class OBK_Builder implements IBookContentsBuilder
 		try { id = Integer.parseInt(book.getSettings().get("UniqueId")); }
 		catch (NumberFormatException e) {}
 		
-		BookID bookId = new BookID(id, displayName);
-		book.setBookID(bookId);
+		book.setBookID(id);
 		
 		buildContents();
 		
@@ -124,8 +122,9 @@ public class OBK_Builder implements IBookContentsBuilder
 						chapid = new ChapterAddress(book.getBookID());
 						String title = line.substring(2).trim();
 						
-						chapid.setAddress(title);
+						chapid.setTitle(title);
 						chapid.setLevel(levelCode);
+
 						
 						chap = new DChapter();
 						chap.setAddress(chapid);
@@ -139,6 +138,9 @@ public class OBK_Builder implements IBookContentsBuilder
 						{
 							chapterContentsTree.data = chap;
 							chapterIDTree.data = chapid;
+							
+							//Root element has has no address
+							chapid.setFullAddress("");
 						}
 						else
 						{
@@ -157,6 +159,9 @@ public class OBK_Builder implements IBookContentsBuilder
 							{
 								currentContentsNode = currentContentsNode.addChild(chap);
 								currentIDNode = currentIDNode.addChild(chapid);
+								
+								//Full address uses parent's address too
+								chapid.setFullAddress(currentIDNode.data.getUID() + title);
 							}
 						}
 						
@@ -209,7 +214,8 @@ public class OBK_Builder implements IBookContentsBuilder
 				{
 					ChapterAddress chapid = new ChapterAddress(book.getBookID());
 					chapid.setLevel(levelCode);
-					chapid.setAddress(line.replace(firstChar + " ", ""));
+					chapid.setTitle(line.replace(firstChar + " ", ""));
+					//TODO: Add fullAdress?
 					
 					flatIndex.add(chapid);
 					

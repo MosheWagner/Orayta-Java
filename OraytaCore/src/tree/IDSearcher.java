@@ -9,11 +9,10 @@ import java.util.TreeMap;
 
 public class IDSearcher <T extends IHasID>
 {
-	private TreeMap<String, TreeNode<T>> mDataMap;
+	private TreeMap<String, TreeNode<T>> mDataMap = new TreeMap<String, TreeNode<T>>();
 	
 	public IDSearcher (TreeNode<T> tree)
 	{
-		mDataMap = new TreeMap<String, TreeNode<T>>();
 		//TODO: Is the null test even needed?
 		if (tree != null) buildSearchIndex(tree);
 	}
@@ -22,13 +21,11 @@ public class IDSearcher <T extends IHasID>
 	{
 		TreeIter<T> iter = (TreeIter<T>) tree.iterator();
 		
-		//mDataMap.put(iter.current().data.getUID(), iter.current());
 		while(iter.hasNext())
 		{
 			TreeNode<T> node = iter.next();
 			
 			mDataMap.put(node.data.getUID(), node);
-			//mDataMap.put(new Integer(node.data.getUID()), (TreeNode<T>) node.data);
 		}
 	}
 
