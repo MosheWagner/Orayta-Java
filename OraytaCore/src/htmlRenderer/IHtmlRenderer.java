@@ -8,10 +8,11 @@ import book.contents.ChapterAddress;
 
 public interface IHtmlRenderer 
 {
-	public String renderBookChapterIndex(Book book);
+	//public String renderBookChapterIndex(Book book);
 	
 	public String renderChapter(Book book, ChapterAddress chapid);
+	public String renderChapter(Book book, ChapterAddress chapid, Collection<Book> otherBooks);
 	//public String renderChapter(Book book, IChapter chap);
 	
-	public String renderChapterWeaved(Book baseBook, Collection<Book> otherBooks, ChapterAddress chapid);
+	//public String renderChapterWeaved(Book baseBook, Collection<Book> otherBooks, ChapterAddress chapid);
 }

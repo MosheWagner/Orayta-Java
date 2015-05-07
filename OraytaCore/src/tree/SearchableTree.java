@@ -3,12 +3,10 @@ package tree;
 
 public class SearchableTree<T extends IHasID>
 {
-	TreeNode<T> mBooks;
-	IDSearcher<T> bookSearcher;
+	TreeNode<T> mBooks = null;
+	IDSearcher<T> bookSearcher = null;
 	
-	public SearchableTree() {
-		// TODO Auto-generated constructor stub
-	}
+	public SearchableTree() {}
 	
 	public SearchableTree(TreeNode<T> books)
 	{
@@ -22,6 +20,8 @@ public class SearchableTree<T extends IHasID>
 	
 	public TreeNode<T> getElementNodeByID(String uid)
 	{
+		if (bookSearcher == null) return null;
+		
 		return bookSearcher.findById(uid);
 	}
 	

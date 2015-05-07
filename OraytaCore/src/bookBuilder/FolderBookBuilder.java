@@ -29,7 +29,7 @@ public class FolderBookBuilder implements IBookBuilder
 			book.setPath(folderFilePath);
 			
 			String s = new SFileReader().readContents(folderFilePath);
-			book.setBookSettingsMap(new SimpleSetingsParser().parseSettings(s));
+			book.setBookSettingsMap(new SimpleSetingsParser(s).buildSettingMap());
 			
 			String displayName = book.getSettings().get("BranchName");
 			book.setDisplayName(displayName);

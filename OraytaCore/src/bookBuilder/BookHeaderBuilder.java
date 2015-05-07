@@ -19,7 +19,7 @@ public class BookHeaderBuilder implements IBookBuilder
 
 		String zipComment = ZipReader.readComment(path);
 		
-		book.setBookSettingsMap(new SimpleSetingsParser().parseSettings(zipComment));
+		book.setBookSettingsMap(new SimpleSetingsParser(zipComment).buildSettingMap());
 
 		String displayName = book.getSettings().get("DisplayName");
 		book.setDisplayName(displayName);

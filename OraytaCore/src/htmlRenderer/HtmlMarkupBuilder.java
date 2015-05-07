@@ -64,7 +64,7 @@ public class HtmlMarkupBuilder
 	{
 		int level = c.getChapterAddress().getLevel() + 1;
 		
-		return createHeading(level, c.getUID());
+		return createHeading(level, c.getChapterAddress().getTitle());
 	}
 	
 	public static String genHeader(String title, ICSSBuilder cssBuilder)
@@ -134,5 +134,20 @@ public class HtmlMarkupBuilder
 	    }
 
 	    return origStr; 
+	}
+
+	public static String genSpanClassPrefix(String classType, int index) 
+	{
+		return "<span class=" + classType + String.valueOf(index) + ">";
+	}
+	
+	public static String genSpanSuffix() 
+	{
+		return "</span>";
+	}
+	
+	public static String genItalicBold(String str) 
+	{
+		return "<i><b> " +  str + ": </b></i>";
 	}
 }

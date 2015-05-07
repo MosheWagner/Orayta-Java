@@ -50,7 +50,9 @@ public class OBK_Builder implements IBookContentsBuilder
 		
 		String zipComment = ZipReader.readComment(bookPath);
 		
-		book.setBookSettingsMap(new SimpleSetingsParser().parseSettings(zipComment));
+		SimpleSetingsParser Parser = new SimpleSetingsParser(zipComment);
+		book.setBookSettingsMap(Parser.buildSettingMap());
+		book.setWaevedSources(Parser.buildWeavedDiplaySourcesList());
 
 		displayName = book.getSettings().get("DisplayName");
 		

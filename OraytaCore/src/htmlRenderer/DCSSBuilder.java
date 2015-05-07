@@ -1,6 +1,5 @@
 package htmlRenderer;
 
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -18,10 +17,7 @@ public class DCSSBuilder implements ICSSBuilder
 
 	private String userCss = "";
 	
-	//Font sizes each level's label (in the text itself) should get
-	private static final int[] LevelFontSizeAdd = {2,12,18,20,24};
-	
-	private static final String USER_CSS_FILE_PATH = SettingsManager.generalSettings().BOOKS_ROOT_DIR + "../css/user.css";
+
 
 	private String genericCSS(String fontFamily, int basesize)
 	{
@@ -31,13 +27,6 @@ public class DCSSBuilder implements ICSSBuilder
 		String css = "<style type=\"text/css\">\n"
 	    + "   body { dir=\"RTL\"; text-align:justify; font-family:'" + fontFamily + "'; font-size:" + String.valueOf(basesize) + "px; }\n"
 
-	    +        "   .L1 { font-family: '" + fontFamily + "'; font-size:" + String.valueOf(basesize + LevelFontSizeAdd[4]) + "px; font-weight:bold; color:indigo; }\n"
-	    +        "   .L2 { font-family: '" + fontFamily + "'; font-size:" + String.valueOf(basesize + LevelFontSizeAdd[3]) + "px; font-weight:bold; color:indigo; }\n"
-	    +        "   .L3 { font-family: '" + fontFamily + "'; font-size:" + String.valueOf(basesize + LevelFontSizeAdd[2]) + "px; font-weight:bold; color:indigo; }\n"
-	    +        "   .L4 { font-family: '" + fontFamily + "'; font-size:" + String.valueOf(basesize + LevelFontSizeAdd[1]) + "px; font-weight:bold; color:indigo; }\n"
-	    +        "   .L5 { font-family: '" + fontFamily + "'; font-size:" + String.valueOf(basesize + LevelFontSizeAdd[0]) + "px; font-weight:bold; color:indigo; }\n"
-	    +        "   .L6 { font-family: '" + fontFamily + "'; font-size:" + String.valueOf(basesize + LevelFontSizeAdd[0]) + "px; font-weight:bold; color:indigo; }\n"
-	    
 	    +        "   .Aliyah { text-align: center; font-family:'" + fontFamily + "'; font-size:" + String.valueOf(basesize - 4) + "px; font-weight:bold; color:indigo; }\n"
 	    +        "   .S0 { font-size:" + String.valueOf(basesize - 5) + "px;  font-weight:bold;}\n"
 	    +        "   .copyright { font-size:" + String.valueOf((int)(basesize*0.6)) + "px; color:blue;}\n"
@@ -52,12 +41,30 @@ public class DCSSBuilder implements ICSSBuilder
 	    +        "   .pirush, .editor{font-size:" + String.valueOf((int)(basesize*0.9)) + "px;}\n"
 	    +        "   .small {font-size:" + String.valueOf((int)(basesize*0.7)) + "px;}\n"
 
-	    +        "   div.Index A { font-family: '" + fontFamily + "'; color:indigo; }\n"
+	    +        "   div.Index A { font-family: '" + fontFamily + "'; color:indigo; }\n";
 
 	    //+		 "   H6 {display: inline;} "
 	    
+	    //Level classes
+		int c = 0;
+		for (String color:SettingsManager.uiSettings().WEAVED_DISPLAY_COLOR_LIST)
+		{
+			css += "   .W" + String.valueOf(c++) + " {color:" + color + "; }\n";
+		}
+		
+	    //Level classes (start from 1)
+		c = 1;
+		for (int size:SettingsManager.uiSettings().LevelFontSizeAdd)
+		{
+			css += "   .L" + String.valueOf(c++) 
+					+ "{ font-family: '" + fontFamily 
+					+ "'; font-size:" + String.valueOf(basesize + size) 
+					+ "px; font-weight:bold; color:indigo; }\n";
+		}
+	    
+	    
 	            //adding user defined styles here:
-	    +        userCss + "\n"
+	    css +=        userCss + "\n"
 
 	    +        "</style>\n";
 
@@ -69,7 +76,7 @@ public class DCSSBuilder implements ICSSBuilder
 	{
 		try 
 		{
-			userCss =  new SFileReader().readContents(USER_CSS_FILE_PATH);
+			userCss =  new SFileReader().readContents(SettingsManager.generalSettings().USER_CSS_FILE_PATH);
 		} 
 		catch (FileNotFoundException e) 
 		{

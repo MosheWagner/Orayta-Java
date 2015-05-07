@@ -1,5 +1,6 @@
 package book;
 
+import java.util.List;
 import java.util.Map;
 
 import book.contents.BookContents;
@@ -29,6 +30,7 @@ public class Book implements Comparable<Book>, IHasID, IPuretextSearchable
 	protected String mFilePath;
 	
 	protected Map<String, String> mBookSettingsMap;
+	protected List<String[]> mWaevedSources;
 
 	public int getBookID() { return mBookUID; }
 	public void setBookID(int uid) { mBookUID = uid; }
@@ -69,6 +71,11 @@ public class Book implements Comparable<Book>, IHasID, IPuretextSearchable
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
+	
+	public List<String[]> getWaevedSources() {
+		return mWaevedSources;
+	}
+	public void setWaevedSources(List<String[]> mWaevedSources) {
+		this.mWaevedSources = mWaevedSources;
+	}
 }
