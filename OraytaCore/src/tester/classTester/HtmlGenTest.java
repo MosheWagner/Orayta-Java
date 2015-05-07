@@ -9,7 +9,6 @@ import bookBuilder.BookHeaderBuilder;
 import bookBuilder.obk.OBK_Builder;
 import settings.SettingsManager;
 import tester.ITest;
-import tree.TreeNode;
 
 public class HtmlGenTest implements ITest
 {
@@ -24,12 +23,12 @@ public class HtmlGenTest implements ITest
 		b.setContents(new OBK_Builder().buildBookContents(b));
 		
 		//TreeNode<IChapter> chapnode = b.getContents().getChapterByID("בראשית פרק-יב");
-		TreeNode<IChapter> chapnode = b.getContents().getChapterByID("בראשית פרק-יח");
+		IChapter chap = b.getContents().getChapterByID("בראשית פרק-יח");
 		//TreeNode<IChapter> chapnode = b.getContents().getChapterByID("בראשית פרק-יט");
 		//TreeNode<IChapter> chapnode = b.getContents().getChapterByID("דף יג - א");
 		//TreeNode<IChapter> chapnode = b.getContents().getChapterByID("דף לה - א");
 		
-		String html = new SHtmlRenderer().renderChapter(b, chapnode.data.getChapterAddress());
+		String html = new SHtmlRenderer().renderChapter(b, chap.getChapterAddress());
 		
 		System.out.println(html);
 		

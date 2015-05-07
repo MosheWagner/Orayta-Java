@@ -14,8 +14,6 @@ import java.util.function.Consumer;
  *  - http://sujitpal.blogspot.co.il/2006/05/java-data-structure-generic-tree.html
  */
 
-
-
 public class TreeNode<T> implements ITree<T>, Iterable<TreeNode<T>> {
 
     public T data;

@@ -6,9 +6,23 @@ public class SearchableTree<T extends IHasID>
 	TreeNode<T> mBooks;
 	IDSearcher<T> bookSearcher;
 	
+	public SearchableTree() {
+		// TODO Auto-generated constructor stub
+	}
+	
 	public SearchableTree(TreeNode<T> books)
 	{
 		setElementsTree(books);
+	}
+	
+	public TreeNode<T> getElementNodeByID(int uid)
+	{
+		return getElementNodeByID(String.valueOf(uid));
+	}
+	
+	public TreeNode<T> getElementNodeByID(String uid)
+	{
+		return bookSearcher.findById(uid);
 	}
 	
 	public T getElementByID(int uid)
@@ -18,7 +32,7 @@ public class SearchableTree<T extends IHasID>
 	
 	public T getElementByID(String uid)
 	{
-		TreeNode<T> b = bookSearcher.findById(uid);
+		TreeNode<T> b = getElementNodeByID(uid);
 		if (b != null) return b.data;
 		
 		return null;

@@ -6,6 +6,7 @@ import bookBuilder.obk.OBK_Builder;
 import bookTree.BookTreeBuilder;
 import bookmark.Bookmark;
 import bookmark.updatingBookmarks.DafYomiBookmarkGenerator;
+import bookmark.updatingBookmarks.HalachaYomitBookmarkBuilder;
 import bookmark.updatingBookmarks.MishnaYomitBookmarkBuilder;
 import settings.SettingsManager;
 import tester.ITest;
@@ -26,20 +27,30 @@ public class LimudYomiTester implements ITest
 		
 		if (masechet.getContents() != null)
 		{
-			IChapter chap = masechet.getContents().getChapterByID(bm.getAddress().getUID()).data;
+			IChapter chap = masechet.getContents().getChapterByID(bm.getAddress().getUID());
 			System.out.println(chap);
 		}
 		
 		//Mishna yomit
-		Bookmark bm2 = new MishnaYomitBookmarkBuilder(bt).genBookmark();
+		bm = new MishnaYomitBookmarkBuilder(bt).genBookmark();
 		
-		masechet = bt.getElementByID(bm2.getAddress().getBookID());
+		masechet = bt.getElementByID(bm.getAddress().getBookID());
 		masechet.setContents(builder.buildBookContents(masechet));
 		if (masechet.getContents() != null)
 		{
-			IChapter chap = masechet.getContents().getChapterByID(bm2.getAddress().getUID()).data;
+			IChapter chap = masechet.getContents().getChapterByID(bm.getAddress().getUID());
+			System.out.println(chap);
+		}
+		
+		//Halacha yomit
+		bm = new HalachaYomitBookmarkBuilder(bt).genBookmark();
+		
+		masechet = bt.getElementByID(bm.getAddress().getBookID());
+		masechet.setContents(builder.buildBookContents(masechet));		
+		if (masechet.getContents() != null)
+		{
+			IChapter chap = masechet.getContents().getChapterByID(bm.getAddress().getUID());
 			System.out.println(chap);
 		}
 	}
-
 }

@@ -25,7 +25,7 @@ public class SHtmlRenderer implements IHtmlRenderer
 		String html = HtmlMarkupBuilder.genHeader(book.getDisplayName() + " - " + chapid.getUID(),
 				new DCSSBuilder(book));
 		
-		TreeNode<IChapter> baseNode = book.getContents().getChapterByID(chapid.getUID());
+		TreeNode<IChapter> baseNode = book.getContents().getChapterNodeByID(chapid.getUID());
 
 		if (baseNode == null) return "Invalid chapter!";
 		

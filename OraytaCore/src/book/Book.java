@@ -3,13 +3,11 @@ package book;
 import java.util.Map;
 
 import book.contents.BookContents;
-import book.contents.ChapterAddress;
 import book.contents.IBookMetaData;
 
 import search.IPuretextSearchable;
 import search.chapterMapping.ISortedNumberList;
 import tree.IHasID;
-import tree.TreeNode;
 
 /*
  * THE Book class.
@@ -47,8 +45,6 @@ public class Book implements Comparable<Book>, IHasID, IPuretextSearchable
 	public BookContents getContents() {return mContents; }
 
 	public String toString() {return mDisplayName;}
-	
-	public TreeNode<ChapterAddress> getChapterIDList() {return mContents.getChapterIDTree();}
 	
 	public Map<String, String> getSettings() { return mBookSettingsMap; }
 

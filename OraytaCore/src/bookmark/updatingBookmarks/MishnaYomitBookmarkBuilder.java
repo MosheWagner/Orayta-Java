@@ -1,16 +1,7 @@
 package bookmark.updatingBookmarks;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import settings.SettingsManager;
 import tree.SearchableTree;
 import tree.TreeNode;
-import fileManager.SFileReader;
 import book.Book;
 import book.contents.ChapterAddress;
 import bookmark.Bookmark;
@@ -26,8 +17,8 @@ public class MishnaYomitBookmarkBuilder implements IBookmarkBuilder
 	
 	public Bookmark genBookmark() 
 	{
-		String [] text = readCSVFile();
-		String todaysLine = getTodaysLine(text);
+		String [] text = DailyLimudFileParser.readCSVFile();
+		String todaysLine = DailyLimudFileParser.getTodaysLine(text);
 		
 		String [] todaysLineParts = null;
 		
@@ -80,57 +71,5 @@ public class MishnaYomitBookmarkBuilder implements IBookmarkBuilder
 		return addr;
 	}
 
-	private String [] readCSVFile()
-	{
-		try 
-		{
-			String s = new SFileReader().readContents(SettingsManager.generalSettings().DAILY_LIMUD_FILE_PATH);
-			return s.split("\\r?\\n");
-		}
-		catch (FileNotFoundException e) 
-		{
-			error();
-		} 
-		catch (IOException e) 
-		{
-			error();
-		} 
-		
-		return null;
-	}
-	
-	private String getTodaysLine(String [] csvLines)
-	{
-		if (csvLines == null) return null;
-		
-		Date today = new Date();
-
-		DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
-		
-		for (String line:csvLines)
-		{
-	        String firstPart = line.split(",")[0];
-			Date d = null;
-			
-			try 
-			{
-				d = format.parse(firstPart);
-			} 
-			//Ignore invalid lines
-			catch (ParseException e) {}
-	        
-	        if (d != null && DateTools.sameDay(d, today))
-	        {
-	        	return line;
-	        }
-		}
-		
-		return null;
-	}
-	
-	private void error()
-	{
-		System.out.println("Daily limud list file not found or corrupt!");
-	}
 
 }

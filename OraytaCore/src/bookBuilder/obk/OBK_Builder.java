@@ -83,10 +83,8 @@ public class OBK_Builder implements IBookContentsBuilder
 	private void buildChapters() 
 	{
 		TreeNode<IChapter> chapterContentsTree = new TreeNode<IChapter>(null);
-		TreeNode<ChapterAddress> chapterIDTree = new TreeNode<ChapterAddress>(null);
 		
 		TreeNode<IChapter> currentContentsNode = chapterContentsTree;
-		TreeNode<ChapterAddress> currentIDNode = chapterIDTree;
 		
 		int currentsLevel = -1;
 
@@ -137,7 +135,6 @@ public class OBK_Builder implements IBookContentsBuilder
 						if (levelCode == 0)
 						{
 							chapterContentsTree.data = chap;
-							chapterIDTree.data = chapid;
 							
 							//Root element has has no address
 							chapid.setFullAddress("");
@@ -147,21 +144,19 @@ public class OBK_Builder implements IBookContentsBuilder
 							while (levelCode <= currentsLevel)
 							{
 								currentContentsNode = currentContentsNode.parent;
-								currentIDNode = currentIDNode.parent;
 								
-								if (currentContentsNode == null || currentIDNode == null) break;
+								if (currentContentsNode == null) break;
 								if (currentContentsNode.data == null) break;
 								
 								currentsLevel = currentContentsNode.data.getChapterAddress().getLevel();
 							}
 							
-							if (currentContentsNode != null && currentIDNode != null)
+							if (currentContentsNode != null)
 							{
-								currentContentsNode = currentContentsNode.addChild(chap);
-								currentIDNode = currentIDNode.addChild(chapid);
-								
 								//Full address uses parent's address too
-								chapid.setFullAddress(currentIDNode.data.getUID() + title);
+								chapid.setFullAddress(currentContentsNode.data.getUID() + " " + title);
+								
+								currentContentsNode = currentContentsNode.addChild(chap);
 							}
 						}
 						
@@ -179,7 +174,6 @@ public class OBK_Builder implements IBookContentsBuilder
 		}
 
 		bookContents.setChapterContentsTree(chapterContentsTree);
-		bookContents.setChapterIDTree(chapterIDTree);
 		
 		bookContents.setFlatIndex(flatIndex);
 	}
