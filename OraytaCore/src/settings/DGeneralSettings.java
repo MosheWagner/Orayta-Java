@@ -3,7 +3,7 @@ package settings;
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement
-public class GeneralSettings 
+public class DGeneralSettings 
 {
 	public String BOOKS_ROOT_DIR = "/home/moshe/Orayta/Orayta-Books/books/";
 	
