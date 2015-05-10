@@ -6,7 +6,7 @@ public class ChapterAddress implements Comparable<ChapterAddress>, IHasID
 {
 	private int mBookId;
 	private String mTitle;
-	private String mFullAddress;
+	private String mFullAddress = "";
 	private int mLevel = -1;
 	
 	public ChapterAddress(int bookId, String title, String fullAddress)

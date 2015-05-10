@@ -27,7 +27,7 @@ public class BooksDownloadManager
 	private TreeMap<String, ArrayList<DownloadCandidate>> categoryFileMapper = new TreeMap<String, ArrayList<DownloadCandidate>>();
 	private ArrayList<DownloadCategoryTitle> categories = new ArrayList<DownloadCategoryTitle>();
 	
-	private String SavedBookListPath = SettingsManager.generalSettings().BOOKS_SAVE_PATH + "BookList";
+	private String SavedBookListPath = SettingsManager.getSettings().get_BOOKS_SAVE_PATH() + "BookList";
 	
 	private List<ICategoryListReadyListener> listeners = new ArrayList<ICategoryListReadyListener>();
 	
@@ -44,7 +44,7 @@ public class BooksDownloadManager
 			}
 		});
 		
-		downloader.downloadAsync(SettingsManager.generalSettings().BOOK_LIST_DOWNLOAD_URL, SavedBookListPath , true);
+		downloader.downloadAsync(SettingsManager.getSettings().get_BOOK_LIST_DOWNLOAD_URL(), SavedBookListPath , true);
 	}
 	
 	public void onDownloadBooklistDone()
@@ -136,7 +136,7 @@ public class BooksDownloadManager
 		
 		if (lineParts.length > 2)
 		{
-			url = lineParts[0].replace("./", SettingsManager.generalSettings().SERVER_BOOK_ROOT_URL);
+			url = lineParts[0].replace("./", SettingsManager.getSettings().get_SERVER_BOOK_ROOT_URL());
 			
 			sizeInBytes = Integer.parseInt(lineParts[1]);
 			

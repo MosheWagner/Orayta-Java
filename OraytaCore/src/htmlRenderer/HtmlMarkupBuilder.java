@@ -2,6 +2,7 @@ package htmlRenderer;
 
 import java.util.IllegalFormatException;
 
+import book.contents.ChapterAddress;
 import book.contents.IChapter;
 
 /*
@@ -11,16 +12,11 @@ import book.contents.IChapter;
 
 public class HtmlMarkupBuilder 
 {
-	public static String createAnchor(String txt)
-	{	
-		return createAnchor(txt, escapeToHex(txt));
-	}
-	
 	public final static String ARBITRAY_BEGINNING_MARK = "A";
-	public static String createAnchor(String txt, String anchorHexID)
+	public static String createAnchor(String txt, String anchorID)
 	{	
-		String prefix = "<a id=\"" + ARBITRAY_BEGINNING_MARK + anchorHexID + "\"> ";
-		String suffix = " </a>";
+		String prefix = "<a id=\"" + ARBITRAY_BEGINNING_MARK + escapeToHex(anchorID) + "\"> ";
+		String suffix = "</a>";
 		
 		return prefix + txt + suffix;
 	}
@@ -35,11 +31,9 @@ public class HtmlMarkupBuilder
 		return genHtmlComment("LevelMarker!");
 	}
 	
-	
-	
-	public static String genMarkerAnchor(int levelCode, String markerText)
+	public static String genMarkerAnchor(int levelCode, String markerText, String anchorId)
 	{
-		return createHeading(levelCode, createAnchor(markerText));
+		return createHeading(levelCode, createAnchor(markerText, anchorId));
 	}
 	
 	
@@ -55,7 +49,15 @@ public class HtmlMarkupBuilder
 		//prefix += "<h" + lvlStr + "> ";
 		//suffix += " </h" + lvlStr + ">\n";
 		prefix += "<span class=\"L" + lvlStr + "\">";
-		suffix += "</span>&nbsp;";
+		suffix += "</span>";
+		
+		return prefix + txt + suffix;
+	}
+	
+	private static String createLink(String txt, String linkID) 
+	{
+		String prefix = "<a href=\"#" + ARBITRAY_BEGINNING_MARK + escapeToHex(linkID) + "\"> ";
+		String suffix = "</a>";
 		
 		return prefix + txt + suffix;
 	}
@@ -64,9 +66,20 @@ public class HtmlMarkupBuilder
 	{
 		int level = c.getChapterAddress().getLevel() + 1;
 		
-		return createHeading(level, c.getChapterAddress().getTitle());
+		String linkID = c.getChapterAddress().getUID();
+		String title = c.getChapterAddress().getTitle();
+		return createHeading(level, createAnchor(title, linkID));
 	}
 	
+	public static String genLinkToChapter(ChapterAddress address) 
+	{
+		int level = address.getLevel() + 1;
+		
+		String anchorID = address.getUID();
+		String title = address.getTitle();
+		return createHeading(level, createLink(title, anchorID));
+	}
+
 	public static String genHeader(String title, ICSSBuilder cssBuilder)
 	{
 		String html;
@@ -106,6 +119,8 @@ public class HtmlMarkupBuilder
 	public static String escapeToHex(String str)
 	{
 	    String encoded = "";
+	    
+	    if (str == null) return "";
 	    
 	    //Make sure we have no extra spaces
 	    str = str.trim();

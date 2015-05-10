@@ -47,14 +47,14 @@ public class DCSSBuilder implements ICSSBuilder
 	    
 	    //Level classes
 		int c = 0;
-		for (String color:SettingsManager.uiSettings().WEAVED_DISPLAY_COLOR_LIST)
+		for (String color:SettingsManager.getSettings().get_WEAVED_DISPLAY_COLOR_LIST())
 		{
 			css += "   .W" + String.valueOf(c++) + " {color:" + color + "; }\n";
 		}
 		
 	    //Level classes (start from 1)
 		c = 1;
-		for (int size:SettingsManager.uiSettings().LevelFontSizeAdd)
+		for (int size:SettingsManager.getSettings().get_LevelFontSizeAdd())
 		{
 			css += "   .L" + String.valueOf(c++) 
 					+ "{ font-family: '" + fontFamily 
@@ -76,7 +76,7 @@ public class DCSSBuilder implements ICSSBuilder
 	{
 		try 
 		{
-			userCss =  new SFileReader().readContents(SettingsManager.generalSettings().USER_CSS_FILE_PATH);
+			userCss =  new SFileReader().readContents(SettingsManager.getSettings().get_USER_CSS_FILE_PATH());
 		} 
 		catch (FileNotFoundException e) 
 		{
@@ -92,8 +92,8 @@ public class DCSSBuilder implements ICSSBuilder
 
 	public String genCSS() 
 	{
-		String fontFamily = SettingsManager.uiSettings().FONT_NAME;
-		int basesize = SettingsManager.uiSettings().BASE_FONT_SIZE;
+		String fontFamily = SettingsManager.getSettings().get_FONT_NAME();
+		int basesize = SettingsManager.getSettings().get_BASE_FONT_SIZE();
 		return genericCSS(fontFamily, basesize);
 	}
 

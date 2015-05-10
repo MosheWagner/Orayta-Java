@@ -16,7 +16,7 @@ public class LimudYomiTester implements ITest
 {
 	public void Run() 
 	{
-		SearchableTree<Book> bt = new BookTreeBuilder().buildTree(SettingsManager.generalSettings().BOOKS_ROOT_DIR);
+		SearchableTree<Book> bt = new BookTreeBuilder().buildTree(SettingsManager.getSettings().get_BOOKS_ROOT_DIR());
 		
 		//Daf yomi
 		Bookmark bm = new DafYomiBookmarkGenerator().genBookmark();

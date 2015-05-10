@@ -42,6 +42,9 @@ public class OBK_Builder implements IBookContentsBuilder
 	
 	public BookContents buildBookContents(Book book) 
 	{
+		//Don't build a book twice!
+		if (book.getContents() != null) return book.getContents();
+		
 		bookContents = new BookContents();
 		
 		this.book = book;
@@ -80,8 +83,8 @@ public class OBK_Builder implements IBookContentsBuilder
 		}
 	}	
 
-	
 	//TODO: Add external link reading
+	String mPendingText = "";
 	private void buildChapters() 
 	{
 		TreeNode<IChapter> chapterContentsTree = new TreeNode<IChapter>(null);
@@ -90,9 +93,7 @@ public class OBK_Builder implements IBookContentsBuilder
 		
 		int currentsLevel = -1;
 
-		String pendingText = "";
-		
-		ChapterAddress chapid;
+		ChapterAddress chapid = new ChapterAddress(book.getBookID());
 		DChapter chap = new DChapter();
 		
 		for (String line:rawTextLines)
@@ -110,8 +111,14 @@ public class OBK_Builder implements IBookContentsBuilder
 					{
 						//In this case, the level sign is just a marker, NOT part of the hierarchy
 						// So we generate a marker from the given line
-						pendingText += HtmlMarkupBuilder.genHtmlMarkerComment() + "\n";
-						pendingText += HtmlMarkupBuilder.genMarkerAnchor(levelCode + 1, line.replace(firstChar + " ", "")) + "\n";
+						String title = line.replace(firstChar + " ", "");
+						String linkID = chapid.getBookID() + "-" + title;
+						
+						mPendingText += HtmlMarkupBuilder.genHtmlMarkerComment() + "\n";
+						mPendingText += HtmlMarkupBuilder.genMarkerAnchor(levelCode + 1, title, linkID);
+						mPendingText += "<BR>\n";
+						
+						correctFlatIndexLink(title, linkID);
 					}
 					else
 					{    
@@ -130,8 +137,7 @@ public class OBK_Builder implements IBookContentsBuilder
 						chap.setAddress(chapid);
 						
 						//Pending text is added right at start of the new chapter
-						chap.setChapterText(pendingText);
-						pendingText = "";
+						addTextAndPendingTextToChapter(chap, "");
 						
 						//Root element
 						if (levelCode == 0)
@@ -157,6 +163,7 @@ public class OBK_Builder implements IBookContentsBuilder
 							{
 								//Full address uses parent's address too
 								chapid.setFullAddress(currentContentsNode.data.getUID() + " " + title);
+								correctFlatIndexLink(title, currentContentsNode.data.getUID() + " " + title);
 								
 								currentContentsNode = currentContentsNode.addChild(chap);
 							}
@@ -165,12 +172,17 @@ public class OBK_Builder implements IBookContentsBuilder
 						currentsLevel = levelCode;
 					}
 				}
+				//External link
+				else if(line.startsWith("<!--ex")) 
+				{
+					String link = OBK_ParseHelper.decodeExternalLink(line);
+					
+					addTextAndPendingTextToChapter(chap, link);
+				}
 				else if(line.trim() != "") //Ignore empty line totally
 				{
 					//Simply add this line's text, and any pending text we have
-					chap.setChapterText(chap.text() + pendingText + line + "\n");
-					
-					pendingText = "";
+					addTextAndPendingTextToChapter(chap, line);
 				}
 			}
 		}
@@ -180,6 +192,12 @@ public class OBK_Builder implements IBookContentsBuilder
 		bookContents.setFlatIndex(flatIndex);
 	}
 
+	private void addTextAndPendingTextToChapter(IChapter chapter, String str)
+	{
+		chapter.setChapterText(chapter.text() + mPendingText + str + "\n");
+		mPendingText = "";
+	}
+	
 	//NOTE: If num == UBound this returns False!
 	private Boolean inRange(int num, int BoundA, int BoundB)
 	{
@@ -211,6 +229,7 @@ public class OBK_Builder implements IBookContentsBuilder
 					ChapterAddress chapid = new ChapterAddress(book.getBookID());
 					chapid.setLevel(levelCode);
 					chapid.setTitle(line.replace(firstChar + " ", ""));
+					
 					//TODO: Add fullAdress?
 					
 					flatIndex.add(chapid);
@@ -237,6 +256,17 @@ public class OBK_Builder implements IBookContentsBuilder
 		for (i=HigherLevelsLBound; i<LevelSigns.length() && signFound[i]; i++); HigherLevelsUBound = i;
 	}
 
+	private void correctFlatIndexLink(String title, String fullAddress) 
+	{
+		for (ChapterAddress addrr:flatIndex)
+		{
+			if (addrr.getUID().equals("") && addrr.getTitle().equals(title))
+			{
+				addrr.setFullAddress(fullAddress);
+			}
+		}
+	}
+	
 	private void readRawText(String filePath) 
 	{
 		ZipReader zr = new ZipReader(filePath);

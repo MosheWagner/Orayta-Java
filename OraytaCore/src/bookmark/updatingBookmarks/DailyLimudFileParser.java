@@ -16,7 +16,7 @@ public class DailyLimudFileParser
 	{
 		try 
 		{
-			String s = new SFileReader().readContents(SettingsManager.generalSettings().DAILY_LIMUD_FILE_PATH);
+			String s = new SFileReader().readContents(SettingsManager.getSettings().get_DAILY_LIMUD_FILE_PATH());
 			return s.split("\\r?\\n");
 		}
 		catch (FileNotFoundException e) 

@@ -13,4 +13,6 @@ public interface IChapter extends IHasID // extends Comparable<IChapter>
 	//Returns the text in the chapter. If this is not an atom (like a high level chapter), this returns an empty string.
 	public String text();
 	public String plainText();
+
+	public void setChapterText(String string);
 }

@@ -2,22 +2,17 @@ package tree;
 
 import java.util.TreeMap;
 
-/*
- * This class allows us to find a TreeNode by it's data's UID.
- *  (That's why it works only for elements that extend IHasID)
- */
-
-public class IDSearcher <T extends IHasID>
+public class PathSearcher <T extends IHasPath>
 {
 	private TreeMap<String, TreeNode<T>> mDataMap = new TreeMap<String, TreeNode<T>>();
 	
-	public IDSearcher (TreeNode<T> tree)
+	public PathSearcher (TreeNode<T> tree)
 	{
 		//TODO: Is the null test even needed?
-		if (tree != null) buildSearchIndex(tree);
+		if (tree != null) buildPathSearchIndex(tree);
 	}
 	
-	private void buildSearchIndex(TreeNode<T> tree) 
+	private void buildPathSearchIndex(TreeNode<T> tree) 
 	{
 		TreeIter<T> iter = (TreeIter<T>) tree.iterator();
 		
@@ -25,11 +20,11 @@ public class IDSearcher <T extends IHasID>
 		{
 			TreeNode<T> node = iter.next();
 			
-			mDataMap.put(node.data.getUID(), node);
+			mDataMap.put(node.data.getPath(), node);
 		}
 	}
 
-	public TreeNode<T> findById(String id)
+	public TreeNode<T> findByPath(String id)
 	{
 		if (mDataMap.containsKey(id)) return mDataMap.get(id);
 		

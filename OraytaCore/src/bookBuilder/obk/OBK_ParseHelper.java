@@ -88,8 +88,6 @@ public class OBK_ParseHelper
 		            
 		            //Get BookInternalLabel
 		            BookInternalLabel = splitStr.get(1).substring(ind+1).trim();
-		            
-		        	System.out.println(BookInternalLabel);
 		        }
 		    }
 	    }

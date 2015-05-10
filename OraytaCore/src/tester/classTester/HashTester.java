@@ -9,7 +9,7 @@ import tester.ITest;
 public class HashTester implements ITest
 {
 	
-	private final String path = SettingsManager.generalSettings().BOOKS_ROOT_DIR + "001_mkra/01_torh/a01_Genesis.obk";
+	private final String path = SettingsManager.getSettings().get_BOOKS_ROOT_DIR() + "001_mkra/01_torh/a01_Genesis.obk";
 	
 	public void Run() 
 	{

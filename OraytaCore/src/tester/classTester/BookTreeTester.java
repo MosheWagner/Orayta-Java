@@ -1,10 +1,9 @@
 package tester.classTester;
 
-import book.Book;
+import bookTree.BookTree;
 import bookTree.BookTreeBuilder;
 import settings.SettingsManager;
 import tester.ITest;
-import tree.SearchableTree;
 
 
 public class BookTreeTester  implements ITest {
@@ -12,7 +11,7 @@ public class BookTreeTester  implements ITest {
 	public void Run() 
 	{
 		BookTreeBuilder tb = new BookTreeBuilder();
-		SearchableTree<Book> bookTree = tb.buildTree(SettingsManager.generalSettings().BOOKS_ROOT_DIR);
+		BookTree bookTree = tb.buildTree(SettingsManager.getSettings().get_BOOKS_ROOT_DIR());
 		
 		System.out.println(bookTree.getElementsTree().printTree());
 	}

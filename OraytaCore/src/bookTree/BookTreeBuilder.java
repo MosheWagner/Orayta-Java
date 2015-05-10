@@ -6,7 +6,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import tree.SearchableTree;
 import tree.TreeNode;
 
 import book.Book;
@@ -27,7 +26,7 @@ public class BookTreeBuilder
 	IBookBuilder folderBuilder = new FolderBookBuilder();
 	IBookBuilder emptyBookBuilder = new BookHeaderBuilder();
 	
-	public SearchableTree<Book> buildTree(String rootPath)
+	public BookTree buildTree(String rootPath)
 	{
 		//Root is a folder called 'OraytaBooks'
 		tree = new TreeNode<Book>(folderBuilder.buildBook(rootPath, "OraytaBooks"));
@@ -36,7 +35,7 @@ public class BookTreeBuilder
 		sortByLeadingNumber(files);
 		addFilesToTreeNode((files), tree);
 
-		return new SearchableTree<Book>(tree);
+		return new BookTree(tree);
 	}
 
 

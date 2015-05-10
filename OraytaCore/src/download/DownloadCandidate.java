@@ -48,7 +48,7 @@ public class DownloadCandidate
 	
 	public String getSaveToPath()
 	{
-		return getURL().replace(SettingsManager.generalSettings().SERVER_BOOK_ROOT_URL, SettingsManager.generalSettings().BOOKS_SAVE_PATH);
+		return getURL().replace(SettingsManager.getSettings().get_SERVER_BOOK_ROOT_URL(), SettingsManager.getSettings().get_BOOKS_SAVE_PATH());
 	}
 
 	public Date getDate() {

@@ -14,6 +14,36 @@ import book.contents.IChapter;
 
 public class SHtmlRenderer implements IHtmlRenderer
 {
+	
+	public String renderFullBook(Book book) 
+	{
+		return renderFullBook(book, new ArrayList<Book>());
+	}
+	
+	public String renderFullBook(Book book, Collection<Book> otherBooks)
+	{
+		String html = HtmlMarkupBuilder.genHeader(book.getDisplayName(), new DCSSBuilder(book));
+		
+		html += renderChapterIndexItself(book);
+		html += renderChapterItself(book, book.getContents().getChapterContentsTree().data.getChapterAddress(), otherBooks);
+		html += HtmlMarkupBuilder.htmlEnd();
+		
+		return html;
+	}
+	
+	private String renderChapterIndexItself(Book book) 
+	{
+		String html = "";
+		
+		//TODO:
+		for(ChapterAddress addrr:book.getContents().getFlatIndex())
+		{
+			html += HtmlMarkupBuilder.genLinkToChapter(addrr);
+		}
+
+		return html;
+	}
+
 	public String renderChapter(Book book, ChapterAddress chapid) 
 	{
 		return renderChapter(book, chapid, new ArrayList<Book>()); 
@@ -24,6 +54,17 @@ public class SHtmlRenderer implements IHtmlRenderer
 		String html = HtmlMarkupBuilder.genHeader(book.getDisplayName() + " - " + chapid.getTitle(),
 				new DCSSBuilder(book));
 		
+		html += renderChapterItself(book, chapid, otherBooks);
+		html += HtmlMarkupBuilder.htmlEnd();
+		
+		return html;
+	}
+	
+	private String renderChapterItself(Book book, ChapterAddress chapid, Collection<Book> otherBooks)
+	{
+		String html = "";
+		
+
 		TreeNode<IChapter> baseNode = book.getContents().getChapterNodeByID(chapid.getUID());
 
 		if (baseNode == null) return "Invalid chapter!";
@@ -55,7 +96,7 @@ public class SHtmlRenderer implements IHtmlRenderer
 			for (Book other:otherBooks)
 			{
 				IChapter otherChap = other.getContents().getChapterByID(chap.getUID());
-				String chapTextNoMarkers = removeChapMarker(otherChap);
+				String chapTextNoMarkers = removeChapMarkerFromChapText(otherChap);
 
 				if (!chapTextNoMarkers.isEmpty())
 				{
@@ -63,7 +104,7 @@ public class SHtmlRenderer implements IHtmlRenderer
                         html += "<BR>\n";
 					
 					html += "<BR>\n" + HtmlMarkupBuilder.genSpanClassPrefix("W", c++);
-					html += HtmlMarkupBuilder.genItalicBold(other.getDisplayName()) + "<BR>\n";
+					html += HtmlMarkupBuilder.genItalicBold(other.getDisplayNameWhenWeaved()) + "<BR>\n";
 					
 					html += chapTextNoMarkers;
 					
@@ -75,12 +116,10 @@ public class SHtmlRenderer implements IHtmlRenderer
 			}
 		}
 		
-		html += HtmlMarkupBuilder.htmlEnd();
-		
 		return html;
 	}
 	
-	private String removeChapMarker(IChapter chap)
+	private String removeChapMarkerFromChapText(IChapter chap)
 	{
 		if (chap == null) return "";
 		

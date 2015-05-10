@@ -27,6 +27,7 @@ public class TestRunner
 		//ITest t = new BLDownloadTester();
 		//ITest t = new GematriaTest();
 		//ITest t = new LimudYomiTester();
+		//ITest t = new BookSettingsTester();
 		
 		t.Run();
 	}

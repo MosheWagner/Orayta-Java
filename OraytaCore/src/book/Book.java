@@ -9,6 +9,7 @@ import book.contents.IBookMetaData;
 import search.IPuretextSearchable;
 import search.chapterMapping.ISortedNumberList;
 import tree.IHasID;
+import tree.IHasPath;
 
 /*
  * THE Book class.
@@ -17,15 +18,16 @@ import tree.IHasID;
  *  and much more.
  */
 
-public class Book implements Comparable<Book>, IHasID, IPuretextSearchable
+public class Book implements Comparable<Book>, IHasID, IPuretextSearchable, IHasPath
 {
-	protected BookContents mContents;
+	protected BookContents mContents = null;
 	
 	//TODO: ???
 	protected IBookMetaData metaData;
 	
 	protected int mBookUID;
 	protected String mDisplayName;
+	protected String mDisplayNameWhenWeaved = "";
 	
 	protected String mFilePath;
 	
@@ -77,5 +79,14 @@ public class Book implements Comparable<Book>, IHasID, IPuretextSearchable
 	}
 	public void setWaevedSources(List<String[]> mWaevedSources) {
 		this.mWaevedSources = mWaevedSources;
+	}
+	public String getDisplayNameWhenWeaved() 
+	{
+		if (!mDisplayNameWhenWeaved.isEmpty()) return mDisplayNameWhenWeaved;
+		
+		return mDisplayName;
+	}
+	public void setDisplayNameWhenWeaved(String mDisplayNameWhenWeaved) {
+		this.mDisplayNameWhenWeaved = mDisplayNameWhenWeaved;
 	}
 }

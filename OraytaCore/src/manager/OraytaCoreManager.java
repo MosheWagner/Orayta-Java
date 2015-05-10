@@ -2,7 +2,7 @@ package manager;
 
 import book.Book;
 import download.DownloadManager;
-import settings.GeneralSettings;
+import settings.DGeneralSettings;
 import tree.TreeNode;
 
 /*
@@ -13,7 +13,7 @@ import tree.TreeNode;
 public abstract class OraytaCoreManager implements UIBridge, IOraytaCore
 {
 	@SuppressWarnings("unused")
-	private GeneralSettings generalSettings;
+	private DGeneralSettings generalSettings;
 	@SuppressWarnings("unused")
 	private TreeNode<Book> bookList;
 	

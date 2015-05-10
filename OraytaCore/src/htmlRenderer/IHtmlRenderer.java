@@ -10,6 +10,9 @@ public interface IHtmlRenderer
 {
 	//public String renderBookChapterIndex(Book book);
 	
+	public String renderFullBook(Book book);
+	public String renderFullBook(Book book, Collection<Book> otherBooks);
+	
 	public String renderChapter(Book book, ChapterAddress chapid);
 	public String renderChapter(Book book, ChapterAddress chapid, Collection<Book> otherBooks);
 	//public String renderChapter(Book book, IChapter chap);
