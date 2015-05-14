@@ -26,5 +26,7 @@ public interface ISettingsHolder
 	
 	//Font sizes each level's label (in the text itself) should get
 	public Collection<Integer> get_LevelFontSizeAdd();
+
+	public String get_BOOK_SETTINGS_FILE_PATH();
 	
 }

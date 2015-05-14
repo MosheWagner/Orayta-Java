@@ -110,8 +110,7 @@ public class SHtmlRenderer implements IHtmlRenderer
 					
 					html += HtmlMarkupBuilder.genSpanSuffix() + "\n";
 					
-                    if (otherBooks.size() > 1)
-                        html += "<BR>\n";
+                    html += "<BR>\n";
 				}
 			}
 		}

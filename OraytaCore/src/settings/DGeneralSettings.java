@@ -17,5 +17,8 @@ public class DGeneralSettings
 	public String DAILY_LIMUD_FILE_PATH = "/home/moshe/Orayta/Orayta-Java/OraytaCore/" + "LimudYomi.csv";
 	
 	
+	//public String BOOK_SETTINGS_FILE_PATH = BOOKS_ROOT_DIR + "BooksSettings";
+	public String BOOK_SETTINGS_FILE_PATH = "/home/moshe/Desktop/a.map";
+	
 	public String USER_CSS_FILE_PATH = BOOKS_ROOT_DIR + "../css/user.css";
 }

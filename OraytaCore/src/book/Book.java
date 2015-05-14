@@ -32,7 +32,7 @@ public class Book implements Comparable<Book>, IHasID, IPuretextSearchable, IHas
 	protected String mFilePath;
 	
 	protected Map<String, String> mBookSettingsMap;
-	protected List<String[]> mWaevedSources;
+	protected List<String[]> mPossibleWaevedSources;
 
 	public int getBookID() { return mBookUID; }
 	public void setBookID(int uid) { mBookUID = uid; }
@@ -60,7 +60,6 @@ public class Book implements Comparable<Book>, IHasID, IPuretextSearchable, IHas
 		return (this.getBookID() - other.getBookID());
 	}
 	
-	
 	public void buildSearchIndex() {
 		// TODO Auto-generated method stub
 		
@@ -74,19 +73,25 @@ public class Book implements Comparable<Book>, IHasID, IPuretextSearchable, IHas
 		return null;
 	}
 	
-	public List<String[]> getWaevedSources() {
-		return mWaevedSources;
+	public List<String[]> getPossibleWaevedSources() 
+	{
+		return mPossibleWaevedSources;
 	}
-	public void setWaevedSources(List<String[]> mWaevedSources) {
-		this.mWaevedSources = mWaevedSources;
+	
+	public void setWaevedSources(List<String[]> mWaevedSources) 
+	{
+		this.mPossibleWaevedSources = mWaevedSources;
 	}
+	
 	public String getDisplayNameWhenWeaved() 
 	{
 		if (!mDisplayNameWhenWeaved.isEmpty()) return mDisplayNameWhenWeaved;
 		
 		return mDisplayName;
 	}
-	public void setDisplayNameWhenWeaved(String mDisplayNameWhenWeaved) {
+	
+	public void setDisplayNameWhenWeaved(String mDisplayNameWhenWeaved) 
+	{
 		this.mDisplayNameWhenWeaved = mDisplayNameWhenWeaved;
 	}
 }

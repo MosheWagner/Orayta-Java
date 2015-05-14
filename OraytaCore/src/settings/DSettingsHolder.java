@@ -59,4 +59,9 @@ public class DSettingsHolder implements ISettingsHolder
 		return Arrays.asList(mUISettings.LevelFontSizeAdd);
 	}
 
+
+	public String get_BOOK_SETTINGS_FILE_PATH() {
+		return mGeneralSettings.BOOK_SETTINGS_FILE_PATH;
+	}
+
 }
