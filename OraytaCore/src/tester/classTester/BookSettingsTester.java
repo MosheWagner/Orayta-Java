@@ -3,20 +3,21 @@ package tester.classTester;
 import java.util.ArrayList;
 
 import tester.ITest;
-import userBookSettings.BookSettings;
-import userBookSettings.BookSettingsManager;
-import userBookSettings.BookSettingsMapper;
+import userSettings.bookSettings.SingleBookSettings;
+import userSettings.bookSettings.BookSettingsManager;
+import userSettings.bookSettings.BookSettingsMapper;
 
 public class BookSettingsTester implements ITest 
 {
 
 	public void Run() 
 	{
-		BookSettingsMapper bsm = BookSettingsManager.getSettingsMapper();
+		BookSettingsManager bsmn = new BookSettingsManager();
+		BookSettingsMapper bsmp = bsmn.getSettingsMapper();
 		
 		for (int i=0; i<4; i++)
 		{
-			BookSettings bs = new BookSettings();
+			SingleBookSettings bs = new SingleBookSettings();
 			
 			bs.setShowNikud(i < 2);
 			bs.setShowTeamim(i < 2);
@@ -32,14 +33,15 @@ public class BookSettingsTester implements ITest
 			bs.setWeavedDisplayIDs(l);
 			bs.setWeavedDisplayTitles(s);
 			
-			bsm.put(i, bs);
+			bsmp.put(i, bs);
 		}
-		bsm.put(4, new BookSettings());
+		bsmp.put(4, new SingleBookSettings());
 		
-		BookSettingsManager.saveToFile();
+		bsmn.saveToFile();
 
-		BookSettingsManager.readSettingsFromFile();
-		BookSettingsMapper bsm2 = BookSettingsManager.getSettingsMapper();
+		BookSettingsManager bsmn2 = new BookSettingsManager();
+		bsmn2.readSettingsFromFile();
+		BookSettingsMapper bsm2 = bsmn2.getSettingsMapper();
 		
 		System.out.println(bsm2.get(2).getWeavedDisplayIDs());
 		System.out.println(bsm2.get(2).getWeavedDisplayTitles());

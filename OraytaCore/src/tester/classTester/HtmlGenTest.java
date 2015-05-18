@@ -16,7 +16,7 @@ import bookTree.BookTreeBuilder;
 import settings.SettingsManager;
 import tester.ITest;
 
-import userBookSettings.BookSettingsManager;
+import userSettings.bookSettings.BookSettingsManager;
 
 public class HtmlGenTest implements ITest
 {
@@ -27,6 +27,8 @@ public class HtmlGenTest implements ITest
 	
 	public void Run() 
 	{	
+		BookSettingsManager bsmn = new BookSettingsManager();
+		
 		BookTreeBuilder tb = new BookTreeBuilder();
 		BookTree bookTree = tb.buildTree(SettingsManager.getSettings().get_BOOKS_ROOT_DIR());
 		
@@ -55,17 +57,17 @@ public class HtmlGenTest implements ITest
 //			}
 //		}
 //		
-//		BookSettings bs = new BookSettings();
+//		SingleBookSettings bs = new SingleBookSettings();
 //		bs.setWeavedDisplayIDs(weavedIds);
 //		bs.setWeavedDisplayTitles(weavedTitles);
 //		
-//		BookSettingsManager.getSettingsMapper().put(b.getBookID(), bs);
-//		BookSettingsManager.saveToFile();
+//		bsmn.getSettingsMapper().put(b.getBookID(), bs);
+//		bsmn.saveToFile();
 		
 		
 		Collection<Book> weaved = new ArrayList<Book>();
-		List<Integer> weavedBooksIds = BookSettingsManager.getSettingsMapper().get(b.getBookID()).getWeavedDisplayIDs();
-		List<String> weavedBookstitles = BookSettingsManager.getSettingsMapper().get(b.getBookID()).getWeavedDisplayTitles();
+		List<Integer> weavedBooksIds = bsmn.getSettingsMapper().get(b.getBookID()).getWeavedDisplayIDs();
+		List<String> weavedBookstitles = bsmn.getSettingsMapper().get(b.getBookID()).getWeavedDisplayTitles();
 		
 		for (int i=0; i<weavedBooksIds.size(); i++)
 		{

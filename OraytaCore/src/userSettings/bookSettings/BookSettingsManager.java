@@ -1,4 +1,4 @@
-package userBookSettings;
+package userSettings.bookSettings;
 
 import java.io.IOException;
 
@@ -12,17 +12,17 @@ public class BookSettingsManager
 {
 	static Boolean initialized = false;
 	
-	private static BookSettingsMapper mBookSettingsMapper = new BookSettingsMapper();
-	private static ClassIO<BookSettingsMapper> classRW = null;
+	private BookSettingsMapper mBookSettingsMapper = new BookSettingsMapper();
+	private ClassIO<BookSettingsMapper> classRW = null;
 	
-	public static BookSettingsMapper getSettingsMapper()
+	public BookSettingsMapper getSettingsMapper()
 	{
 		if (!initialized) initSettings();
 		
 		return mBookSettingsMapper;
 	}
 	
-	private static void initSettings() 
+	private void initSettings() 
 	{
 		try 
 		{
@@ -40,12 +40,12 @@ public class BookSettingsManager
 		initialized = true;
 	}
 	
-	public static void readSettingsFromFile()
+	public void readSettingsFromFile()
 	{
 		readSettingsFromFile(SettingsManager.getSettings().get_BOOK_SETTINGS_FILE_PATH());
 	}
 	
-	public static void readSettingsFromFile(String path)
+	public void readSettingsFromFile(String path)
 	{
 		if (classRW != null)
 		{
@@ -60,17 +60,17 @@ public class BookSettingsManager
 			} 
 			catch (IOException e) 
 			{
-				// File not found is fine
+				// File not found is fine. Just use defaults
 			}
 		}
 	}
 	
-	public static void saveToFile()
+	public void saveToFile()
 	{
 		saveToFile(SettingsManager.getSettings().get_BOOK_SETTINGS_FILE_PATH());
 	}
 	
-	public static void saveToFile(String filePath)
+	public void saveToFile(String filePath)
 	{
 		if (classRW != null && mBookSettingsMapper != null)
 		{

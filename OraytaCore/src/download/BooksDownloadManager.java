@@ -9,8 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.TreeMap;
+import java.util.Map;
 
 import download.ISingleFileDownloader.DownloadStatus;
 import fileManager.SimplestFileReader;
@@ -24,7 +25,7 @@ import settings.SettingsManager;
 
 public class BooksDownloadManager 
 {
-	private TreeMap<String, ArrayList<DownloadCandidate>> categoryFileMapper = new TreeMap<String, ArrayList<DownloadCandidate>>();
+	private Map<String, ArrayList<DownloadCandidate>> categoryFileMapper = new HashMap<String, ArrayList<DownloadCandidate>>();
 	private ArrayList<DownloadCategoryTitle> categories = new ArrayList<DownloadCategoryTitle>();
 	
 	private String SavedBookListPath = SettingsManager.getSettings().get_BOOKS_SAVE_PATH() + "BookList";

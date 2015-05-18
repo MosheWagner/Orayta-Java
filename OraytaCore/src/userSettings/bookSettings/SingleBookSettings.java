@@ -1,9 +1,9 @@
-package userBookSettings;
+package userSettings.bookSettings;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookSettings 
+public class SingleBookSettings 
 {
 	private Boolean showNikud = true;
 	private Boolean showTeamim = true;
@@ -70,7 +70,7 @@ public class BookSettings
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		BookSettings other = (BookSettings) obj;
+		SingleBookSettings other = (SingleBookSettings) obj;
 		if (showNikud == null) {
 			if (other.showNikud != null)
 				return false;

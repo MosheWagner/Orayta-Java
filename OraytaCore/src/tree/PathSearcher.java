@@ -1,10 +1,11 @@
 package tree;
 
-import java.util.TreeMap;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PathSearcher <T extends IHasPath>
 {
-	private TreeMap<String, TreeNode<T>> mDataMap = new TreeMap<String, TreeNode<T>>();
+	private Map<String, TreeNode<T>> mDataMap = new HashMap<String, TreeNode<T>>();
 	
 	public PathSearcher (TreeNode<T> tree)
 	{

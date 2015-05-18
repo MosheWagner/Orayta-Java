@@ -1,6 +1,7 @@
 package tree;
 
-import java.util.TreeMap;
+import java.util.HashMap;
+import java.util.Map;
 
 /*
  * This class allows us to find a TreeNode by it's data's UID.
@@ -9,7 +10,7 @@ import java.util.TreeMap;
 
 public class IDSearcher <T extends IHasID>
 {
-	private TreeMap<String, TreeNode<T>> mDataMap = new TreeMap<String, TreeNode<T>>();
+	private Map<String, TreeNode<T>> mDataMap = new HashMap<String, TreeNode<T>>();
 	
 	public IDSearcher (TreeNode<T> tree)
 	{
