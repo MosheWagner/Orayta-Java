@@ -2,7 +2,7 @@ package htmlRenderer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.List;
 
 import htmlRenderer.DCSSBuilder;
 
@@ -20,7 +20,7 @@ public class SHtmlRenderer implements IHtmlRenderer
 		return renderFullBook(book, new ArrayList<Book>());
 	}
 	
-	public String renderFullBook(Book book, Collection<Book> otherBooks)
+	public String renderFullBook(Book book, List<Book> otherBooks)
 	{
 		String html = HtmlMarkupBuilder.genHeader(book.getDisplayName(), new DCSSBuilder(book));
 		
@@ -49,7 +49,7 @@ public class SHtmlRenderer implements IHtmlRenderer
 		return renderChapter(book, chapid, new ArrayList<Book>()); 
 	}
 	
-	public String renderChapter(Book book, ChapterAddress chapid, Collection<Book> otherBooks) 
+	public String renderChapter(Book book, ChapterAddress chapid, List<Book> otherBooks) 
 	{
 		String html = HtmlMarkupBuilder.genHeader(book.getDisplayName() + " - " + chapid.getTitle(),
 				new DCSSBuilder(book));
@@ -60,7 +60,7 @@ public class SHtmlRenderer implements IHtmlRenderer
 		return html;
 	}
 	
-	private String renderChapterItself(Book book, ChapterAddress chapid, Collection<Book> otherBooks)
+	private String renderChapterItself(Book book, ChapterAddress chapid, List<Book> otherBooks)
 	{
 		String html = "";
 		
@@ -69,7 +69,7 @@ public class SHtmlRenderer implements IHtmlRenderer
 
 		if (baseNode == null) return "Invalid chapter!";
 		
-		Collection<IChapter> chaps = baseNode.deepSiblingsList();
+		List<IChapter> chaps = baseNode.deepSiblingsList();
 
 		for (IChapter chap:chaps)
 		{

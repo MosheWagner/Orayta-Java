@@ -1,7 +1,6 @@
 package tester.classTester;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import fileManager.IFileWriter;
@@ -9,6 +8,7 @@ import fileManager.SFileWriter;
 import htmlRenderer.SHtmlRenderer;
 import book.Book;
 
+import book.contents.IChapter;
 import bookBuilder.BookHeaderBuilder;
 import bookBuilder.obk.OBK_Builder;
 import bookTree.BookTree;
@@ -36,7 +36,7 @@ public class HtmlGenTest implements ITest
 		b.setContents(new OBK_Builder().buildBookContents(b));
 		
 		//TreeNode<IChapter> chapnode = b.getContents().getChapterByID("בראשית פרק-יב");
-		//IChapter chap = b.getContents().getChapterByID("בראשית פרק-יח");
+		IChapter chap = b.getContents().getChapterByID("בראשית פרק-יח");
 		//TreeNode<IChapter> chapnode = b.getContents().getChapterByID("בראשית פרק-יט");
 		//IChapter chap = b.getContents().getChapterByID("דף יג - א");
 		//IChapter chap = b.getContents().getChapterByID("דף לה - א");
@@ -65,7 +65,7 @@ public class HtmlGenTest implements ITest
 //		bsmn.saveToFile();
 		
 		
-		Collection<Book> weaved = new ArrayList<Book>();
+		List<Book> weaved = new ArrayList<Book>();
 		List<Integer> weavedBooksIds = bsmn.getSettingsMapper().get(b.getBookID()).getWeavedDisplayIDs();
 		List<String> weavedBookstitles = bsmn.getSettingsMapper().get(b.getBookID()).getWeavedDisplayTitles();
 		
@@ -82,8 +82,8 @@ public class HtmlGenTest implements ITest
 			}
 		}
 		
-		//String html = new SHtmlRenderer().renderChapter(b, chap.getChapterAddress(), weaved);
-		String html = new SHtmlRenderer().renderFullBook(b, weaved);
+		String html = new SHtmlRenderer().renderChapter(b, chap.getChapterAddress(), weaved);
+		//String html = new SHtmlRenderer().renderFullBook(b, weaved);
 		
 		//System.out.println(html);
 		

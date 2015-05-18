@@ -1,6 +1,6 @@
 package settings;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface ISettingsHolder 
 {
@@ -22,10 +22,10 @@ public interface ISettingsHolder
 	public String get_FONT_NAME();
 	public int get_BASE_FONT_SIZE();
 	
-	public Collection<String> get_WEAVED_DISPLAY_COLOR_LIST();
+	public List<String> get_WEAVED_DISPLAY_COLOR_LIST();
 	
 	//Font sizes each level's label (in the text itself) should get
-	public Collection<Integer> get_LevelFontSizeAdd();
+	public List<Integer> get_LevelFontSizeAdd();
 
 	public String get_BOOK_SETTINGS_FILE_PATH();
 	

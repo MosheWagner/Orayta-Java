@@ -225,8 +225,5 @@ public class BooksDownloadManager
 			dm.addDownloadRequest(file.getURL(), file.getSaveToPath());
 		}
 	}
-	
-//	public abstract void downloadCatagories(Collection<String> catagoriesToDownload);
-//	private abstract void downloadCatagorie(String catagorieToDownload);
 
 }

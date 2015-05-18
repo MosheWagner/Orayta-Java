@@ -1,7 +1,8 @@
 package settings;
 
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.List;
+
 
 public class DSettingsHolder implements ISettingsHolder 
 {
@@ -50,12 +51,12 @@ public class DSettingsHolder implements ISettingsHolder
 		return mUISettings.BASE_FONT_SIZE;
 	}
 
-	public Collection<String> get_WEAVED_DISPLAY_COLOR_LIST() {
+	public List<String> get_WEAVED_DISPLAY_COLOR_LIST() {
 		// TODO Auto-generated method stub
 		return Arrays.asList(mUISettings.WEAVED_DISPLAY_COLOR_LIST);
 	}
 
-	public Collection<Integer> get_LevelFontSizeAdd() {
+	public List<Integer> get_LevelFontSizeAdd() {
 		return Arrays.asList(mUISettings.LevelFontSizeAdd);
 	}
 

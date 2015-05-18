@@ -1,6 +1,5 @@
 package tree;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Spliterator;
@@ -70,7 +69,7 @@ public class TreeNode<T> implements ITree<T>, Iterable<TreeNode<T>> {
             parent.unRegisterChildFromSearch(node);
 	}
 
-    public Collection<TreeNode<T>> findTreeNodes(T data) 
+    public List<TreeNode<T>> findTreeNodes(T data) 
     {
     	LinkedList<TreeNode<T>> res = new LinkedList<TreeNode<T>>();
     	
@@ -96,16 +95,16 @@ public class TreeNode<T> implements ITree<T>, Iterable<TreeNode<T>> {
 	}
 	
 	
-	public Collection<T> deepSiblingsList() 
+	public List<T> deepSiblingsList() 
 	{
-		Collection<T> sibList = new ArrayList<T>();
+		List<T> sibList = new ArrayList<T>();
 		
 		addDeepSiblingsToList(this, sibList);
 
 		return sibList;
 	}
 	
-	private void addDeepSiblingsToList(TreeNode<T> node, Collection<T> sibList) 
+	private void addDeepSiblingsToList(TreeNode<T> node, List<T> sibList) 
 	{
 		sibList.add(node.data);
 		

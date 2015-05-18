@@ -1,6 +1,6 @@
 package tree;
 
-import java.util.Collection;
+import java.util.List;
 
 /*
  * The way any good tree should act.
@@ -12,12 +12,12 @@ public interface ITree<T> {
 	public int getLevel();
 	
 	public TreeNode<T> addChild(T child);
-	public Collection<TreeNode<T>> getChildren();
+	public List<TreeNode<T>> getChildren();
 	
 	public void removeElement(TreeNode<T> node);
 
-	public Collection<TreeNode<T>> findTreeNodes(T data);
+	public List<TreeNode<T>> findTreeNodes(T data);
 	
 	//Returns a list of all siblings (including siblings' siblings, recursively)
-	public Collection<T> deepSiblingsList();
+	public List<T> deepSiblingsList();
 }
