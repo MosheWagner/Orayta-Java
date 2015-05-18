@@ -64,7 +64,7 @@ public class HtmlMarkupBuilder
 	
 	public static String genChapTitle(IChapter c) 
 	{
-		int level = c.getChapterAddress().getLevel() + 1;
+		int level = c.getChapterAddress().getChapterLevel() + 1;
 		
 		String linkID = c.getChapterAddress().getUID();
 		String title = c.getChapterAddress().getTitle();
@@ -73,7 +73,7 @@ public class HtmlMarkupBuilder
 	
 	public static String genLinkToChapter(ChapterAddress address) 
 	{
-		int level = address.getLevel() + 1;
+		int level = address.getChapterLevel() + 1;
 		
 		String anchorID = address.getUID();
 		String title = address.getTitle();

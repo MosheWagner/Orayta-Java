@@ -1,16 +1,16 @@
 package bookmark.updatingBookmarks;
 
-import tree.SearchableTree;
 import tree.TreeNode;
 import book.Book;
 import book.contents.ChapterAddress;
+import bookTree.BookTree;
 import bookmark.Bookmark;
 
 public class MishnaYomitBookmarkBuilder implements IBookmarkBuilder
 {
-	SearchableTree<Book> mBookTree;
+	BookTree mBookTree;
 	
-	public MishnaYomitBookmarkBuilder(SearchableTree<Book> bt)
+	public MishnaYomitBookmarkBuilder(BookTree bt)
 	{
 		mBookTree = bt;
 	}
@@ -64,7 +64,7 @@ public class MishnaYomitBookmarkBuilder implements IBookmarkBuilder
 	{
 		ChapterAddress addr = new ChapterAddress(masechet.getBookID());
 		
-		addr.setTitle(" משנה" + mishna);
+		addr.setTitle("משנה " + mishna);
 		
 		addr.setFullAddress("פרק " + perek + " - משנה " + mishna);
 		

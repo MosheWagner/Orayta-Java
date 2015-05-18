@@ -1,8 +1,9 @@
 package htmlRenderer;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Collection;
 
 import htmlRenderer.DCSSBuilder;
 
@@ -20,7 +21,7 @@ public class SHtmlRenderer implements IHtmlRenderer
 		return renderFullBook(book, new ArrayList<Book>());
 	}
 	
-	public String renderFullBook(Book book, List<Book> otherBooks)
+	public String renderFullBook(Book book, Collection<Book> otherBooks)
 	{
 		String html = HtmlMarkupBuilder.genHeader(book.getDisplayName(), new DCSSBuilder(book));
 		
@@ -49,7 +50,7 @@ public class SHtmlRenderer implements IHtmlRenderer
 		return renderChapter(book, chapid, new ArrayList<Book>()); 
 	}
 	
-	public String renderChapter(Book book, ChapterAddress chapid, List<Book> otherBooks) 
+	public String renderChapter(Book book, ChapterAddress chapid, Collection<Book> otherBooks) 
 	{
 		String html = HtmlMarkupBuilder.genHeader(book.getDisplayName() + " - " + chapid.getTitle(),
 				new DCSSBuilder(book));
@@ -60,7 +61,7 @@ public class SHtmlRenderer implements IHtmlRenderer
 		return html;
 	}
 	
-	private String renderChapterItself(Book book, ChapterAddress chapid, List<Book> otherBooks)
+	private String renderChapterItself(Book book, ChapterAddress chapid, Collection<Book> otherBooks)
 	{
 		String html = "";
 		

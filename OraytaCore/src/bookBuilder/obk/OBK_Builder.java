@@ -156,7 +156,7 @@ public class OBK_Builder implements IBookContentsBuilder
 								if (currentContentsNode == null) break;
 								if (currentContentsNode.data == null) break;
 								
-								currentsLevel = currentContentsNode.data.getChapterAddress().getLevel();
+								currentsLevel = currentContentsNode.data.getChapterAddress().getChapterLevel();
 							}
 							
 							if (currentContentsNode != null)

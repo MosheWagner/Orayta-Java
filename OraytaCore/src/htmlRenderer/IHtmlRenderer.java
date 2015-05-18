@@ -1,6 +1,6 @@
 package htmlRenderer;
 
-import java.util.List;
+import java.util.Collection;
 
 import book.Book;
 import book.contents.ChapterAddress;
@@ -11,8 +11,8 @@ public interface IHtmlRenderer
 	//public String renderBookChapterIndex(Book book);
 	
 	public String renderFullBook(Book book);
-	public String renderFullBook(Book book, List<Book> otherBooks);
+	public String renderFullBook(Book book, Collection<Book> otherBooks);
 	
 	public String renderChapter(Book book, ChapterAddress chapid);
-	public String renderChapter(Book book, ChapterAddress chapid, List<Book> otherBooks);
+	public String renderChapter(Book book, ChapterAddress chapid, Collection<Book> otherBooks);
 }

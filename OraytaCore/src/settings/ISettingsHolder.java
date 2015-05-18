@@ -17,6 +17,8 @@ public interface ISettingsHolder
 	
 	public String get_USER_CSS_FILE_PATH();
 	
+	public String get_BOOKMARKS_SAVE_FILE();
+	
 	//UI Settings:
 	
 	public String get_FONT_NAME();

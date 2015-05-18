@@ -21,4 +21,7 @@ public class DGeneralSettings
 	public String BOOK_SETTINGS_FILE_PATH = "/home/moshe/Desktop/a.map";
 	
 	public String USER_CSS_FILE_PATH = BOOKS_ROOT_DIR + "../css/user.css";
+	
+	//public String BOOKMARKS_SAVE_FILE = BOOKS_ROOT_DIR + "Bookmarks";
+	public String BOOKMARKS_SAVE_FILE = "/home/moshe/Desktop/bm.save";
 }

@@ -5,16 +5,16 @@ import hebrewStuff.GematriaTools;
 import java.util.Arrays;
 import java.util.List;
 
-import tree.SearchableTree;
 import book.Book;
 import book.contents.ChapterAddress;
+import bookTree.BookTree;
 import bookmark.Bookmark;
 
 public class HalachaYomitBookmarkBuilder implements IBookmarkBuilder 
 {
-	SearchableTree<Book> mBootTree;
+	BookTree mBootTree;
 	
-	public HalachaYomitBookmarkBuilder(SearchableTree<Book> bt) 
+	public HalachaYomitBookmarkBuilder(BookTree bt) 
 	{
 		mBootTree = bt;
 	}

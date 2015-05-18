@@ -3,12 +3,10 @@ package settings;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class DSettingsHolder implements ISettingsHolder 
 {
 	static DGeneralSettings mGeneralSettings;
 	static DUISettings mUISettings;
-	
 	
 	public DSettingsHolder()
 	{
@@ -52,7 +50,6 @@ public class DSettingsHolder implements ISettingsHolder
 	}
 
 	public List<String> get_WEAVED_DISPLAY_COLOR_LIST() {
-		// TODO Auto-generated method stub
 		return Arrays.asList(mUISettings.WEAVED_DISPLAY_COLOR_LIST);
 	}
 
@@ -63,6 +60,11 @@ public class DSettingsHolder implements ISettingsHolder
 
 	public String get_BOOK_SETTINGS_FILE_PATH() {
 		return mGeneralSettings.BOOK_SETTINGS_FILE_PATH;
+	}
+
+
+	public String get_BOOKMARKS_SAVE_FILE() {
+		return mGeneralSettings.BOOKMARKS_SAVE_FILE;
 	}
 
 }
