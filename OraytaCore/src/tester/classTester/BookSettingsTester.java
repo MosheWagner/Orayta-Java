@@ -3,8 +3,8 @@ package tester.classTester;
 import java.util.ArrayList;
 
 import tester.ITest;
-import userSettings.bookSettings.SingleBookSettings;
 import userSettings.bookSettings.BookSettingsManager;
+import userSettings.bookSettings.SingleBookSettings;
 import userSettings.bookSettings.BookSettingsMapper;
 
 public class BookSettingsTester implements ITest 
@@ -13,7 +13,8 @@ public class BookSettingsTester implements ITest
 	public void Run() 
 	{
 		BookSettingsManager bsmn = new BookSettingsManager();
-		BookSettingsMapper bsmp = bsmn.getSettingsMapper();
+		
+		BookSettingsMapper bsmp = bsmn.getData();
 		
 		for (int i=0; i<4; i++)
 		{
@@ -37,14 +38,13 @@ public class BookSettingsTester implements ITest
 		}
 		bsmp.put(4, new SingleBookSettings());
 		
-		bsmn.saveToFile();
+		bsmn.saveData();
 
 		BookSettingsManager bsmn2 = new BookSettingsManager();
-		bsmn2.readSettingsFromFile();
-		BookSettingsMapper bsm2 = bsmn2.getSettingsMapper();
+		BookSettingsMapper bsm2 = bsmn2.getData();
 		
-		System.out.println(bsm2.get(2).getWeavedDisplayIDs());
-		System.out.println(bsm2.get(2).getWeavedDisplayTitles());
+		System.out.println(bsm2.get(3).getWeavedDisplayIDs());
+		System.out.println(bsm2.get(3).getWeavedDisplayTitles());
 		
 	}
 

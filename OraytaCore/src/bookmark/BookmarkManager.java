@@ -1,12 +1,10 @@
 package bookmark;
 
-import java.io.IOException;
 import java.util.List;
 
-import javax.xml.bind.JAXBException;
+import classIO.SavableClass;
 
 import settings.SettingsManager;
-import xml.ClassIO;
 
 import bookTree.BookTree;
 import bookmark.updatingBookmarks.DafYomiBookmarkGenerator;
@@ -15,10 +13,10 @@ import bookmark.updatingBookmarks.MishnaYomitBookmarkBuilder;
 
 public class BookmarkManager 
 {
-	private ClassIO<BookmarkList> classRW = null;
-	
 	//private List<Bookmark> lastViewedBookmarks;
-	private BookmarkList userSavedBookmarks = new BookmarkList();
+	private SavableClass<BookmarkList> lastViewedBookmarks;
+	private SavableClass<BookmarkList> userSavedBookmarks;
+	
 	private BookmarkList limudYomiBookmarks = new BookmarkList();
 	
 	private BookTree mBookTree;
@@ -29,72 +27,41 @@ public class BookmarkManager
 		
 		genLimudYomiBookmarks();
 		
-		try 
-		{
-			classRW = new ClassIO<BookmarkList>(BookmarkList.class);
-		} 
-		catch (JAXBException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		readSavedBookmarksFromFile();
+		userSavedBookmarks = new SavableClass<BookmarkList>(BookmarkList.class, SettingsManager.getSettings().get_BOOKMARKS_SAVE_FILE());
 	}
 	
 	public List<Bookmark> getLimudYomiBookmarks() { return limudYomiBookmarks.getBookmarks(); }
 	
-	public List<Bookmark> getSavedBookmarks() {return userSavedBookmarks.getBookmarks(); }
-	public void addBookmark(Bookmark bookmark) {userSavedBookmarks.add(bookmark); }
 	
-	private void readSavedBookmarksFromFile()
+	public void addUserBookmark(Bookmark bookmark) 
 	{
-		readSavedBookmarksFromFile(SettingsManager.getSettings().get_BOOKMARKS_SAVE_FILE());
+		userSavedBookmarks.getData().add(bookmark); 
+		//Autosave
+		userSavedBookmarks.saveData();
 	}
+	public void removeUserBookmark(Bookmark bookmark) 
+	{
+		userSavedBookmarks.getData().remove(bookmark); 
+		//Autosave
+		userSavedBookmarks.saveData();
+	}
+	public List<Bookmark> getUserSavedBookmarks() {return userSavedBookmarks.getData().getBookmarks(); }
 	
-	public void readSavedBookmarksFromFile(String filePath)
-	{
-		if (classRW != null)
-		{
-			try 
-			{
-				userSavedBookmarks = classRW.readClassFromFile(filePath);
-			} 
-			catch (JAXBException e) 
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
-			catch (IOException e) 
-			{
-				// File not found is fine. Just use defaults
-			}
-		}
-	}
+
 	
-	public void saveBookmarksToFile()
+	public void addLastViewedBookmark(Bookmark bookmark) 
 	{
-		saveBookmarksToFile(SettingsManager.getSettings().get_BOOKMARKS_SAVE_FILE());
+		lastViewedBookmarks.getData().add(bookmark); 
+		//Autosave
+		lastViewedBookmarks.saveData();
 	}
-	
-	public void saveBookmarksToFile(String filePath)
+	public void removeLastViewedBookmark(Bookmark bookmark) 
 	{
-		try 
-		{
-			classRW.saveClassToFile(userSavedBookmarks, filePath);
-		} 
-		catch (JAXBException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} 
-		catch (IOException e) 
-		{
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		lastViewedBookmarks.getData().remove(bookmark); 
+		//Autosave
+		lastViewedBookmarks.saveData();
 	}
+	public List<Bookmark> getLastViewedBookmarks() {return lastViewedBookmarks.getData().getBookmarks(); }
 	
 	private void genLimudYomiBookmarks()
 	{

@@ -66,8 +66,8 @@ public class HtmlGenTest implements ITest
 		
 		
 		List<Book> weaved = new ArrayList<Book>();
-		List<Integer> weavedBooksIds = bsmn.getSettingsMapper().get(b.getBookID()).getWeavedDisplayIDs();
-		List<String> weavedBookstitles = bsmn.getSettingsMapper().get(b.getBookID()).getWeavedDisplayTitles();
+		List<Integer> weavedBooksIds = bsmn.getData().get(b.getBookID()).getWeavedDisplayIDs();
+		List<String> weavedBookstitles = bsmn.getData().get(b.getBookID()).getWeavedDisplayTitles();
 		
 		for (int i=0; i<weavedBooksIds.size(); i++)
 		{

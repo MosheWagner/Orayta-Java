@@ -21,5 +21,7 @@ public class BookmarkList
 		Bookmarks = bookmarks;
 	}
 
+	public void remove(Bookmark bookmark) { Bookmarks.remove(bookmark); }
+	
 	public void add(Bookmark bm) { Bookmarks.add(bm); }
 }
