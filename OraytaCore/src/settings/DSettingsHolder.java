@@ -67,4 +67,9 @@ public class DSettingsHolder implements ISettingsHolder
 		return mGeneralSettings.BOOKMARKS_SAVE_FILE;
 	}
 
+
+	public String get_LV_BOOKMARKS_SAVE_FILE() {
+		return  mGeneralSettings.LV_BOOKMARKS_SAVE_FILE;
+	}
+
 }

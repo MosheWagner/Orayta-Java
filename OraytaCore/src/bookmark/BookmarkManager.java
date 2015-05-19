@@ -28,6 +28,7 @@ public class BookmarkManager
 		genLimudYomiBookmarks();
 		
 		userSavedBookmarks = new SavableClass<BookmarkList>(BookmarkList.class, SettingsManager.getSettings().get_BOOKMARKS_SAVE_FILE());
+		lastViewedBookmarks = new SavableClass<BookmarkList>(BookmarkList.class, SettingsManager.getSettings().get_LV_BOOKMARKS_SAVE_FILE());
 	}
 	
 	public List<Bookmark> getLimudYomiBookmarks() { return limudYomiBookmarks.getBookmarks(); }

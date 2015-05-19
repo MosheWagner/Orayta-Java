@@ -24,4 +24,5 @@ public class DGeneralSettings
 	
 	//public String BOOKMARKS_SAVE_FILE = BOOKS_ROOT_DIR + "Bookmarks";
 	public String BOOKMARKS_SAVE_FILE = "/home/moshe/Desktop/bm.save";
+	public String LV_BOOKMARKS_SAVE_FILE = "/home/moshe/Desktop/bm2.save";
 }
