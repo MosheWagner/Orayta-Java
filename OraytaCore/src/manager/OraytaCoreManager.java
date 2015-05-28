@@ -47,8 +47,7 @@ public class OraytaCoreManager implements IOraytaCore
 
 	private IBookDisplayManager buildBookDisplayer() 
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new DBookDisplayer(this);
 	}
 
 	private BookTree buildBookTree() {

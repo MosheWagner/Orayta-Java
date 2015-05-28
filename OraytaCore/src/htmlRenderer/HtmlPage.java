@@ -5,12 +5,17 @@ public class HtmlPage
 	//TODO: Improve and actually use!
 	
 	String htmlHead;
-	String CSS;
 	String htmlBody;
+	String htmlEnd;
+	
+	public String getHtmlString()
+	{
+		return toString();
+	}
 	
 	public String toString()
 	{
-		return htmlHead + htmlBody;
+		return htmlHead + htmlBody + htmlEnd;
 	}
 
 	public String getHtmlHead() {
@@ -21,19 +26,19 @@ public class HtmlPage
 		this.htmlHead = htmlHead;
 	}
 
-	public String getCSS() {
-		return CSS;
-	}
-
-	public void setCSS(String cSS) {
-		CSS = cSS;
-	}
-
 	public String getHtmlBody() {
 		return htmlBody;
 	}
 
 	public void setHtmlBody(String htmlBody) {
 		this.htmlBody = htmlBody;
+	}
+
+	public String getHtmlEnd() {
+		return htmlEnd;
+	}
+
+	public void setHtmlEnd(String htmlEnd) {
+		this.htmlEnd = htmlEnd;
 	}
 }

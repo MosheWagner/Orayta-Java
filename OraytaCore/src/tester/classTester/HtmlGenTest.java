@@ -82,7 +82,7 @@ public class HtmlGenTest implements ITest
 			}
 		}
 		
-		String html = new SHtmlRenderer().renderChapter(b, chap.getChapterAddress(), weaved);
+		String html = new SHtmlRenderer().renderChapter(b, chap.getChapterAddress(), weaved).toString();
 		//String html = new SHtmlRenderer().renderFullBook(b, weaved);
 		
 		//System.out.println(html);

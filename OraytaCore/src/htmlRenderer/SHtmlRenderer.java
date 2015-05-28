@@ -16,55 +16,69 @@ import book.contents.IChapter;
 public class SHtmlRenderer implements IHtmlRenderer
 {
 	
-	public String renderFullBook(Book book) 
+	public HtmlPage renderFullBook(Book book) 
 	{
 		return renderFullBook(book, new ArrayList<Book>());
 	}
 	
-	public String renderFullBook(Book book, Collection<Book> otherBooks)
+	public HtmlPage renderFullBook(Book book, Collection<Book> otherBooks)
 	{
-		String html = HtmlMarkupBuilder.genHeader(book.getDisplayName(), new DCSSBuilder(book));
+		HtmlPage page = new HtmlPage();
 		
-		html += renderChapterIndex(book);
-		html += renderChapterItself(book, book.getContents().getChapterContentsTree().data.getChapterAddress(), otherBooks);
-		html += HtmlMarkupBuilder.htmlEnd();
+		String htmlHead = HtmlMarkupBuilder.genHeader(book.getDisplayName(), new DCSSBuilder(book));
+		page.setHtmlHead(htmlHead);
 		
-		return html;
+		String htmlBody = renderChapterIndex(book).getHtmlBody();
+		htmlBody += renderChapterItself(book, book.getContents().getChapterContentsTree().data.getChapterAddress(), otherBooks);
+		page.setHtmlBody(htmlBody);
+		
+		page.setHtmlEnd(HtmlMarkupBuilder.htmlEnd());
+		
+		return page;
 	}
 	
-	public String renderChapterIndex(Book book) 
+	public HtmlPage renderChapterIndex(Book book) 
 	{
-		String html = "";
+		HtmlPage page = new HtmlPage();
 		
-		//TODO:
+		String htmlHead = HtmlMarkupBuilder.genHeader(book.getDisplayName(), new DCSSBuilder(book));
+		page.setHtmlHead(htmlHead);
+		
+		String htmlBody = "";
+		//TODO: Improve!
 		for(ChapterAddress addrr:book.getContents().getFlatIndex())
 		{
-			html += HtmlMarkupBuilder.genLinkToChapter(addrr);
+			htmlBody += HtmlMarkupBuilder.genLinkToChapter(addrr);
 		}
-
-		return html;
+		page.setHtmlBody(htmlBody);
+		
+		page.setHtmlEnd(HtmlMarkupBuilder.htmlEnd());
+		
+		return page;
 	}
 
-	public String renderChapter(Book book, ChapterAddress chapid) 
+	public HtmlPage renderChapter(Book book, ChapterAddress chapid) 
 	{
 		return renderChapter(book, chapid, new ArrayList<Book>()); 
 	}
 	
-	public String renderChapter(Book book, ChapterAddress chapid, Collection<Book> otherBooks) 
+	public HtmlPage renderChapter(Book book, ChapterAddress chapid, Collection<Book> otherBooks) 
 	{
-		String html = HtmlMarkupBuilder.genHeader(book.getDisplayName() + " - " + chapid.getTitle(),
-				new DCSSBuilder(book));
+		HtmlPage page = new HtmlPage();
 		
-		html += renderChapterItself(book, chapid, otherBooks);
-		html += HtmlMarkupBuilder.htmlEnd();
+		page.setHtmlHead(HtmlMarkupBuilder.genHeader(book.getDisplayName() + " - " + chapid.getTitle(),
+				new DCSSBuilder(book)));
 		
-		return html;
+		page.setHtmlBody(renderChapterItself(book, chapid, otherBooks));
+		
+		page.setHtmlEnd(HtmlMarkupBuilder.htmlEnd());
+		
+		return page;
 	}
 	
 	private String renderChapterItself(Book book, ChapterAddress chapid, Collection<Book> otherBooks)
 	{
 		String html = "";
-		
 
 		TreeNode<IChapter> baseNode = book.getContents().getChapterNodeByID(chapid.getUID());
 

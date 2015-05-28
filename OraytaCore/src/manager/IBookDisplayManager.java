@@ -3,12 +3,14 @@ package manager;
 import htmlRenderer.HtmlPage;
 import book.Book;
 import book.contents.ChapterAddress;
+import bookmark.Bookmark;
 
 public interface IBookDisplayManager 
 {
 	public HtmlPage displayBook(int bookID);
 	public HtmlPage displayBook(Book book);
-	public HtmlPage displayBookAtAddress(ChapterAddress address);
+	public HtmlPage displayBookAtAddress(Book book, ChapterAddress address);
+	public HtmlPage displayBookmark(Bookmark bookmark);
 	
 	public HtmlPage displayLink(String codedUrl);
 	
