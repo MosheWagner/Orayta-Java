@@ -83,7 +83,6 @@ public class OBK_Builder implements IBookContentsBuilder
 		}
 	}	
 
-	//TODO: Add external link reading
 	String mPendingText = "";
 	private void buildChapters() 
 	{

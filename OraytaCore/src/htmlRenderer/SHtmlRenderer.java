@@ -25,14 +25,14 @@ public class SHtmlRenderer implements IHtmlRenderer
 	{
 		String html = HtmlMarkupBuilder.genHeader(book.getDisplayName(), new DCSSBuilder(book));
 		
-		html += renderChapterIndexItself(book);
+		html += renderChapterIndex(book);
 		html += renderChapterItself(book, book.getContents().getChapterContentsTree().data.getChapterAddress(), otherBooks);
 		html += HtmlMarkupBuilder.htmlEnd();
 		
 		return html;
 	}
 	
-	private String renderChapterIndexItself(Book book) 
+	public String renderChapterIndex(Book book) 
 	{
 		String html = "";
 		

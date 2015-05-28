@@ -1,21 +1,75 @@
 package manager;
 
-import book.Book;
+import htmlRenderer.IHtmlRenderer;
+import htmlRenderer.SHtmlRenderer;
+import bookBuilder.DBookBuildersFactory;
+import bookBuilder.IBookBuildersFactory;
+import bookTree.BookTree;
+import bookTree.BookTreeBuilder;
+import bookmark.BookmarkManager;
 import download.DownloadManager;
-import settings.DGeneralSettings;
-import tree.TreeNode;
+import errReport.AutomaticErrorReporter;
+import errReport.IErrReporter;
+import settings.SettingsManager;
+import userSettings.bookSettings.BookSettingsManager;
 
 /*
  * This class handles everything.
  * It holds the settings, the booklist, 
  */
 
-public abstract class OraytaCoreManager implements UIBridge, IOraytaCore
+public class OraytaCoreManager implements IOraytaCore
 {
-	@SuppressWarnings("unused")
-	private DGeneralSettings generalSettings;
-	@SuppressWarnings("unused")
-	private TreeNode<Book> bookList;
+	BookSettingsManager mBookSettingsManager;
+	BookTree mBookTree;
+	DownloadManager mDownloadManager;
+	BookmarkManager mBookmarkManager;
+	IErrReporter mErrReporter;
+	IHtmlRenderer mHtmlRenderer;
+	IBookBuildersFactory mBookBuildersFactory;
 	
-	public abstract DownloadManager downloadManager();
+	//Currently using only a single displayer
+	IBookDisplayManager mBookDisplayManager;
+	
+	public void initOrayta() 
+	{
+		mBookTree = buildBookTree();
+		
+		mBookSettingsManager = new BookSettingsManager();
+		mDownloadManager = new DownloadManager();
+		mBookmarkManager = new BookmarkManager(mBookTree);
+		mErrReporter = new AutomaticErrorReporter();
+		mHtmlRenderer = new SHtmlRenderer();
+		mBookBuildersFactory = new DBookBuildersFactory();
+		
+		mBookDisplayManager = buildBookDisplayer();
+	}
+
+	private IBookDisplayManager buildBookDisplayer() 
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private BookTree buildBookTree() {
+		BookTreeBuilder treeBuilder = new BookTreeBuilder();
+		return treeBuilder.buildTree(SettingsManager.getSettings().get_BOOKS_ROOT_DIR());
+	}
+
+	public BookSettingsManager getBookSettingsManager() { return mBookSettingsManager; }
+	public BookTree getBookTree() { return mBookTree; }
+	public DownloadManager getDownloadManager() { return mDownloadManager; }
+	public BookmarkManager getBookmarkManager() { return mBookmarkManager; }
+	public IErrReporter getErrReporter() { return mErrReporter; }
+	public IHtmlRenderer getHtmlRenderer() { return mHtmlRenderer; }
+	public IBookBuildersFactory getBookBuildersFactory() { return mBookBuildersFactory; }
+	public IBookDisplayManager getCurrentBookDisplayManager() { return mBookDisplayManager; }
+
+	
+	
+	public void registerListener(ICoreEventsListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

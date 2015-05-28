@@ -8,7 +8,7 @@ import java.net.URL;
 import book.Book;
 import book.contents.ChapterAddress;
 
-public class AutomaticErrorReporter 
+public class AutomaticErrorReporter implements IErrReporter
 {
 	private static String serverHostUrl="http://moshewagner.pythonanywhere.com";
 	private static String httpMethod="POST";

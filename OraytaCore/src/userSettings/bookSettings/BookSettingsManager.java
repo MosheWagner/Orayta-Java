@@ -10,7 +10,7 @@ public class BookSettingsManager extends SavableClass<BookSettingsMapper>
 		super(BookSettingsMapper.class, SettingsManager.getSettings().get_BOOK_SETTINGS_FILE_PATH());
 	}
 	
-	public BookSettingsManager(Class<BookSettingsMapper> typeParameterClass, String savePath) 
+	private BookSettingsManager(Class<BookSettingsMapper> typeParameterClass, String savePath) 
 	{
 		super(typeParameterClass, savePath);
 	}
