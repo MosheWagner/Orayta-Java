@@ -1,12 +1,14 @@
 package tester;
 
 import tester.classTester.*;
+import tester.integrationTester.IntegrationTester;
 
 /*
  * This class initiates code tests, as needed while developing.
  *  DON'T USE THIS FOR PRODUCTION  
  */
 
+@SuppressWarnings("unused")
 public class TestRunner 
 {
 	public static void main(String[] args)
@@ -28,7 +30,8 @@ public class TestRunner
 		//ITest t = new GematriaTest();
 		//ITest t = new LimudYomiTester();
 		//ITest t = new BookSettingsTester();
-		ITest t = new BookmarksTester();
+		//ITest t = new BookmarksTester();
+		ITest t = new IntegrationTester();
 		
 		t.Run();
 	}

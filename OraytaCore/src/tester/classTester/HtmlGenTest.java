@@ -1,10 +1,12 @@
 package tester.classTester;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import fileManager.IFileWriter;
-import fileManager.SFileWriter;
+import fileManager.SimplestFileReader;
 import htmlRenderer.SHtmlRenderer;
 import book.Book;
 
@@ -23,7 +25,6 @@ public class HtmlGenTest implements ITest
 
 	private final String path = SettingsManager.getSettings().get_BOOKS_ROOT_DIR() + "001_mkra/01_torh/a01_Genesis.obk";
 	//private final String path = SettingsManager.getSettings().get_BOOKS_ROOT_DIR() + "030_tlmod_bbli/01_Bav_BRAHOT_L1.obk";
-	private final String savepath = "/home/moshe/Desktop/a.html";
 	
 	public void Run() 
 	{	
@@ -82,13 +83,19 @@ public class HtmlGenTest implements ITest
 			}
 		}
 		
-		String html = new SHtmlRenderer().renderChapter(b, chap.getChapterAddress(), weaved).toString();
-		//String html = new SHtmlRenderer().renderFullBook(b, weaved);
+		URL f = new SHtmlRenderer().renderChapter(b, chap.getChapterAddress(), weaved);
 		
-		//System.out.println(html);
+		System.out.println(f);
 		
-		IFileWriter fw = new SFileWriter(); 
-		fw.writeToFile(savepath, html, true);
+		try {
+			System.out.println((new SimplestFileReader()).readContents(f.getPath()));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

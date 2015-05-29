@@ -31,7 +31,7 @@ public class OraytaCoreManager implements IOraytaCore
 	//Currently using only a single displayer
 	IBookDisplayManager mBookDisplayManager;
 	
-	public void initOrayta() 
+	public void init() 
 	{
 		mBookTree = buildBookTree();
 		
@@ -43,6 +43,23 @@ public class OraytaCoreManager implements IOraytaCore
 		mBookBuildersFactory = new DBookBuildersFactory();
 		
 		mBookDisplayManager = buildBookDisplayer();
+	}
+	
+
+	public void initAsync() 
+	{
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void initAsync(ICoreEventsListener listener) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void registerListener(ICoreEventsListener listener) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private IBookDisplayManager buildBookDisplayer() 
@@ -63,12 +80,5 @@ public class OraytaCoreManager implements IOraytaCore
 	public IHtmlRenderer getHtmlRenderer() { return mHtmlRenderer; }
 	public IBookBuildersFactory getBookBuildersFactory() { return mBookBuildersFactory; }
 	public IBookDisplayManager getCurrentBookDisplayManager() { return mBookDisplayManager; }
-
-	
-	
-	public void registerListener(ICoreEventsListener listener) {
-		// TODO Auto-generated method stub
-		
-	}
 
 }

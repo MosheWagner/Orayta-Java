@@ -1,12 +1,17 @@
 package htmlRenderer;
 
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
+import fileManager.SFileWriter;
 import htmlRenderer.DCSSBuilder;
 
+import settings.SettingsManager;
 import tree.TreeNode;
 
 import book.Book;
@@ -15,21 +20,60 @@ import book.contents.IChapter;
 
 public class SHtmlRenderer implements IHtmlRenderer
 {
+	/*
+	 * Creates a unique Html file name for each book.
+	 * NOTE: This is NOT unique per chapter, so this dosn't actually do caching. 
+	 */
+	private String genSuggestedSavePath(int bookID, Boolean isIndex)
+	{
+		String path = SettingsManager.getSettings().get_HTML_RENDERED_FILES_PATH();
+		
+		String prefix = "H";
+		if (isIndex) prefix = "I";
+		
+		path += prefix + String.valueOf(bookID) + ".html";
+		
+		return path;
+	}
 	
-	public HtmlPage renderFullBook(Book book) 
+	private URL saveToFile(HtmlPage page, String filePath)
+	{
+		URL url = null;
+		File file = new File(filePath);
+		
+		try 
+		{
+			Boolean ok = (new SFileWriter()).writeToFile(filePath, page.getHtmlString(), true);
+			if (ok) url = file.toURI().toURL();
+		} 
+		catch (MalformedURLException e) 
+		{
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return url;
+	}
+	
+	public URL renderFullBook(Book book) 
 	{
 		return renderFullBook(book, new ArrayList<Book>());
 	}
 	
-	public HtmlPage renderFullBook(Book book, Collection<Book> otherBooks)
+	public URL renderFullBook(Book book, Collection<Book> otherBooks)
+	{
+		return saveToFile(genFullBookHtml(book, otherBooks), genSuggestedSavePath(book.getBookID(), false));
+	}
+	
+	public HtmlPage genFullBookHtml(Book book, Collection<Book> otherBooks)
 	{
 		HtmlPage page = new HtmlPage();
 		
 		String htmlHead = HtmlMarkupBuilder.genHeader(book.getDisplayName(), new DCSSBuilder(book));
 		page.setHtmlHead(htmlHead);
 		
-		String htmlBody = renderChapterIndex(book).getHtmlBody();
-		htmlBody += renderChapterItself(book, book.getContents().getChapterContentsTree().data.getChapterAddress(), otherBooks);
+		String htmlBody = genChapterIndexHtml(book).getHtmlBody();
+		htmlBody += renderChapterContents(book, book.getContents().getChapterContentsTree().data.getChapterAddress(), otherBooks);
 		page.setHtmlBody(htmlBody);
 		
 		page.setHtmlEnd(HtmlMarkupBuilder.htmlEnd());
@@ -37,7 +81,12 @@ public class SHtmlRenderer implements IHtmlRenderer
 		return page;
 	}
 	
-	public HtmlPage renderChapterIndex(Book book) 
+	public URL renderChapterIndex(Book book) 
+	{
+		return saveToFile(genChapterIndexHtml(book), genSuggestedSavePath(book.getBookID(), true));
+	}
+	
+	private HtmlPage genChapterIndexHtml(Book book) 
 	{
 		HtmlPage page = new HtmlPage();
 		
@@ -57,26 +106,31 @@ public class SHtmlRenderer implements IHtmlRenderer
 		return page;
 	}
 
-	public HtmlPage renderChapter(Book book, ChapterAddress chapid) 
+	public URL renderChapter(Book book, ChapterAddress chapid) 
 	{
 		return renderChapter(book, chapid, new ArrayList<Book>()); 
 	}
 	
-	public HtmlPage renderChapter(Book book, ChapterAddress chapid, Collection<Book> otherBooks) 
+	public URL renderChapter(Book book, ChapterAddress chapid, Collection<Book> otherBooks) 
+	{
+		return saveToFile(genChapterHtml(book, chapid, otherBooks), genSuggestedSavePath(book.getBookID(), false));
+	}
+	
+	public HtmlPage genChapterHtml(Book book, ChapterAddress chapid, Collection<Book> otherBooks) 
 	{
 		HtmlPage page = new HtmlPage();
 		
 		page.setHtmlHead(HtmlMarkupBuilder.genHeader(book.getDisplayName() + " - " + chapid.getTitle(),
 				new DCSSBuilder(book)));
 		
-		page.setHtmlBody(renderChapterItself(book, chapid, otherBooks));
+		page.setHtmlBody(renderChapterContents(book, chapid, otherBooks));
 		
 		page.setHtmlEnd(HtmlMarkupBuilder.htmlEnd());
 		
 		return page;
 	}
 	
-	private String renderChapterItself(Book book, ChapterAddress chapid, Collection<Book> otherBooks)
+	private String renderChapterContents(Book book, ChapterAddress chapid, Collection<Book> otherBooks)
 	{
 		String html = "";
 

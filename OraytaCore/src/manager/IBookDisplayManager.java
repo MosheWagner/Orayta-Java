@@ -1,25 +1,26 @@
 package manager;
 
-import htmlRenderer.HtmlPage;
+import java.net.URL;
+
 import book.Book;
 import book.contents.ChapterAddress;
 import bookmark.Bookmark;
 
 public interface IBookDisplayManager 
 {
-	public HtmlPage displayBook(int bookID);
-	public HtmlPage displayBook(Book book);
-	public HtmlPage displayBookAtAddress(Book book, ChapterAddress address);
-	public HtmlPage displayBookmark(Bookmark bookmark);
+	public URL displayBook(int bookID);
+	public URL displayBook(Book book);
+	public URL displayBookAtAddress(Book book, ChapterAddress address);
+	public URL displayBookmark(Bookmark bookmark);
 	
-	public HtmlPage displayLink(String codedUrl);
+	public URL displayLink(String codedUrl);
 	
 	
 	public Boolean hasNextChapter();
 	public Boolean hasPreviousChapter();
 	
-	public HtmlPage displayNextChapter();
-	public HtmlPage displayPreviousChapter();
+	public URL displayNextChapter();
+	public URL displayPreviousChapter();
 	
 	public Book getCurrentlyDisplayedBook();
 	public ChapterAddress getCurrentlySetAddress();

@@ -2,12 +2,19 @@ package htmlRenderer;
 
 public class HtmlPage 
 {
-	//TODO: Improve and actually use!
+	private String htmlHead;
+	private String htmlBody;
+	private String htmlEnd;
 	
-	String htmlHead;
-	String htmlBody;
-	String htmlEnd;
+	public HtmlPage() {}
 	
+	public HtmlPage(String savePath, String htmlHead, String htmlBody, String htmlEnd)
+	{
+		this.htmlHead = htmlHead;
+		this.htmlBody = htmlBody;
+		this.htmlEnd = htmlEnd;
+	}
+
 	public String getHtmlString()
 	{
 		return toString();

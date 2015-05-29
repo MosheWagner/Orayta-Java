@@ -41,6 +41,10 @@ public class DSettingsHolder implements ISettingsHolder
 		return mGeneralSettings.USER_CSS_FILE_PATH;
 	}
 
+	public String get_HTML_RENDERED_FILES_PATH() {
+		return mGeneralSettings.HTML_RENDERED_FILES_PATH;
+	}
+	
 	public String get_FONT_NAME() {
 		return mUISettings.FONT_NAME;
 	}

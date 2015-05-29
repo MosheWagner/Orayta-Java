@@ -9,5 +9,4 @@ public class SimplestFileReader implements IFileReader{
 	{
 		return new StreamReader().readContents(filePath, "utf8");
 	}
-
 }

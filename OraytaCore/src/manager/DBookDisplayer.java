@@ -1,8 +1,9 @@
 package manager;
 
+import java.net.URL;
+
 import tree.ITreeIterator;
 import tree.TreeNode;
-import htmlRenderer.HtmlPage;
 import htmlRenderer.IHtmlRenderer;
 import book.Book;
 import book.contents.ChapterAddress;
@@ -31,15 +32,17 @@ public class DBookDisplayer implements IBookDisplayManager
 		BuilderFactory = CoreManager.getBookBuildersFactory();
 	}
 	
-	public HtmlPage displayBook(int bookID) 
+	public URL displayBook(int bookID) throws IllegalArgumentException
 	{
 		Book b = CoreManager.getBookTree().getElementByID(bookID);
+		
+		if (b == null) throw new IllegalArgumentException("Book id not found!");
 		currentBook = b;
 		
 		return displayBook(b);
 	}
 
-	public HtmlPage displayBook(Book book) 
+	public URL displayBook(Book book) 
 	{
 		currentBook = book;
 		initBook(book);
@@ -49,7 +52,7 @@ public class DBookDisplayer implements IBookDisplayManager
 		return Renderer.renderChapterIndex(book);
 	}
 
-	public HtmlPage displayBookAtAddress(Book book, ChapterAddress address) 
+	public URL displayBookAtAddress(Book book, ChapterAddress address) 
 	{
 		currentBook = book;
 		currentAddressNode = book.getContents().getChapterNodeByID(address.getUID());
@@ -77,7 +80,7 @@ public class DBookDisplayer implements IBookDisplayManager
 		return (currentAddressNode.iterator().hasPrevious());
 	}
 
-	public HtmlPage displayNextChapter() 
+	public URL displayNextChapter() 
 	{
 		ITreeIterator<TreeNode<IChapter>> iter = currentAddressNode.iterator();
 		if (iter.hasNext()) currentAddressNode = iter.next();
@@ -87,7 +90,7 @@ public class DBookDisplayer implements IBookDisplayManager
 		return displayBookAtAddress(currentBook, currentAddressNode.data.getChapterAddress());
 	}
 
-	public HtmlPage displayPreviousChapter() 
+	public URL displayPreviousChapter() 
 	{
 		ITreeIterator<TreeNode<IChapter>> iter = currentAddressNode.iterator();
 		if (iter.hasPrevious()) currentAddressNode = iter.previous();
@@ -111,12 +114,12 @@ public class DBookDisplayer implements IBookDisplayManager
 		return getCurrentlySetAddress();
 	}
 
-	public HtmlPage displayLink(String codedUrl) {
+	public URL displayLink(String codedUrl) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	public HtmlPage displayBookmark(Bookmark bookmark) {
+	public URL displayBookmark(Bookmark bookmark) {
 		// TODO Auto-generated method stub
 		return null;
 	}

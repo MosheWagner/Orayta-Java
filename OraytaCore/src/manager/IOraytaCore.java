@@ -19,7 +19,9 @@ public interface IOraytaCore
 {
 	//Initialize Orayta. 
 	// This should be done in a separate thread, and should later update the listener when it's done.
-	public void initOrayta();
+	public void init();
+	public void initAsync();
+	public void initAsync(ICoreEventsListener listener);
 	
 	public BookSettingsManager getBookSettingsManager();
 	public BookTree getBookTree();

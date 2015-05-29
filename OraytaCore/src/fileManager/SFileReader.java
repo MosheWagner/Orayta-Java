@@ -12,5 +12,4 @@ public class SFileReader implements IFileReader{
 		byte[] encoded = Files.readAllBytes(Paths.get(filePath));
 		return new String(encoded, "utf8");
 	}
-
 }
