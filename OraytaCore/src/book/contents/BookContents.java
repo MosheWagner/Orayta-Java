@@ -10,7 +10,16 @@ public class BookContents
 {
 	private SearchableTree<IChapter> chapterContentsTree = new SearchableTree<IChapter>();
 	private List<ChapterAddress> flatIndex = new ArrayList<ChapterAddress>();
+	private Boolean signMask[];
 	
+	public Boolean[] getSignMask() {
+		return signMask;
+	}
+
+	public void setSignMask(Boolean[] signMask) {
+		this.signMask = signMask;
+	}
+
 	public IChapter getChapterByID(String id)
 	{
 		return chapterContentsTree.getElementByID(id);

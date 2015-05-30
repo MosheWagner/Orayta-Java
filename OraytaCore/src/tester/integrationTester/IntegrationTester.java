@@ -12,9 +12,7 @@ public class IntegrationTester implements ITest
 	{
 		Orayta.init();
 		
-		System.out.println(Orayta.getBookTree().getElementsTree().printTree());
-		
-		System.out.println(Orayta.getCurrentBookDisplayManager().displayBook(1623));
+		System.out.println(Orayta.getCurrentBookDisplayManager().displayBook(760));
 	}
 
 }

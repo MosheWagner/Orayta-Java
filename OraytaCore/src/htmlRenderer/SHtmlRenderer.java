@@ -93,17 +93,99 @@ public class SHtmlRenderer implements IHtmlRenderer
 		String htmlHead = HtmlMarkupBuilder.genHeader(book.getDisplayName(), new DCSSBuilder(book));
 		page.setHtmlHead(htmlHead);
 		
+		Boolean signs[] = book.getContents().getSignMask();
+		if (signs.length < 5) return null;
+		
+	    //Find lowest level (starting from 5)
+	    int highestLevel=4;
+	    for (; highestLevel >= 0 && !signs[highestLevel]; highestLevel--) {};
+	    //Find the next one above it:
+	    int lowerLevel = highestLevel - 1 ;
+	    for (; lowerLevel >= 0 && !signs[lowerLevel]; lowerLevel--) {};
+		
 		String htmlBody = "";
-		//TODO: Improve!
-		for(ChapterAddress addrr:book.getContents().getFlatIndex())
-		{
-			htmlBody += HtmlMarkupBuilder.genLinkToChapter(addrr);
-		}
+
+		System.out.println(highestLevel);
+		System.out.println(lowerLevel);
+		
+	    //If only one link level is present (and thus higherLevel became 6)
+		//TODO: is -1 the right one?
+	    if ( lowerLevel == -1)
+	    {
+	    	htmlBody = genSingleLevelIndex(book);
+	    }
+	    else
+	    {
+	    	htmlBody = genTwoLevelIndex(book, lowerLevel, true);	    	
+	    }
+	    
 		page.setHtmlBody(htmlBody);
 		
 		page.setHtmlEnd(HtmlMarkupBuilder.htmlEnd());
 		
 		return page;
+	}
+
+    // The lower level is in a table under the one closest above it,
+    // and the higher one(s) get a <P> before them.
+	private String genTwoLevelIndex(Book book, int lowerLevel, Boolean showDot) 
+	{
+		Boolean opentable = false;
+		
+		String html = "";
+		for(ChapterAddress addrr:book.getContents().getFlatIndex())
+        {
+			System.out.println(addrr.getChapterLevel());
+			
+            if (opentable && addrr.getChapterLevel() <= lowerLevel)
+            {
+            	html += "<P></td></tr></tbody></table>";
+                opentable = false;
+            }
+
+            /*
+            if(short_index_level == indexitemlist[j].level)
+            {
+                QString name = "Index"+ stringify(iln);
+                link_table += "<a name=\"" + name + "\" " + "href=\"$" + name + "\"></a>\n";
+                iln ++;
+            }
+            */
+
+            //lower than one above the highest
+            if (addrr.getChapterLevel() < lowerLevel)
+            {
+            	html += HtmlMarkupBuilder.genLinkToChapter(addrr);
+            }
+            else if (addrr.getChapterLevel() == lowerLevel)
+            {
+            	html += HtmlMarkupBuilder.genLinkToChapter(addrr);
+            	html += "<table border=\"0\" cellpadding=\"8\" cellspacing=\"2\" width=\"100%\"><tbody><tr><td width=\"24\"><td align=\"right\">";
+                opentable = true;
+            }
+            else
+            {
+                if(showDot) html +=  HtmlMarkupBuilder.genBluedot() + " ";
+                html += HtmlMarkupBuilder.genLinkToChapter(addrr);
+                html +="&nbsp;\n";
+            }
+        }
+		
+		return html;
+	}
+
+	private String genSingleLevelIndex(Book book) 
+	{
+		String html = "<span class=\"L0\">&nbsp;";
+		for(ChapterAddress addrr:book.getContents().getFlatIndex())
+		{
+			html += "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+			html += HtmlMarkupBuilder.genBluedot() + "&nbsp;";
+			html += HtmlMarkupBuilder.genLinkToChapter(addrr);
+			html +="<BR>\n";	
+		}
+		
+		return html;
 	}
 
 	public URL renderChapter(Book book, ChapterAddress chapid) 

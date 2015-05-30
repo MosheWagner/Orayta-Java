@@ -38,6 +38,8 @@ public class OBK_Builder implements IBookContentsBuilder
 
 	List<ChapterAddress> flatIndex;
 	List<String> rawTextLines;
+	
+	Boolean signFound[];
 
 	
 	public BookContents buildBookContents(Book book) 
@@ -189,6 +191,8 @@ public class OBK_Builder implements IBookContentsBuilder
 		bookContents.setChapterContentsTree(chapterContentsTree);
 		
 		bookContents.setFlatIndex(flatIndex);
+		bookContents.setSignMask(signFound);
+		
 	}
 
 	private void addTextAndPendingTextToChapter(IChapter chapter, String str)
@@ -209,7 +213,6 @@ public class OBK_Builder implements IBookContentsBuilder
 	
 	private void buildFlatIndex()
 	{
-		Boolean signFound[];
 		signFound = new Boolean[LevelSigns.length()];
 		for (int i=0; i<LevelSigns.length(); i++) signFound[i] = false;
 		

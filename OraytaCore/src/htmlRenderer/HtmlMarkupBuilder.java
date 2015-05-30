@@ -44,7 +44,7 @@ public class HtmlMarkupBuilder
 		String prefix = "";
 		String suffix = "";
 		
-		prefix += "<BR>";
+		//prefix += "<BR>";
 		
 		//prefix += "<h" + lvlStr + "> ";
 		//suffix += " </h" + lvlStr + ">\n";
@@ -165,4 +165,8 @@ public class HtmlMarkupBuilder
 	{
 		return "<i><b> " +  str + ": </b></i>";
 	}
+	
+
+	//Return html code for blue dot:
+	public static String genBluedot() {	return "<span style=\"color:blue\"><B>&bull;</B></span>"; }
 }
