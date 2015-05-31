@@ -23,7 +23,7 @@ public class TestRunner
 		//ITest t = new OBKReadTest();
 		//ITest t = new DecryptTester();
 		//ITest t = new CatagoryTitleTester();
-		ITest t = new HtmlGenTest();
+		//ITest t = new HtmlGenTest();
 		//ITest t = new ErrReportTester();
 		//ITest t = new HashTester();
 		//ITest t = new BLDownloadTester();
@@ -31,7 +31,7 @@ public class TestRunner
 		//ITest t = new LimudYomiTester();
 		//ITest t = new BookSettingsTester();
 		//ITest t = new BookmarksTester();
-		//ITest t = new IntegrationTester();
+		ITest t = new IntegrationTester();
 		
 		t.Run();
 	}

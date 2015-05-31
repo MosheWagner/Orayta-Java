@@ -139,7 +139,7 @@ public class SHtmlRenderer implements IHtmlRenderer
 			
             if (opentable && addrr.getChapterLevel() <= lowerLevel)
             {
-            	html += "<P></td></tr></tbody></table>";
+            	html += "</ul>\n";
                 opentable = false;
             }
 
@@ -159,17 +159,21 @@ public class SHtmlRenderer implements IHtmlRenderer
             }
             else if (addrr.getChapterLevel() == lowerLevel)
             {
-            	html += HtmlMarkupBuilder.genLinkToChapter(addrr);
-            	html += "<table border=\"0\" cellpadding=\"8\" cellspacing=\"2\" width=\"100%\"><tbody><tr><td width=\"24\"><td align=\"right\">";
+            	html += "<BR><BR>";
+            	html += HtmlMarkupBuilder.genIndexLinkToChapter(addrr, 3);
+            	html += "<BR><BR><ul class=\"Grid\">\n";
                 opentable = true;
             }
             else
             {
-                if(showDot) html +=  HtmlMarkupBuilder.genBluedot() + " ";
-                html += HtmlMarkupBuilder.genLinkToChapter(addrr);
-                html +="&nbsp;\n";
+            	html += "<li>";
+            	html += HtmlMarkupBuilder.genBluedot();
+                html += HtmlMarkupBuilder.genIndexLinkToChapter(addrr, 5);
+                html +="&nbsp;\n</li>";
+
             }
         }
+		if (opentable) html += "</ul>";
 		
 		return html;
 	}

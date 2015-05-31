@@ -63,7 +63,21 @@ public class DCSSBuilder implements ICSSBuilder
 					+ "px; font-weight:bold; color:indigo; }\n";
 		}
 	    
-	    
+
+		
+		css +=  "   ul, li{\n"
+		+ 		"   	margin: 0;\n"
+		+ 		"   	padding: 0;\n"
+		+ 		"   }\n"
+
+		+ 		"   .Grid li{\n"
+		+ 		"   	display: inline-block;\n"
+		+ 		"   	list-style-type: circle;\n"
+		+ 		"   	width: 12%;\n"
+		+ 		"   	padding-bottom: 0.35%;\n"
+		+ 		"   	padding-top: 0.35%;\n"
+		+ 		"   }\n";
+		
 	            //adding user defined styles here:
 	    css +=        userCss + "\n"
 

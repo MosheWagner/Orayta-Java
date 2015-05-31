@@ -33,23 +33,21 @@ public class HtmlMarkupBuilder
 	
 	public static String genMarkerAnchor(int levelCode, String markerText, String anchorId)
 	{
-		return createHeading(levelCode, createAnchor(markerText, anchorId));
+		return createHeading(levelCode, createAnchor(markerText, anchorId), true);
 	}
 	
 	
-	public static String createHeading(int level, String txt)
+	public static String createHeading(int level, String txt, Boolean newLine)
 	{
 		String lvlStr = String.valueOf(level);
 		
 		String prefix = "";
-		String suffix = "";
+
+		if (newLine) prefix += "<BR>";
 		
-		//prefix += "<BR>";
-		
-		//prefix += "<h" + lvlStr + "> ";
-		//suffix += " </h" + lvlStr + ">\n";
 		prefix += "<span class=\"L" + lvlStr + "\">";
-		suffix += "</span>";
+		
+		String suffix = "</span>";
 		
 		return prefix + txt + suffix;
 	}
@@ -68,7 +66,7 @@ public class HtmlMarkupBuilder
 		
 		String linkID = c.getChapterAddress().getUID();
 		String title = c.getChapterAddress().getTitle();
-		return createHeading(level, createAnchor(title, linkID));
+		return createHeading(level, createAnchor(title, linkID), true);
 	}
 	
 	public static String genLinkToChapter(ChapterAddress address) 
@@ -77,7 +75,14 @@ public class HtmlMarkupBuilder
 		
 		String anchorID = address.getUID();
 		String title = address.getTitle();
-		return createHeading(level, createLink(title, anchorID));
+		return createHeading(level, createLink(title, anchorID), true);
+	}
+	
+	public static String genIndexLinkToChapter(ChapterAddress address, int dispLevel) 
+	{
+		String anchorID = address.getUID();
+		String title = address.getTitle();
+		return createHeading(dispLevel, createLink(title, anchorID), false);
 	}
 
 	public static String genHeader(String title, ICSSBuilder cssBuilder)
