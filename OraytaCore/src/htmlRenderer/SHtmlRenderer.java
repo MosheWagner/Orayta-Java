@@ -104,9 +104,6 @@ public class SHtmlRenderer implements IHtmlRenderer
 	    for (; lowerLevel >= 0 && !signs[lowerLevel]; lowerLevel--) {};
 		
 		String htmlBody = "";
-
-		System.out.println(highestLevel);
-		System.out.println(lowerLevel);
 		
 	    //If only one link level is present (and thus higherLevel became 6)
 		//TODO: is -1 the right one?
@@ -135,8 +132,6 @@ public class SHtmlRenderer implements IHtmlRenderer
 		String html = "";
 		for(ChapterAddress addrr:book.getContents().getFlatIndex())
         {
-			System.out.println(addrr.getChapterLevel());
-			
             if (opentable && addrr.getChapterLevel() <= lowerLevel)
             {
             	html += "</ul>\n";

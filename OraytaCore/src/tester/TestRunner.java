@@ -1,7 +1,7 @@
 package tester;
 
 import tester.classTester.*;
-import tester.integrationTester.IntegrationTester;
+import tester.integrationTester.*;
 
 /*
  * This class initiates code tests, as needed while developing.
@@ -31,7 +31,8 @@ public class TestRunner
 		//ITest t = new LimudYomiTester();
 		//ITest t = new BookSettingsTester();
 		//ITest t = new BookmarksTester();
-		ITest t = new IntegrationTester();
+		//ITest t = new IntegrationTester();
+		ITest t = new ChapterMappingTester();
 		
 		t.Run();
 	}

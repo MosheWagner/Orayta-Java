@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
+import book.contents.ChapterAddress;
+
 public class OBK_ParseHelper 
 {
 	//Returns the Html code for the given external link
@@ -185,5 +187,32 @@ public class OBK_ParseHelper
 	private static String toUnicode(byte[] isoStr, String charset) 
 	{
 		return new String(isoStr, Charset.forName(charset));
+	}
+	
+	public static ChapterAddress addressFromLevelStrArr(int bookId, String[] lvlStrs) 
+	{
+		ChapterAddress addr = new ChapterAddress(bookId);
+		
+		String fullAddress = "";
+		
+		Boolean started = false;
+		Boolean erase = false;
+		for (int i=0; i<lvlStrs.length; i++)
+		{
+			if (!lvlStrs[i].equals("")) started = true;
+			if (lvlStrs[i].equals("") && started == true) erase = true;
+			
+			if (erase) lvlStrs[i] = "";
+		}
+		
+		for (int i=lvlStrs.length - 1; i>=0; i--)
+		{
+			fullAddress += lvlStrs[i] + " ";
+		}
+
+		fullAddress = fullAddress.trim();
+		
+		addr.setFullAddress(fullAddress);
+		return addr;
 	}
 }

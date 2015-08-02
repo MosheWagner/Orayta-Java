@@ -232,7 +232,7 @@ public class OBK_Builder implements IBookContentsBuilder
 					chapid.setLevel(levelCode);
 					chapid.setTitle(line.replace(firstChar + " ", ""));
 					
-					//TODO: Add fullAdress?
+					//NOTE: Full address is corrected later
 					
 					flatIndex.add(chapid);
 					
