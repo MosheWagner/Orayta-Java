@@ -22,12 +22,32 @@ public class BookContents
 
 	public IChapter getChapterByID(String id)
 	{
-		return chapterContentsTree.getElementByID(id);
+		IChapter chap = chapterContentsTree.getElementByID(id);
+		
+		//Try removing the last part of id; maybe it's too specific
+		if (chap == null) chap = chapterContentsTree.getElementByID(despecifyId(id));
+		
+		return chap;
 	}
 	
 	public TreeNode<IChapter> getChapterNodeByID(String id)
 	{
-		return chapterContentsTree.getElementNodeByID(id);
+		TreeNode<IChapter> node = chapterContentsTree.getElementNodeByID(id);
+		
+		//Try removing the last part of id; maybe it's too specific
+		if (node == null) node = chapterContentsTree.getElementNodeByID(despecifyId(id));
+		
+		return node;
+	}
+
+	// Remove last element (after space) of the id, to make link less specific
+	private String despecifyId(String id) 
+	{
+		int lastSpaceId = id.lastIndexOf(" ");
+		
+		if (lastSpaceId == -1) return id;
+		
+		return id.substring(0, lastSpaceId);
 	}
 
 	public TreeNode<IChapter> getChapterContentsTree() 

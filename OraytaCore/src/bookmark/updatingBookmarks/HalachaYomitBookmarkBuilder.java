@@ -1,9 +1,12 @@
 package bookmark.updatingBookmarks;
 
+import fileManager.DatedCSVFileParser;
 import hebrewStuff.GematriaTools;
 
 import java.util.Arrays;
 import java.util.List;
+
+import settings.SettingsManager;
 
 import book.Book;
 import book.contents.ChapterAddress;
@@ -21,8 +24,9 @@ public class HalachaYomitBookmarkBuilder implements IBookmarkBuilder
 
 	public Bookmark genBookmark() 
 	{
-		String [] text = DailyLimudFileParser.readCSVFile();
-		String todaysLine = DailyLimudFileParser.getTodaysLine(text);
+		DatedCSVFileParser parser = new DatedCSVFileParser();
+		parser.readFile(SettingsManager.getSettings().get_DAILY_LIMUD_FILE_PATH());
+		String todaysLine = parser.getTodaysLine();
 		
 		String [] todaysLineParts = null;
 		
@@ -50,9 +54,9 @@ public class HalachaYomitBookmarkBuilder implements IBookmarkBuilder
 		ChapterAddress addr = new ChapterAddress(p.getBookID());
 		
 		addr.setFullAddress("סימן " + siman + " {" + seif + "}");
-		
 		addr.setTitle(siman + " {" + seif + "}");
 		
+		addr.setTitle(siman);
 		return addr;
 	}
 

@@ -1,5 +1,7 @@
 package bookmark.updatingBookmarks;
 
+import fileManager.DatedCSVFileParser;
+import settings.SettingsManager;
 import tree.TreeNode;
 import book.Book;
 import book.contents.ChapterAddress;
@@ -17,8 +19,9 @@ public class MishnaYomitBookmarkBuilder implements IBookmarkBuilder
 	
 	public Bookmark genBookmark() 
 	{
-		String [] text = DailyLimudFileParser.readCSVFile();
-		String todaysLine = DailyLimudFileParser.getTodaysLine(text);
+		DatedCSVFileParser parser = new DatedCSVFileParser();
+		parser.readFile(SettingsManager.getSettings().get_DAILY_LIMUD_FILE_PATH());
+		String todaysLine = parser.getTodaysLine();
 		
 		String [] todaysLineParts = null;
 		

@@ -52,7 +52,7 @@ public class ChapterMappingTester implements ITest
 		
 		ChapterAddress c = mapper.mapToChaper(40);
 		System.out.println(c.getUID());
-
+		System.out.println("SDB:" + db);
 		
 		ITreeIterator<TreeNode<IChapter>> a = b.getContents().getChapterContentsTree().iterator();
 		a.next(); a.next(); a.next();

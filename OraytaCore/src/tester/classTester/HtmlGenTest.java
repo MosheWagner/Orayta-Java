@@ -11,7 +11,6 @@ import htmlRenderer.SHtmlRenderer;
 import book.Book;
 
 import book.contents.IChapter;
-import bookBuilder.BookHeaderBuilder;
 import bookBuilder.obk.OBK_Builder;
 import bookTree.BookTree;
 import bookTree.BookTreeBuilder;
@@ -23,9 +22,8 @@ import userSettings.bookSettings.BookSettingsManager;
 public class HtmlGenTest implements ITest
 {
 
-	private final String path = SettingsManager.getSettings().get_BOOKS_ROOT_DIR() + "001_mkra/01_torh/a01_Genesis.obk";
-	//private final String path = SettingsManager.getSettings().get_BOOKS_ROOT_DIR() + "030_tlmod_bbli/01_Bav_BRAHOT_L1.obk";
-	
+	private final int ID = 80005;
+
 	public void Run() 
 	{	
 		BookSettingsManager bsmn = new BookSettingsManager();
@@ -33,11 +31,11 @@ public class HtmlGenTest implements ITest
 		BookTreeBuilder tb = new BookTreeBuilder();
 		BookTree bookTree = tb.buildTree(SettingsManager.getSettings().get_BOOKS_ROOT_DIR());
 		
-		Book b = new BookHeaderBuilder().buildBook(path);
+		Book b = bookTree.getElementByID(ID);
 		b.setContents(new OBK_Builder().buildBookContents(b));
 		
 		//TreeNode<IChapter> chapnode = b.getContents().getChapterByID("בראשית פרק-יב");
-		IChapter chap = b.getContents().getChapterByID("בראשית פרק-יח");
+		IChapter chap = b.getContents().getChapterByID("סימן תרעה");
 		//TreeNode<IChapter> chapnode = b.getContents().getChapterByID("בראשית פרק-יט");
 		//IChapter chap = b.getContents().getChapterByID("דף יג - א");
 		//IChapter chap = b.getContents().getChapterByID("דף לה - א");

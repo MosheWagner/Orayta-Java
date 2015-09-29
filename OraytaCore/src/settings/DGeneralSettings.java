@@ -15,7 +15,7 @@ public class DGeneralSettings
 	public String BOOK_LIST_DOWNLOAD_URL = SERVER_BOOK_ROOT_URL + "OraytaBookList";
 	
 	//public String DAILY_LIMUD_FILE_PATH = BOOKS_ROOT_DIR + "LimudYomi.csv";
-	public String DAILY_LIMUD_FILE_PATH = "/home/moshe/Orayta/Orayta-Java/OraytaCore/" + "LimudYomi.csv";
+	public String DAILY_LIMUD_FILE_PATH = BOOKS_ROOT_DIR + "LimudYomi.csv";
 	
 	//public String HTML_RENDERED_FILES_PATH = BOOKS_ROOT_DIR + "TMP/";
 	public String HTML_RENDERED_FILES_PATH = "/home/moshe/Desktop/";

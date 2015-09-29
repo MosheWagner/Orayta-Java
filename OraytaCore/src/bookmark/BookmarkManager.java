@@ -68,15 +68,15 @@ public class BookmarkManager
 	{
 		//Daf yomi
 		Bookmark DafYomi = new DafYomiBookmarkGenerator().genBookmark();
-		limudYomiBookmarks.add(DafYomi);
+		if (DafYomi != null) limudYomiBookmarks.add(DafYomi);
 		
 		//Mishna yomit
 		Bookmark MishnaYomit = new MishnaYomitBookmarkBuilder(mBookTree).genBookmark();
-		limudYomiBookmarks.add(MishnaYomit);
+		if (MishnaYomit != null) limudYomiBookmarks.add(MishnaYomit);
 		
 		//Halacha yomit
 		Bookmark HalachaYomit = new HalachaYomitBookmarkBuilder(mBookTree).genBookmark();
-		limudYomiBookmarks.add(HalachaYomit);
+		if (HalachaYomit != null) limudYomiBookmarks.add(HalachaYomit);
 	}
 
 

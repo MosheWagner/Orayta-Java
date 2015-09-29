@@ -11,6 +11,7 @@ import bookmark.Bookmark;
 import bookmark.BookmarkManager;
 import settings.SettingsManager;
 import tester.ITest;
+import tree.TreeNode;
 
 public class LimudYomiTester implements ITest
 {
@@ -31,8 +32,10 @@ public class LimudYomiTester implements ITest
 			
 			if (b.getContents() != null)
 			{
-				IChapter chap = b.getContents().getChapterByID(bm.getAddress().getUID());
-				System.out.println(chap);
+				TreeNode<IChapter> chapNode = b.getContents().getChapterNodeByID(bm.getAddress().getUID());
+				System.out.println(chapNode.data.text());
+				System.out.println(chapNode.data.getUID());
+				System.out.println(chapNode.children);
 			}
 			
 		}
