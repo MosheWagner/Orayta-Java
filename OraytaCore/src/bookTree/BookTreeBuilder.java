@@ -55,9 +55,13 @@ public class BookTreeBuilder
 				if (builder.isContainer())
 				{
 					String folderPath = f.getAbsolutePath().replace(IBookBuildersFactory.FOLDER_CONF_SUFFIX, "");
-					List<File> children = Arrays.asList(new File(folderPath).listFiles());
-					sortByLeadingNumber(children);
-					addFilesToTreeNode(children, branch);
+					File [] childFiles = new File(folderPath).listFiles();
+					if (childFiles != null)
+					{
+						List<File> children = Arrays.asList(childFiles);
+						sortByLeadingNumber(children);
+						if (!children.isEmpty()) addFilesToTreeNode(children, branch);
+					}
 				}
 			}
 		}
