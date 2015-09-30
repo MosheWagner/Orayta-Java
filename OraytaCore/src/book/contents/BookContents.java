@@ -19,16 +19,6 @@ public class BookContents
 	public void setSignMask(Boolean[] signMask) {
 		this.signMask = signMask;
 	}
-
-	public IChapter getChapterByID(String id)
-	{
-		IChapter chap = chapterContentsTree.getElementByID(id);
-		
-		//Try removing the last part of id; maybe it's too specific
-		if (chap == null) chap = chapterContentsTree.getElementByID(despecifyId(id));
-		
-		return chap;
-	}
 	
 	public TreeNode<IChapter> getChapterNodeByID(String id)
 	{

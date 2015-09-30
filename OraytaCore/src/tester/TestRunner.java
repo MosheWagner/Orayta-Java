@@ -18,7 +18,7 @@ public class TestRunner
 	
 	private static void runTest()
 	{
-		//ITest t = new BookTreeTester();
+		ITest t = new BookTreeTester();
 		//ITest t = new BinarySearchTest();
 		//ITest t = new OBKReadTest();
 		//ITest t = new DecryptTester();
@@ -28,7 +28,7 @@ public class TestRunner
 		//ITest t = new HashTester();
 		//ITest t = new BLDownloadTester();
 		//ITest t = new GematriaTest();
-		ITest t = new LimudYomiTester();
+		//ITest t = new LimudYomiTester();
 		//ITest t = new BookSettingsTester();
 		//ITest t = new BookmarksTester();
 		//ITest t = new IntegrationTester();

@@ -11,6 +11,7 @@ import bookmark.Bookmark;
 import bookmark.BookmarkManager;
 import settings.SettingsManager;
 import tester.ITest;
+import tree.TreeNode;
 
 public class BookmarksTester implements ITest {
 
@@ -36,8 +37,8 @@ public class BookmarksTester implements ITest {
 			
 			if (b.getContents() != null)
 			{
-				IChapter chap = b.getContents().getChapterByID(bm.getAddress().getUID());
-				System.out.println(chap);
+				TreeNode<IChapter> chapNode = b.getContents().getChapterNodeByID(bm.getAddress().getUID());
+				System.out.println(chapNode);
 			}
 			
 		}

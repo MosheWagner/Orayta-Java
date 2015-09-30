@@ -16,6 +16,7 @@ import bookTree.BookTree;
 import bookTree.BookTreeBuilder;
 import settings.SettingsManager;
 import tester.ITest;
+import tree.TreeNode;
 
 import userSettings.bookSettings.BookSettingsManager;
 
@@ -35,7 +36,7 @@ public class HtmlGenTest implements ITest
 		b.setContents(new OBK_Builder().buildBookContents(b));
 		
 		//TreeNode<IChapter> chapnode = b.getContents().getChapterByID("בראשית פרק-יב");
-		IChapter chap = b.getContents().getChapterByID("סימן תרעה");
+		TreeNode<IChapter> chapNode = b.getContents().getChapterNodeByID("סימן תרעה");
 		//TreeNode<IChapter> chapnode = b.getContents().getChapterByID("בראשית פרק-יט");
 		//IChapter chap = b.getContents().getChapterByID("דף יג - א");
 		//IChapter chap = b.getContents().getChapterByID("דף לה - א");
@@ -81,7 +82,7 @@ public class HtmlGenTest implements ITest
 			}
 		}
 		
-		URL f = new SHtmlRenderer().renderChapter(b, chap.getChapterAddress(), weaved);
+		URL f = new SHtmlRenderer().renderChapter(b, chapNode.data.getChapterAddress(), weaved);
 		
 		System.out.println(f);
 		

@@ -61,8 +61,8 @@ public class ChapterMappingTester implements ITest
 		
 		if (b.getContents() != null)
 		{
-			IChapter chap = b.getContents().getChapterByID(c.getUID());
-			System.out.println(chap);
+			TreeNode<IChapter> chapNode = b.getContents().getChapterNodeByID(c.getUID());
+			System.out.println(chapNode);
 		}
 	}
 

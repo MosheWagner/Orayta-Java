@@ -245,8 +245,9 @@ public class SHtmlRenderer implements IHtmlRenderer
 			int c = 0;
 			for (Book other:otherBooks)
 			{
-				IChapter otherChap = other.getContents().getChapterByID(chap.getUID());
-				String chapTextNoMarkers = removeChapMarkerFromChapText(otherChap);
+				String chapTextNoMarkers = "";
+				TreeNode<IChapter> otherChapNode = other.getContents().getChapterNodeByID(chap.getUID());
+				if (otherChapNode != null) chapTextNoMarkers = removeChapMarkerFromChapText(otherChapNode.data);
 
 				if (!chapTextNoMarkers.isEmpty())
 				{
