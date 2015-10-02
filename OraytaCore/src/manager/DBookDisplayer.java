@@ -67,7 +67,7 @@ public class DBookDisplayer implements IBookDisplayManager
 		if (book.getContents() != null) return;
 		
 		IBookContentsBuilder contentsBuilder = BuilderFactory.getContentsBuilder(book);
-		book.setContents(contentsBuilder.buildBookContents(book));
+		book.setContents(contentsBuilder.buildBookContents());
 	}
 
 	public Boolean hasNextChapter() 

@@ -3,7 +3,7 @@ package tester.classTester;
 import bookBuilder.obk.OBK_ParseHelper;
 import tester.ITest;
 
-public class DecryptTester implements ITest
+public class LinkDecryptTester implements ITest
 {
 
 	public void Run() 

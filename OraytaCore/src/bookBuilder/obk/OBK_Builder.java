@@ -1,5 +1,7 @@
 package bookBuilder.obk;
 
+import fileManager.EncryptedZipReader;
+import fileManager.IZipReader;
 import fileManager.ZipReader;
 import htmlRenderer.HtmlMarkupBuilder;
 
@@ -8,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 
 import tree.TreeNode;
 import book.Book;
@@ -23,6 +26,10 @@ public class OBK_Builder implements IBookContentsBuilder
 	private final static String LevelSigns = "$#^@~";
 	private final static String MarkSigns = "!";
 
+	private final static String ENCRYPTED_SETTINGS_NAME="Kukayta";
+	
+	IZipReader zr;
+	
 	private int LowerLevelsLBound = 0;
 	private int LowerLevelsUBound = 0;
 
@@ -41,15 +48,21 @@ public class OBK_Builder implements IBookContentsBuilder
 	
 	Boolean signFound[];
 
+	public OBK_Builder(Book book) 
+	{
+		this.book = book;
+	}
 	
-	public BookContents buildBookContents(Book book) 
+	
+	public BookContents buildBookContents() 
 	{
 		//Don't build a book twice!
+		if (book == null) return null;
 		if (book.getContents() != null) return book.getContents();
 		
 		bookContents = new BookContents();
 		
-		this.book = book;
+
 		bookPath = book.getPath();
 		
 		
@@ -76,8 +89,17 @@ public class OBK_Builder implements IBookContentsBuilder
 
 	private void buildContents() 
 	{
-		readRawText(bookPath);
+		if (book.getSettings().containsKey(ENCRYPTED_SETTINGS_NAME))
+		{
+			zr = new EncryptedZipReader();
+		}
+		else
+		{
+			zr = new ZipReader();
+		}
 		
+		readRawText(bookPath);
+
 		if (!rawTextLines.isEmpty())
 		{
 			buildFlatIndex();
@@ -271,10 +293,10 @@ public class OBK_Builder implements IBookContentsBuilder
 	
 	private void readRawText(String filePath) 
 	{
-		ZipReader zr = new ZipReader(filePath);
+		
 		try 
 		{
-			String rawtext = zr.readContents("BookText");
+			String rawtext = zr.readContents(filePath, "BookText");
 			
 			rawTextLines = Arrays.asList(rawtext.split("\\r?\\n"));
 		}

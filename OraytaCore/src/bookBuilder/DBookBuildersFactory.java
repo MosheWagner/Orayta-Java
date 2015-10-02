@@ -13,7 +13,7 @@ public class DBookBuildersFactory implements IBookBuildersFactory
 		
 		if (path.endsWith(OBK_SUFFIX))
 		{
-			return new OBK_Builder();
+			return new OBK_Builder(book);
 		}
 		
 		return null;

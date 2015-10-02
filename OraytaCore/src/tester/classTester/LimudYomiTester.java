@@ -18,7 +18,6 @@ public class LimudYomiTester implements ITest
 	public void Run() 
 	{
 		BookTree bt = new BookTreeBuilder().buildTree(SettingsManager.getSettings().get_BOOKS_ROOT_DIR());
-		OBK_Builder builder = new OBK_Builder();
 		
 		BookmarkManager bmmn = new BookmarkManager(bt);
 		
@@ -28,7 +27,7 @@ public class LimudYomiTester implements ITest
 		for(Bookmark bm:BMs)
 		{
 			Book b = bt.getElementByID(bm.getAddress().getBookID());
-			b.setContents(builder.buildBookContents(b));
+			b.setContents(new OBK_Builder(b).buildBookContents());
 			
 			if (b.getContents() != null)
 			{

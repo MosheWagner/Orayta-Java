@@ -5,19 +5,9 @@ import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-public class ZipReader implements IFileReader 
+public class ZipReader implements IZipReader
 {
 
-	String zipPath = "";
-	
-	ZipFile zFile;
-	
-	public ZipReader(String zipFilePath) 
-	{
-		zipPath = zipFilePath;
-		
-	}
-	
 	public static String readComment(String zipFilePath)
 	{
 		ZipFile zipFile;
@@ -34,18 +24,18 @@ public class ZipReader implements IFileReader
 
 	}
 	
-	public String readContents(String filePath) throws IOException, FileNotFoundException 
+	public String readContents(String zipPath, String intFileName) throws IOException, FileNotFoundException 
 	{
-		zFile = new ZipFile(zipPath);
+		ZipFile zFile = new ZipFile(zipPath);
 		
-		String innerPath = filePath;
-		if (filePath.startsWith(zipPath + "/")) innerPath = filePath.replaceFirst(zipPath + "/", "");
-		
-        ZipEntry entry = zFile.getEntry(innerPath);
+        ZipEntry entry = zFile.getEntry(intFileName);
         
         InputStream inStream = zFile.getInputStream(entry);
         
-        return new StreamReader().readContents(inStream, "utf8");
+        String contents = new StreamReader().readContents(inStream, "utf8");
+        zFile.close();
+        
+        return contents;
 	}
 
 }

@@ -3,8 +3,8 @@ package tree;
 
 public class SearchableTree<T extends IHasID>
 {
-	TreeNode<T> mBooks = null;
-	IDSearcher<T> bookSearcher = null;
+	TreeNode<T> mElems = null;
+	IDSearcher<T> elemSearcher = null;
 	
 	public SearchableTree() {}
 	
@@ -20,9 +20,9 @@ public class SearchableTree<T extends IHasID>
 	
 	public TreeNode<T> getElementNodeByID(String uid)
 	{
-		if (bookSearcher == null) return null;
+		if (elemSearcher == null) return null;
 		
-		return bookSearcher.findById(uid);
+		return elemSearcher.findById(uid);
 	}
 	
 	public T getElementByID(int uid)
@@ -40,9 +40,9 @@ public class SearchableTree<T extends IHasID>
 	
 	public void setElementsTree(TreeNode<T> books)
 	{
-		mBooks = books;
-		bookSearcher = new IDSearcher<T>(mBooks);
+		mElems = books;
+		elemSearcher = new IDSearcher<T>(mElems);
 	}
 	
-	public TreeNode<T> getElementsTree(){ return mBooks; }
+	public TreeNode<T> getElementsTree(){ return mElems; }
 }

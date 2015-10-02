@@ -23,8 +23,21 @@ import userSettings.bookSettings.BookSettingsManager;
 public class HtmlGenTest implements ITest
 {
 
-	private final int ID = 80005;
+	private final int ID;
+	private final String chapStr;
 
+	public HtmlGenTest() 
+	{
+		ID = 80005;
+		chapStr = "סימן תרעה";
+	}
+	
+	public HtmlGenTest(int id, String chapstr) 
+	{
+		ID = id;
+		chapStr = chapstr;
+	}
+	
 	public void Run() 
 	{	
 		BookSettingsManager bsmn = new BookSettingsManager();
@@ -33,36 +46,9 @@ public class HtmlGenTest implements ITest
 		BookTree bookTree = tb.buildTree(SettingsManager.getSettings().get_BOOKS_ROOT_DIR());
 		
 		Book b = bookTree.getElementByID(ID);
-		b.setContents(new OBK_Builder().buildBookContents(b));
+		b.setContents(new OBK_Builder(b).buildBookContents());
 		
-		//TreeNode<IChapter> chapnode = b.getContents().getChapterByID("בראשית פרק-יב");
-		TreeNode<IChapter> chapNode = b.getContents().getChapterNodeByID("סימן תרעה");
-		//TreeNode<IChapter> chapnode = b.getContents().getChapterByID("בראשית פרק-יט");
-		//IChapter chap = b.getContents().getChapterByID("דף יג - א");
-		//IChapter chap = b.getContents().getChapterByID("דף לה - א");
-		
-
-//		List<Integer> weavedIds = new ArrayList<Integer>();
-//		List<String> weavedTitles = new ArrayList<String>();
-//		
-//		List<String []> weavedcodes = b.getPossibleWaevedSources();
-//		for (String[] src:weavedcodes)
-//		{
-//			Book w = bookTree.getElementByPath(SettingsManager.getSettings().get_BOOKS_ROOT_DIR() + src[0]);
-//			
-//			if (w != null)
-//			{
-//				weavedIds.add(w.getBookID());
-//				weavedTitles.add(src[1]);
-//			}
-//		}
-//		
-//		SingleBookSettings bs = new SingleBookSettings();
-//		bs.setWeavedDisplayIDs(weavedIds);
-//		bs.setWeavedDisplayTitles(weavedTitles);
-//		
-//		bsmn.getSettingsMapper().put(b.getBookID(), bs);
-//		bsmn.saveToFile();
+		TreeNode<IChapter> chapNode = b.getContents().getChapterNodeByID(chapStr);
 		
 		
 		List<Book> weaved = new ArrayList<Book>();
@@ -75,18 +61,21 @@ public class HtmlGenTest implements ITest
 			
 			if (w != null)
 			{
-				w.setContents(new OBK_Builder().buildBookContents(w));
+				w.setContents(new OBK_Builder(w).buildBookContents());
 				
 				w.setDisplayNameWhenWeaved(weavedBookstitles.get(i));
 				weaved.add(w);
 			}
 		}
 		
+		System.out.println(b.getContents().getChapterContentsTree());
+		
 		URL f = new SHtmlRenderer().renderChapter(b, chapNode.data.getChapterAddress(), weaved);
 		
 		System.out.println(f);
 		
-		try {
+		try 
+		{
 			System.out.println((new SimplestFileReader()).readContents(f.getPath()));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

@@ -4,21 +4,16 @@ import java.awt.EventQueue;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTextPane;
 import javax.swing.JTree;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 
 import settings.SettingsManager;
-
 import adapters.TreeAdapter;
 import book.Book;
 import bookTree.BookTree;
 import bookTree.BookTreeBuilder;
-import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 
 public class MainWindow {
 

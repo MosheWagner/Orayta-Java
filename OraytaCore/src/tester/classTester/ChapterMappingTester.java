@@ -10,7 +10,7 @@ import bookBuilder.obk.OBK_Builder;
 import bookTree.BookTree;
 import bookTree.BookTreeBuilder;
 
-import fileManager.IFileReader;
+import fileManager.IZipReader;
 import fileManager.ZipReader;
 import search.chapterMapping.PTextMapper;
 import settings.SettingsManager;
@@ -28,18 +28,17 @@ public class ChapterMappingTester implements ITest
 	public void Run() 
 	{
 		BookTree bt = new BookTreeBuilder().buildTree(SettingsManager.getSettings().get_BOOKS_ROOT_DIR());
-		OBK_Builder builder = new OBK_Builder();
 		
 		Book b = bt.getElementByID(760);
-		b.setContents(builder.buildBookContents(b));
+		b.setContents(new OBK_Builder(b).buildBookContents());
 		
-		IFileReader reader = new ZipReader(b.getPath());
+		IZipReader reader = new ZipReader();
 		
 		String db = "";
 		String map = "";
 		try {
-			db = reader.readContents(SDB);
-			map = reader.readContents(LMP);
+			db = reader.readContents(b.getPath(), SDB);
+			map = reader.readContents(b.getPath(), LMP);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

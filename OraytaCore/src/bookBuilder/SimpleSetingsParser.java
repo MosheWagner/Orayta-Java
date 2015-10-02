@@ -24,6 +24,10 @@ public class SimpleSetingsParser implements ISettingsParser
 			{
 				map.put(lineParts[0], lineParts[1]);
 			}
+			else if (lineParts.length == 1) // A non valued option is on, so therefore true
+			{
+				map.put(lineParts[0], "true");
+			}
 		}
 		
 		return map;

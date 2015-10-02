@@ -18,10 +18,10 @@ public class TestRunner
 	
 	private static void runTest()
 	{
-		ITest t = new BookTreeTester();
+		//ITest t = new BookTreeTester();
 		//ITest t = new BinarySearchTest();
 		//ITest t = new OBKReadTest();
-		//ITest t = new DecryptTester();
+		//ITest t = new LinkDecryptTester();
 		//ITest t = new CatagoryTitleTester();
 		//ITest t = new HtmlGenTest();
 		//ITest t = new ErrReportTester();
@@ -33,6 +33,7 @@ public class TestRunner
 		//ITest t = new BookmarksTester();
 		//ITest t = new IntegrationTester();
 		//ITest t = new ChapterMappingTester();
+		ITest t = new DeCryptTester();
 		
 		t.Run();
 	}

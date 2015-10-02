@@ -32,5 +32,6 @@ public interface ISettingsHolder
 	public List<Integer> get_LevelFontSizeAdd();
 
 	public String get_BOOK_SETTINGS_FILE_PATH();
+
 	
 }
