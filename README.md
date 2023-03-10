@@ -1,4 +1,4 @@
-# Orayta-Java
+# DEPRECATED
 
 Orayta is a open-source, cross platform port to the "תורת אמת" project.
 (http://www.toratemetfreeware.com/) - http://orayta.googlecode.com/
