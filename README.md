@@ -15,8 +15,4 @@ The books are the basically the same ones used in the original ToratEmet project
 Bug reports, ideas, and comments are greatly welcome at -
 moshe.wagner@gmail.com
 
-## Donation
-
-If you'd like to support Orayta, please donate!
-
-<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=P8RH8U6ABNJ38"><img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="[paypal]" /></a>
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
